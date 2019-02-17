@@ -22,7 +22,7 @@ int main (int argc, char *argv[]) {
 	fmt.setVersion (3, 3);
 	fmt.setProfile (QSurfaceFormat::CoreProfile);
 	fmt.setSwapBehavior (QSurfaceFormat::DoubleBuffer);
-	fmt.setDepthBufferSize (32);
+	fmt.setDepthBufferSize (24);
 	fmt.setSamples (2);
 	QSurfaceFormat::setDefaultFormat (fmt);
 
