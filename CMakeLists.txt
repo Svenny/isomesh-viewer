@@ -16,7 +16,7 @@ find_package (isomesh CONFIG REQUIRED)
 
 set (ISOMESH_VIEWER_HEADERS
 	src/camera.h
-	src/functionselector.h
+	src/functionbuilder.h
 	src/mainwindow.h
 	src/meshgenerator.h
 	src/viewerwidget.h
@@ -24,7 +24,7 @@ set (ISOMESH_VIEWER_HEADERS
 
 set (ISOMESH_VIEWER_SOURCES
 	src/camera.cpp
-	src/functionselector.cpp
+	src/functionbuilder.cpp
 	src/main.cpp
 	src/mainwindow.cpp
 	src/meshgenerator.cpp

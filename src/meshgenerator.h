@@ -6,7 +6,7 @@
 
 #include <isomesh/data/mesh.hpp>
 
-#include "functionselector.h"
+#include "functionbuilder.h"
 
 enum UsedAlgorithm : int {
 	AlgoMarchingCubes,

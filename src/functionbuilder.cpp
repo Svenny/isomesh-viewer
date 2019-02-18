@@ -1,4 +1,4 @@
-#include "functionselector.h"
+#include "functionbuilder.h"
 
 #include <QDebug>
 
