@@ -53,7 +53,25 @@ isomesh::SurfaceFunction FunctionSelector::selectEllipsoid () {
 
 isomesh::SurfaceFunction FunctionSelector::selectBox () {
 	isomesh::SurfaceFunction fun;
-	// TODO: implement this
+	glm::dvec3 sub (m_boxA, m_boxB, m_boxC);
+	fun.f = [=](glm::dvec3 p) {
+		p = glm::abs (p);
+		p -= sub;
+		return glm::max (glm::max (p.x, p.y), p.z);
+	};
+	fun.grad = [=](glm::dvec3 p) {
+		glm::dvec3 grad = glm::sign (p);
+		p = glm::abs (p);
+		p -= sub;
+		double mxval = glm::max (glm::max (p.x, p.y), p.z);
+		if (glm::abs (p.x - mxval) > 1e-5)
+			grad.x = 0;
+		if (glm::abs (p.y - mxval) > 1e-5)
+			grad.y = 0;
+		if (glm::abs (p.z - mxval) > 1e-5)
+			grad.z = 0;
+		return grad;
+	};
 	return fun;
 }
 
