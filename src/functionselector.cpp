@@ -112,13 +112,13 @@ isomesh::SurfaceFunction FunctionBuilder::buildTwoSpheresFunction () {
 	// Center of left sphere
 	const double x_left = -x_right;
 	const glm::dvec3 center_left (x_left, 0, 0);
-	const double radius = m_twoSpheresRadius;
+	const double radius2 = m_twoSpheresRadius * m_twoSpheresRadius;
 	fun.f = [=](glm::dvec3 p) {
 		if (p.x < 0)
 			p -= center_left;
 		else
 			p -= center_right;
-		return glm::dot (p, p) - radius;
+		return glm::dot (p, p) - radius2;
 	};
 	fun.grad = [=](glm::dvec3 p) {
 		if (p.x < 0)

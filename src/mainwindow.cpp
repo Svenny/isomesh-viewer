@@ -35,6 +35,7 @@ void MainWindow::initFunctionParams () {
 	ui->funSelectorBox->addItem (tr ("Waves"), FunWaves);
 	ui->funSelectorBox->addItem (tr ("Perlin noise"), FunPerlin);
 	ui->funSelectorBox->addItem (tr ("Multifractal"), FunMultifractal);
+	ui->funSelectorBox->addItem (tr ("Two spheres"), FunTwoSpheres);
 	connect (ui->funSelectorBox, QOverload<int>::of (&QComboBox::currentIndexChanged), this, [this](int idx) {
 		auto fun = UsedFunction (ui->funSelectorBox->itemData (idx).toInt ());
 		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (UsedFunction, fun));
