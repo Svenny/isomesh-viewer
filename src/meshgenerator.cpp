@@ -24,12 +24,12 @@ void MeshGenerator::doGenerateMesh () {
 	// compute...
 	auto t1 = std::chrono::high_resolution_clock::now ();
 	{
-		isomesh::SurfaceFunction f = m_funSelector.selectFunction ();
+		isomesh::SurfaceFunction F = m_funBuilder.buildFunction ();
 		isomesh::BisectionZeroFinder solver;
 		// Generate a surface chunk from this function,
 		// then check it against a manually validated result
 		isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
-		G.fill (f, solver, isomesh::TrivialMaterialSelector ());
+		G.fill (F, solver, isomesh::TrivialMaterialSelector ());
 		result = isomesh::marchingCubes (G);
 	}
 	auto t2 = std::chrono::high_resolution_clock::now ();
@@ -38,7 +38,7 @@ void MeshGenerator::doGenerateMesh () {
 	emit meshGenerated (QSharedPointer<isomesh::Mesh>::create (std::move (result)));
 }
 
-void MeshGenerator::setUsedFunction (UsedFunction fun) { m_funSelector.setUsedFunction (fun); }
+void MeshGenerator::setUsedFunction (UsedFunction fun) { m_funBuilder.setUsedFunction (fun); }
 
 
 

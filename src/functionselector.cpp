@@ -2,20 +2,22 @@
 
 #include <QDebug>
 
-isomesh::SurfaceFunction FunctionSelector::selectFunction () {
+isomesh::SurfaceFunction FunctionBuilder::buildFunction () {
 	switch (m_usedFunction) {
 	case FunPlane:
-		return selectPlane ();
+		return buildPlaneFunction ();
 	case FunEllipsoid:
-		return selectEllipsoid ();
+		return buildEllipsoidFunction ();
 	case FunBox:
-		return selectBox ();
+		return buildBoxFunction ();
 	case FunWaves:
-		return selectWaves ();
+		return buildWavesFunction ();
 	case FunPerlin:
-		return selectPerlin ();
+		return buildPerlinFunction ();
 	case FunMultifractal:
-		return selectMultifractal ();
+		return buildMultifractalFunction ();
+	case FunTwoSpheres:
+		return buildTwoSpheresFunction ();
 	}
 	qDebug () << "Selected invalid function";
 	isomesh::SurfaceFunction fun;
@@ -24,45 +26,40 @@ isomesh::SurfaceFunction FunctionSelector::selectFunction () {
 	return fun;
 }
 
-isomesh::SurfaceFunction FunctionSelector::selectPlane () {
+isomesh::SurfaceFunction FunctionBuilder::buildPlaneFunction () {
 	isomesh::SurfaceFunction fun;
-	glm::dvec3 normal (m_planeA, m_planeB, m_planeC);
+	const glm::dvec3 dir = m_planeDir;
 	fun.f = [=](glm::dvec3 p) {
-		return glm::dot (normal, p);
+		return glm::dot (dir, p);
 	};
 	fun.grad = [=](glm::dvec3 p) {
-		return normal;
+		return dir;
 	};
 	return fun;
 }
 
-isomesh::SurfaceFunction FunctionSelector::selectEllipsoid () {
+isomesh::SurfaceFunction FunctionBuilder::buildEllipsoidFunction () {
 	isomesh::SurfaceFunction fun;
-	double mult_x = 1.0 / (m_ellipsoidA * m_ellipsoidA);
-	double mult_y = 1.0 / (m_ellipsoidB * m_ellipsoidB);
-	double mult_z = 1.0 / (m_ellipsoidC * m_ellipsoidC);
-	glm::dvec3 mult (mult_x, mult_y, mult_z);
+	const glm::dvec3 divisor = 1.0 / (m_ellipsoidRadii * m_ellipsoidRadii);
 	fun.f = [=](glm::dvec3 p) {
-		return glm::dot (p * p, mult) - 1.0;
+		return glm::dot (p * p, divisor) - 1.0;
 	};
 	fun.grad = [=](glm::dvec3 p) {
-		return p * (2.0 * mult);
+		return p * (2.0 * divisor);
 	};
 	return fun;
 }
 
-isomesh::SurfaceFunction FunctionSelector::selectBox () {
+isomesh::SurfaceFunction FunctionBuilder::buildBoxFunction () {
 	isomesh::SurfaceFunction fun;
-	glm::dvec3 sub (m_boxA, m_boxB, m_boxC);
+	const glm::dvec3 sub = m_boxSize * 0.5;
 	fun.f = [=](glm::dvec3 p) {
-		p = glm::abs (p);
-		p -= sub;
+		p = glm::abs (p) - sub;
 		return glm::max (glm::max (p.x, p.y), p.z);
 	};
 	fun.grad = [=](glm::dvec3 p) {
 		glm::dvec3 grad = glm::sign (p);
-		p = glm::abs (p);
-		p -= sub;
+		p = glm::abs (p) - sub;
 		double mxval = glm::max (glm::max (p.x, p.y), p.z);
 		if (glm::abs (p.x - mxval) > 1e-5)
 			grad.x = 0;
@@ -75,7 +72,7 @@ isomesh::SurfaceFunction FunctionSelector::selectBox () {
 	return fun;
 }
 
-isomesh::SurfaceFunction FunctionSelector::selectWaves () {
+isomesh::SurfaceFunction FunctionBuilder::buildWavesFunction () {
 	isomesh::SurfaceFunction fun;
 	fun.f = [=](glm::dvec3 p) {
 		return p.y +
@@ -95,14 +92,40 @@ isomesh::SurfaceFunction FunctionSelector::selectWaves () {
 	return fun;
 }
 
-isomesh::SurfaceFunction FunctionSelector::selectPerlin () {
+isomesh::SurfaceFunction FunctionBuilder::buildPerlinFunction () {
 	isomesh::SurfaceFunction fun;
 	// TODO: implement this
 	return fun;
 }
 
-isomesh::SurfaceFunction FunctionSelector::selectMultifractal () {
+isomesh::SurfaceFunction FunctionBuilder::buildMultifractalFunction () {
 	isomesh::SurfaceFunction fun;
 	// TODO: implement this
+	return fun;
+}
+
+isomesh::SurfaceFunction FunctionBuilder::buildTwoSpheresFunction () {
+	isomesh::SurfaceFunction fun;
+	// Center of right sphere
+	const double x_right = m_twoSpheresRadius + m_twoSpheresGap * 0.5;
+	const glm::dvec3 center_right (x_right, 0, 0);
+	// Center of left sphere
+	const double x_left = -x_right;
+	const glm::dvec3 center_left (x_left, 0, 0);
+	const double radius = m_twoSpheresRadius;
+	fun.f = [=](glm::dvec3 p) {
+		if (p.x < 0)
+			p -= center_left;
+		else
+			p -= center_right;
+		return glm::dot (p, p) - radius;
+	};
+	fun.grad = [=](glm::dvec3 p) {
+		if (p.x < 0)
+			p -= center_left;
+		else
+			p -= center_right;
+		return 2.0 * p;
+	};
 	return fun;
 }

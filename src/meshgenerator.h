@@ -39,7 +39,7 @@ private slots:
 private:
 	bool m_doGenerateCalled = false;
 	// Function parameters
-	FunctionSelector m_funSelector;
+	FunctionBuilder m_funBuilder;
 	// Algorithm parameters
 	UsedAlgorithm m_usedAlgorithm = AlgoMarchingCubes;
 	// Common parameters
