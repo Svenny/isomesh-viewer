@@ -2,6 +2,12 @@
 
 #include "ui_mainwindow.h"
 
+#include <QPalette>
+#include <QMessageBox>
+
+Q_DECLARE_METATYPE (UsedFunction)
+Q_DECLARE_METATYPE (UsedAlgorithm)
+
 MainWindow::MainWindow (QWidget *parent) :
 	QMainWindow (parent), ui (new Ui::MainWindow), m_locale (QLocale::system ()) {
 	ui->setupUi (this);
@@ -9,17 +15,26 @@ MainWindow::MainWindow (QWidget *parent) :
 	m_meshGen = new MeshGenerator;
 	m_meshGen->moveToThread (&m_workerThread);
 	connect (&m_workerThread, SIGNAL (finished ()), m_meshGen, SLOT (deleteLater ()));
-	connect (ui->generateButton, SIGNAL (clicked ()), m_meshGen, SLOT (generateMesh ()));
+	//connect (ui->generateButton, SIGNAL (clicked ()), m_meshGen, SLOT (generateMesh ()));
 	//connect (ui->generateButton, &QPushButton::clicked, this, [this]() {
 	//	double num = m_locale.toDouble (ui->chunkScaleEdit->text ());
 	//	qDebug () << num;
 	//});
 	connect (m_meshGen, &MeshGenerator::meshGenerated, ui->viewer, &ViewerWidget::setMesh);
 	m_workerThread.start ();
-	
+
+	auto scaleValidator = new QDoubleValidator (1e-5, 1e5, 100, ui->chunkScaleEdit);
+	scaleValidator->setNotation (QDoubleValidator::StandardNotation);
+	ui->chunkScaleEdit->setValidator (scaleValidator);
+
+	auto offsetValidator = new QDoubleValidator (this);
+	offsetValidator->setNotation (QDoubleValidator::StandardNotation);
+	ui->xOffsetEdit->setValidator (offsetValidator);
+	ui->yOffsetEdit->setValidator (offsetValidator);
+	ui->zOffsetEdit->setValidator (offsetValidator);
+
 	initFunctionParams ();
 	initAlgorithmParams ();
-	initCommonParams ();
 }
 
 MainWindow::~MainWindow () {
@@ -37,7 +52,7 @@ void MainWindow::initFunctionParams () {
 	ui->funSelectorBox->addItem (tr ("Multifractal"), FunMultifractal);
 	ui->funSelectorBox->addItem (tr ("Two spheres"), FunTwoSpheres);
 	connect (ui->funSelectorBox, QOverload<int>::of (&QComboBox::currentIndexChanged), this, [this](int idx) {
-		auto fun = UsedFunction (ui->funSelectorBox->itemData (idx).toInt ());
+		auto fun = ui->funSelectorBox->itemData(idx).value<UsedFunction>();
 		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (UsedFunction, fun));
 	});
 	ui->funSelectorBox->setCurrentIndex (3);
@@ -47,54 +62,51 @@ void MainWindow::initAlgorithmParams () {
 	ui->algoSelectorBox->addItem (tr ("Marching Cubes"), AlgoMarchingCubes);
 	ui->algoSelectorBox->addItem (tr ("Dual Contouring"), AlgoDualContouring);
 	connect (ui->algoSelectorBox, QOverload<int>::of (&QComboBox::currentIndexChanged), this, [this](int idx) {
-		auto algo = UsedAlgorithm (ui->algoSelectorBox->itemData (idx).toInt ());
+		auto algo = ui->algoSelectorBox->itemData(idx).value<UsedAlgorithm>();
 		QMetaObject::invokeMethod (m_meshGen, "setUsedAlgorithm", Q_ARG (UsedAlgorithm, algo));
 	});
 	ui->algoSelectorBox->setCurrentIndex (0);
 }
 
-void MainWindow::initCommonParams () {
-	// Chunk size
-	ui->chunkSizeBox->addItem ("4");
-	ui->chunkSizeBox->addItem ("8");
-	ui->chunkSizeBox->addItem ("16");
-	ui->chunkSizeBox->addItem ("32");
-	ui->chunkSizeBox->addItem ("64");
-	ui->chunkSizeBox->addItem ("128");
-	connect (ui->chunkSizeBox, QOverload<const QString&>::of (&QComboBox::currentIndexChanged),
-	         this, [this](const QString &sz) {
-		QMetaObject::invokeMethod (m_meshGen, "setChunkSize", Q_ARG (int, sz.toInt ()));
-	});
-	ui->chunkSizeBox->setCurrentIndex (3);
-	// Chunk scale
-	auto scaleValidator = new QDoubleValidator (1e-5, 1e5, 100, ui->chunkScaleEdit);
-	scaleValidator->setNotation (QDoubleValidator::StandardNotation);
-	ui->chunkScaleEdit->setValidator (scaleValidator);
-	connect (ui->chunkScaleEdit, &QLineEdit::textEdited, this, [this](const QString &text) {
-		double scale = m_locale.toDouble (text);
-		if (scale < 1e-5)
-			scale = 1;
-		QMetaObject::invokeMethod (m_meshGen, "setChunkScale", Q_ARG (double, scale));
-	});
-	// Offsets
-	auto offsetValidator = new QDoubleValidator (this);
-	offsetValidator->setNotation (QDoubleValidator::StandardNotation);
-	// X
-	ui->xOffsetEdit->setValidator (offsetValidator);
-	connect (ui->xOffsetEdit, &QLineEdit::textEdited, this, [this](const QString &text) {
-		double offset = m_locale.toDouble (text);
-		QMetaObject::invokeMethod (m_meshGen, "setXOffset", Q_ARG (double, offset));
-	});
-	// Y
-	ui->yOffsetEdit->setValidator (offsetValidator);
-	connect (ui->yOffsetEdit, &QLineEdit::textEdited, this, [this](const QString &text) {
-		double offset = m_locale.toDouble (text);
-		QMetaObject::invokeMethod (m_meshGen, "setYOffset", Q_ARG (double, offset));
-	});
-	// Z
-	ui->zOffsetEdit->setValidator (offsetValidator);
-	connect (ui->zOffsetEdit, &QLineEdit::textEdited, this, [this](const QString &text) {
-		double offset = m_locale.toDouble (text);
-		QMetaObject::invokeMethod (m_meshGen, "setZOffset", Q_ARG (double, offset));
-	});
+void MainWindow::checkQLineEditData() {
+	QLineEdit* edit = dynamic_cast<QLineEdit*>(sender());
+	if (edit) {
+		QPalette palette = edit->palette();
+		if (edit->hasAcceptableInput() || edit->text().isEmpty())
+			palette.setColor(QPalette::Base, Qt::white);
+		else
+			palette.setColor(QPalette::Base, Qt::red);
+		edit->setPalette(palette);
+	}
 }
+
+void MainWindow::generateMesh() {
+	bool allInputValid
+		=  ui->chunkScaleEdit->hasAcceptableInput()
+		&& ui->xOffsetEdit->hasAcceptableInput()
+		&& ui->yOffsetEdit->hasAcceptableInput()
+		&& ui->zOffsetEdit->hasAcceptableInput();
+
+	qDebug() << allInputValid;
+	if (!allInputValid) {
+		QMessageBox::warning(
+			this,
+			tr("Isomesh Viewer"),
+			tr("Some inputs fields contains invalid information or empty (the fields with invalid input marks by red color)")
+		);
+		return;
+	}
+
+	QMetaObject::invokeMethod (m_meshGen, "setChunkSize", Q_ARG (int, ui->chunkSizeBox->currentText().toInt()));
+	QMetaObject::invokeMethod (m_meshGen, "setChunkScale", Q_ARG (double, parseDouble(ui->chunkScaleEdit)));
+	QMetaObject::invokeMethod (m_meshGen, "setXOffset", Q_ARG (double, parseDouble(ui->xOffsetEdit)));
+	QMetaObject::invokeMethod (m_meshGen, "setYOffset", Q_ARG (double, parseDouble(ui->yOffsetEdit)));
+	QMetaObject::invokeMethod (m_meshGen, "setZOffset", Q_ARG (double, parseDouble(ui->zOffsetEdit)));
+	QMetaObject::invokeMethod (m_meshGen, "generateMesh");
+}
+
+double MainWindow::parseDouble(QLineEdit* edit)
+{
+	return m_locale.toDouble(edit->text());
+}
+

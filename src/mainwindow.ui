@@ -57,7 +57,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Surface function</string>
+           <string>&amp;Surface function</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -99,7 +99,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Algorithm</string>
+           <string>&amp;Algorithm</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -157,7 +157,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="chunkSizeLabel">
              <property name="text">
-              <string>Chunk size</string>
+              <string>&amp;Chunk size</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -168,7 +168,41 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="chunkSizeBox"/>
+            <widget class="QComboBox" name="chunkSizeBox">
+             <property name="currentIndex">
+              <number>3</number>
+             </property>
+             <item>
+              <property name="text">
+               <string notr="true">4</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">16</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">32</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">64</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">128</string>
+              </property>
+             </item>
+            </widget>
            </item>
            <item row="1" column="1">
             <widget class="QLineEdit" name="chunkScaleEdit">
@@ -178,11 +212,17 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>180</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="text">
               <string>1</string>
              </property>
              <property name="placeholderText">
-              <string>1</string>
+              <string>positive real number</string>
              </property>
             </widget>
            </item>
@@ -195,10 +235,10 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string/>
+              <string>0</string>
              </property>
              <property name="placeholderText">
-              <string>0</string>
+              <string>real number</string>
              </property>
             </widget>
            </item>
@@ -211,10 +251,10 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string/>
+              <string>0</string>
              </property>
              <property name="placeholderText">
-              <string>0</string>
+              <string>real number</string>
              </property>
             </widget>
            </item>
@@ -227,17 +267,17 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string/>
+              <string>0</string>
              </property>
              <property name="placeholderText">
-              <string>0</string>
+              <string>real number</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="chunkScaleLabel">
              <property name="text">
-              <string>Chunk scale</string>
+              <string>C&amp;hunk scale</string>
              </property>
              <property name="buddy">
               <cstring>chunkScaleEdit</cstring>
@@ -247,7 +287,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="xOffsetLabel">
              <property name="text">
-              <string>X offset</string>
+              <string>&amp;X offset</string>
              </property>
              <property name="buddy">
               <cstring>xOffsetEdit</cstring>
@@ -257,7 +297,7 @@
            <item row="3" column="0">
             <widget class="QLabel" name="yOffsetLabel">
              <property name="text">
-              <string>Y offset</string>
+              <string>&amp;Y offset</string>
              </property>
              <property name="buddy">
               <cstring>yOffsetEdit</cstring>
@@ -267,7 +307,7 @@
            <item row="4" column="0">
             <widget class="QLabel" name="zOffsetLabel">
              <property name="text">
-              <string>Z offset</string>
+              <string>&amp;Z offset</string>
              </property>
              <property name="buddy">
               <cstring>zOffsetEdit</cstring>
@@ -296,7 +336,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
@@ -324,5 +364,90 @@
   <tabstop>generateButton</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>chunkScaleEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1177</x>
+     <y>527</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>xOffsetEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1177</x>
+     <y>560</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>yOffsetEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1177</x>
+     <y>593</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zOffsetEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1177</x>
+     <y>626</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>generateButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>generateMesh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1125</x>
+     <y>672</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>checkQLineEditData()</slot>
+  <slot>generateMesh()</slot>
+ </slots>
 </ui>

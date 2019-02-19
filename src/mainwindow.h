@@ -7,6 +7,7 @@
 
 #include "meshgenerator.h"
 
+class QLineEdit;
 namespace Ui {
 class MainWindow;
 }
@@ -21,6 +22,11 @@ public:
 signals:
 	void regenerateMesh ();
 
+private slots:
+	void checkQLineEditData();
+
+	void generateMesh();
+
 private:
 	Ui::MainWindow *ui;
 	QThread m_workerThread;
@@ -29,7 +35,7 @@ private:
 
 	void initFunctionParams ();
 	void initAlgorithmParams ();
-	void initCommonParams ();
+	double parseDouble(QLineEdit* edit);
 };
 
 #endif // MAINWINDOW_H
