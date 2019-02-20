@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QSharedPointer>
 #include <QSurfaceFormat>
+#include <QTranslator>
 
 #include <isomesh/data/mesh.hpp>
 
@@ -27,6 +28,10 @@ int main (int argc, char *argv[]) {
 	QSurfaceFormat::setDefaultFormat (fmt);
 
 	QApplication app (argc, argv);
+
+	QTranslator translator;
+	if (translator.load(QLocale::system(), QLatin1String("isomeshviewer"), QLatin1String("_"), QLatin1String(":/translations")))
+		app.installTranslator(&translator);
 
 	MainWindow w;
 	w.show ();

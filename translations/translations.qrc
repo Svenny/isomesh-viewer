@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/translations">
+        <file alias="isomeshviewer_ru_RU.qm">isomeshviewer_ru_RU.qm</file>
+    </qresource>
+</RCC>
