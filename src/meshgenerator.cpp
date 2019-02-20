@@ -4,10 +4,7 @@
 
 #include <QDebug>
 
-#include <isomesh/algo/marching_cubes.hpp>
-#include <isomesh/data/grid.hpp>
-#include <isomesh/util/material_selector.hpp>
-#include <isomesh/util/zero_finder.hpp>
+#include <isomesh/isomesh.hpp>
 
 void MeshGenerator::generateMesh () {
 	qDebug () << "generate mesh requested";
@@ -30,7 +27,14 @@ void MeshGenerator::doGenerateMesh () {
 		// then check it against a manually validated result
 		isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
 		G.fill (F, solver, isomesh::TrivialMaterialSelector ());
-		result = isomesh::marchingCubes (G);
+		if (m_usedAlgorithm == AlgoMarchingCubes)
+			result = isomesh::marchingCubes (G);
+		else if (m_usedAlgorithm == AlgoDualContouring) {
+			isomesh::AnyNonemptyMaterialFilter filter;
+			isomesh::GradientDescentQefSolver3D solver;
+			result = isomesh::dualContouring (G, filter, solver);
+		}
+		else qDebug () << "Invalid algorithm used";
 	}
 	auto t2 = std::chrono::high_resolution_clock::now ();
 	auto dur = std::chrono::duration_cast<std::chrono::duration<double> > (t2 - t1);
