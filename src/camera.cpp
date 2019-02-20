@@ -70,6 +70,11 @@ bool Camera::setKeyState (int key, bool pressed) noexcept {
 	return false;
 }
 
+void Camera::resetKeyState() noexcept {
+	for (size_t i = 0; i < Key::KeyCount; i++)
+		m_keyPressed[i] = false;
+}
+
 glm::quat quatFromEulerAngles (float pitch, float yaw, float roll) {
 	glm::vec3 eulerAngle (pitch * 0.5f, yaw * 0.5f, roll * 0.5f);
 	glm::vec3 c = glm::cos (eulerAngle * 0.5f);

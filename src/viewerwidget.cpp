@@ -101,7 +101,12 @@ void ViewerWidget::keyReleaseEvent (QKeyEvent *e) {
 		e->ignore ();
 }
 
-void ViewerWidget::mouseMoveEvent (QMouseEvent *) {
+void ViewerWidget::mouseMoveEvent (QMouseEvent *e) {
+	// Ignore, if left button not pressed
+	if (!(e->buttons () & Qt::MouseButton::LeftButton)) {
+		return e->ignore();
+	}
+
 	auto cur = cursor ();
 	auto delta = cur.pos () - m_lastMousePos;
 	cur.setPos (mapToGlobal (rect ().center ()));
@@ -130,4 +135,10 @@ void ViewerWidget::mouseReleaseEvent (QMouseEvent *e) {
 		update ();
 	}
 	else e->ignore ();
+}
+
+void ViewerWidget::focusOutEvent(QFocusEvent* event)
+{
+	m_camera.resetKeyState();
+	update();
 }

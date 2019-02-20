@@ -27,6 +27,7 @@ public:
 	virtual void mouseMoveEvent (QMouseEvent *e) override;
 	virtual void mousePressEvent (QMouseEvent *e) override;
 	virtual void mouseReleaseEvent (QMouseEvent *e) override;
+	virtual void focusOutEvent(QFocusEvent* event) override;
 
 public slots:
 	void setMesh (QSharedPointer<isomesh::Mesh> mesh);

@@ -19,6 +19,7 @@ public:
 	void setFovDegrees (float f) noexcept;
 	void setScreenSize (int w, int h) noexcept;
 	bool setKeyState (int key, bool pressed) noexcept;
+	void resetKeyState() noexcept;
 
 	void processMouseMovement (float dx, float dy) noexcept;
 	void update () noexcept;
