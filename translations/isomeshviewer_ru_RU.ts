@@ -101,7 +101,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="49"/>
         <source>Box</source>
-        <translation>Коробка</translation>
+        <translation>Параллелепипед</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="50"/>
