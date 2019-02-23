@@ -110,6 +110,7 @@ void MainWindow::generateMesh() {
 	if (updateFunctionParams()) {
 		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction, m_builder.buildFunction()));
 		QMetaObject::invokeMethod (m_meshGen, "generateMesh");
+		ui->viewer->setFocus();
 	}
 }
 
