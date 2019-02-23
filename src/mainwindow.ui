@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>720</height>
+    <width>1190</width>
+    <height>759</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <widget class="ViewerWidget" name="viewer">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
+        <horstretch>1</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
@@ -86,6 +86,307 @@
         <property name="flat">
          <bool>false</bool>
         </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QStackedWidget" name="stackedWidget">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="currentIndex">
+            <number>3</number>
+           </property>
+           <widget class="QWidget" name="page_Plane">
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="planeXLable">
+                 <property name="text">
+                  <string>X coord</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="planeXEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="planeYLable">
+                 <property name="text">
+                  <string>Y coord</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="planeYEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="planeZLabel">
+                 <property name="text">
+                  <string>Z coord</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="planeZEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_Ellipsoid">
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_3">
+               <item row="0" column="0">
+                <widget class="QLabel" name="ellipsoidXLable">
+                 <property name="text">
+                  <string>Radius X</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="ellipsoidXEdit">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="ellipsoidYLable">
+                 <property name="text">
+                  <string>Radius Y</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="ellipsoidYEdit">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="ellipsoidZLabel">
+                 <property name="text">
+                  <string>Radius Z</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="ellipsoidZEdit">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_Box">
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_4">
+               <item row="0" column="0">
+                <widget class="QLabel" name="boxXLable">
+                 <property name="text">
+                  <string>Length</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="boxXEdit">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="boxYLable">
+                 <property name="text">
+                  <string>Width</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="boxYEdit">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="boxZLabel">
+                 <property name="text">
+                  <string>Height</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="boxZEdit">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_Waves">
+            <layout class="QGridLayout" name="gridLayout_9">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_5">
+               <item row="0" column="0">
+                <widget class="QLabel" name="wavesFreq1Lable">
+                 <property name="text">
+                  <string>Frequency 1</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="wavesFreq1Edit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="wavesFreq2Lable">
+                 <property name="text">
+                  <string>Frequency 2</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="wavesFreq2Edit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="wavesAmp1Label">
+                 <property name="text">
+                  <string>Amplitude 1</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="wavesAmp1Edit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="wavesAmp2Label">
+                 <property name="text">
+                  <string>Amplitude 2</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="wavesAmp2Edit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_Perlin_noise"/>
+           <widget class="QWidget" name="page_Multifractal"/>
+           <widget class="QWidget" name="page_Two_Spheres"/>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -204,6 +505,16 @@
              </item>
             </widget>
            </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="chunkScaleLabel">
+             <property name="text">
+              <string>C&amp;hunk scale</string>
+             </property>
+             <property name="buddy">
+              <cstring>chunkScaleEdit</cstring>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="1">
             <widget class="QLineEdit" name="chunkScaleEdit">
              <property name="sizePolicy">
@@ -214,7 +525,7 @@
              </property>
              <property name="minimumSize">
               <size>
-               <width>180</width>
+               <width>0</width>
                <height>0</height>
               </size>
              </property>
@@ -223,6 +534,16 @@
              </property>
              <property name="placeholderText">
               <string>positive real number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="xOffsetLabel">
+             <property name="text">
+              <string>&amp;X offset</string>
+             </property>
+             <property name="buddy">
+              <cstring>xOffsetEdit</cstring>
              </property>
             </widget>
            </item>
@@ -242,6 +563,16 @@
              </property>
             </widget>
            </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="yOffsetLabel">
+             <property name="text">
+              <string>&amp;Y offset</string>
+             </property>
+             <property name="buddy">
+              <cstring>yOffsetEdit</cstring>
+             </property>
+            </widget>
+           </item>
            <item row="3" column="1">
             <widget class="QLineEdit" name="yOffsetEdit">
              <property name="sizePolicy">
@@ -258,6 +589,16 @@
              </property>
             </widget>
            </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="zOffsetLabel">
+             <property name="text">
+              <string>&amp;Z offset</string>
+             </property>
+             <property name="buddy">
+              <cstring>zOffsetEdit</cstring>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="1">
             <widget class="QLineEdit" name="zOffsetEdit">
              <property name="sizePolicy">
@@ -271,46 +612,6 @@
              </property>
              <property name="placeholderText">
               <string>real number</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="chunkScaleLabel">
-             <property name="text">
-              <string>C&amp;hunk scale</string>
-             </property>
-             <property name="buddy">
-              <cstring>chunkScaleEdit</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="xOffsetLabel">
-             <property name="text">
-              <string>&amp;X offset</string>
-             </property>
-             <property name="buddy">
-              <cstring>xOffsetEdit</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="yOffsetLabel">
-             <property name="text">
-              <string>&amp;Y offset</string>
-             </property>
-             <property name="buddy">
-              <cstring>yOffsetEdit</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="zOffsetLabel">
-             <property name="text">
-              <string>&amp;Z offset</string>
-             </property>
-             <property name="buddy">
-              <cstring>zOffsetEdit</cstring>
              </property>
             </widget>
            </item>
@@ -335,7 +636,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1280</width>
+     <width>1190</width>
      <height>24</height>
     </rect>
    </property>
@@ -349,6 +650,17 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar_2">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -372,8 +684,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1177</x>
-     <y>527</y>
+     <x>1366</x>
+     <y>540</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -388,8 +700,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1177</x>
-     <y>560</y>
+     <x>1366</x>
+     <y>573</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -404,8 +716,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1177</x>
-     <y>593</y>
+     <x>1366</x>
+     <y>606</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -420,8 +732,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1177</x>
-     <y>626</y>
+     <x>1366</x>
+     <y>639</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -445,9 +757,234 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>funSelectorBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectedFunctionChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1303</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ellipsoidXEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1263</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>boxXEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1251</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>boxYEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1251</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>boxZEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1251</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ellipsoidYEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1263</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ellipsoidZEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1263</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>planeZEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1259</x>
+     <y>206</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>planeXEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1259</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>planeYEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1259</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wavesFreq1Edit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wavesFreq2Edit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wavesAmp1Edit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wavesAmp2Edit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>233</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkQLineEditData()</slot>
   <slot>generateMesh()</slot>
+  <slot>selectedFunctionChanged(int)</slot>
  </slots>
 </ui>

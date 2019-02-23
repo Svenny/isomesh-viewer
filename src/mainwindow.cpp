@@ -33,6 +33,26 @@ MainWindow::MainWindow (QWidget *parent) :
 	ui->yOffsetEdit->setValidator (offsetValidator);
 	ui->zOffsetEdit->setValidator (offsetValidator);
 
+	auto positiveDoubleValidator = new QDoubleValidator(this);
+	positiveDoubleValidator->setBottom(0);
+	positiveDoubleValidator->setNotation(QDoubleValidator::StandardNotation);
+	ui->boxXEdit->setValidator (positiveDoubleValidator);
+	ui->boxYEdit->setValidator (positiveDoubleValidator);
+	ui->boxZEdit->setValidator (positiveDoubleValidator);
+
+	ui->ellipsoidXEdit->setValidator (positiveDoubleValidator);
+	ui->ellipsoidYEdit->setValidator (positiveDoubleValidator);
+	ui->ellipsoidZEdit->setValidator (positiveDoubleValidator);
+
+	ui->wavesFreq1Edit->setValidator (positiveDoubleValidator);
+	ui->wavesFreq1Edit->setText(m_locale.toString(0.1));
+	ui->wavesFreq2Edit->setValidator (positiveDoubleValidator);
+	ui->wavesFreq2Edit->setText(m_locale.toString(0.2));
+	ui->wavesAmp1Edit->setValidator (positiveDoubleValidator);
+	ui->wavesAmp1Edit->setText(m_locale.toString(1.1));
+	ui->wavesAmp2Edit->setValidator (positiveDoubleValidator);
+	ui->wavesAmp2Edit->setText(m_locale.toString(1.2));
+
 	initFunctionParams ();
 	initAlgorithmParams ();
 }
@@ -51,10 +71,7 @@ void MainWindow::initFunctionParams () {
 	ui->funSelectorBox->addItem (tr ("Perlin noise"), FunPerlin);
 	ui->funSelectorBox->addItem (tr ("Multifractal"), FunMultifractal);
 	ui->funSelectorBox->addItem (tr ("Two spheres"), FunTwoSpheres);
-	connect (ui->funSelectorBox, QOverload<int>::of (&QComboBox::currentIndexChanged), this, [this](int idx) {
-		auto fun = ui->funSelectorBox->itemData(idx).value<UsedFunction>();
-		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (UsedFunction, fun));
-	});
+
 	ui->funSelectorBox->setCurrentIndex (3);
 }
 
@@ -81,28 +98,19 @@ void MainWindow::checkQLineEditData() {
 }
 
 void MainWindow::generateMesh() {
-	bool allInputValid
-		=  ui->chunkScaleEdit->hasAcceptableInput()
-		&& ui->xOffsetEdit->hasAcceptableInput()
-		&& ui->yOffsetEdit->hasAcceptableInput()
-		&& ui->zOffsetEdit->hasAcceptableInput();
-
-	qDebug() << allInputValid;
-	if (!allInputValid) {
-		QMessageBox::warning(
-			this,
-			tr("Isomesh Viewer"),
-			tr("Some inputs fields contains invalid information or empty (the fields with invalid input marks by red color)")
-		);
+	if (hasInvalidInput({ui->chunkScaleEdit, ui->xOffsetEdit, ui->yOffsetEdit, ui->zOffsetEdit}))
 		return;
-	}
 
 	QMetaObject::invokeMethod (m_meshGen, "setChunkSize", Q_ARG (int, ui->chunkSizeBox->currentText().toInt()));
 	QMetaObject::invokeMethod (m_meshGen, "setChunkScale", Q_ARG (double, parseDouble(ui->chunkScaleEdit)));
 	QMetaObject::invokeMethod (m_meshGen, "setXOffset", Q_ARG (double, parseDouble(ui->xOffsetEdit)));
 	QMetaObject::invokeMethod (m_meshGen, "setYOffset", Q_ARG (double, parseDouble(ui->yOffsetEdit)));
 	QMetaObject::invokeMethod (m_meshGen, "setZOffset", Q_ARG (double, parseDouble(ui->zOffsetEdit)));
-	QMetaObject::invokeMethod (m_meshGen, "generateMesh");
+
+	if (updateFunctionParams()) {
+		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction, m_builder.buildFunction()));
+		QMetaObject::invokeMethod (m_meshGen, "generateMesh");
+	}
 }
 
 double MainWindow::parseDouble(QLineEdit* edit)
@@ -110,3 +118,73 @@ double MainWindow::parseDouble(QLineEdit* edit)
 	return m_locale.toDouble(edit->text());
 }
 
+void MainWindow::selectedFunctionChanged(int idx)
+{
+	auto fun = ui->funSelectorBox->itemData(idx).value<UsedFunction>();
+	m_builder.setUsedFunction(fun);
+	ui->stackedWidget->setCurrentIndex(ui->funSelectorBox->currentIndex());
+}
+
+bool MainWindow::updateFunctionParams()
+{
+	auto fun = ui->funSelectorBox->currentData().value<UsedFunction>();
+	switch (fun)
+	{
+		case UsedFunction::FunBox: {
+			if (hasInvalidInput({ui->boxXEdit, ui->boxYEdit, ui->boxZEdit}))
+				break;
+
+			m_builder.setBoxSizeX(parseDouble(ui->boxXEdit));
+			m_builder.setBoxSizeY(parseDouble(ui->boxYEdit));
+			m_builder.setBoxSizeZ(parseDouble(ui->boxZEdit));
+			return true;
+		}
+
+		case UsedFunction::FunEllipsoid: {
+			if (hasInvalidInput({ui->ellipsoidXEdit, ui->ellipsoidYEdit, ui->ellipsoidZEdit}))
+				break;
+
+			m_builder.setEllipsoidRadiusX(parseDouble(ui->ellipsoidXEdit));
+			m_builder.setEllipsoidRadiusY(parseDouble(ui->ellipsoidYEdit));
+			m_builder.setEllipsoidRadiusZ(parseDouble(ui->ellipsoidZEdit));
+			return true;
+		}
+
+	case UsedFunction::FunPlane: {
+			if (hasInvalidInput({ui->planeXEdit, ui->planeYEdit, ui->planeZEdit}))
+				break;
+
+			m_builder.setPlaneDirX(parseDouble(ui->planeXEdit));
+			m_builder.setPlaneDirY(parseDouble(ui->planeYEdit));
+			m_builder.setPlaneDirZ(parseDouble(ui->planeZEdit));
+			return true;
+		}
+
+	case UsedFunction::FunWaves: {
+			if (hasInvalidInput({ui->wavesFreq1Edit, ui->wavesFreq2Edit, ui->wavesAmp1Edit, ui->wavesAmp2Edit}))
+				break;
+
+			m_builder.setWavesFrequency1(parseDouble(ui->wavesFreq1Edit));
+			m_builder.setWavesFrequency2(parseDouble(ui->wavesFreq2Edit));
+			m_builder.setWavesAmplitude1(parseDouble(ui->wavesAmp1Edit));
+			m_builder.setWavesAmplitude2(parseDouble(ui->wavesAmp2Edit));
+			return true;
+		}
+	}
+	return false;
+}
+
+bool MainWindow::hasInvalidInput(std::initializer_list<QLineEdit*> widgets)
+{
+	for (const QLineEdit* edit : widgets) {
+		if (!edit->hasAcceptableInput()) {
+			QMessageBox::warning(
+				this,
+				tr("Isomesh Viewer"),
+				tr("Some inputs fields contains invalid information or empty (the fields with invalid input marks by red color)")
+			);
+			return true;
+		}
+	}
+	return false;
+}

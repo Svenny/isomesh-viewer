@@ -6,6 +6,7 @@
 #include <QThread>
 
 #include "meshgenerator.h"
+#include "functionbuilder.h"
 
 class QLineEdit;
 namespace Ui {
@@ -24,17 +25,20 @@ signals:
 
 private slots:
 	void checkQLineEditData();
-
+	void selectedFunctionChanged(int idx);
 	void generateMesh();
 
 private:
 	Ui::MainWindow *ui;
 	QThread m_workerThread;
 	MeshGenerator *m_meshGen;
+	FunctionBuilder m_builder;
 	QLocale m_locale;
 
 	void initFunctionParams ();
 	void initAlgorithmParams ();
+	bool updateFunctionParams();
+	bool hasInvalidInput(std::initializer_list<QLineEdit*> widgets);
 	double parseDouble(QLineEdit* edit);
 };
 

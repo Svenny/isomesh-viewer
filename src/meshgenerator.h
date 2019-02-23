@@ -6,8 +6,6 @@
 
 #include <isomesh/data/mesh.hpp>
 
-#include "functionbuilder.h"
-
 enum UsedAlgorithm : int {
 	AlgoMarchingCubes,
 	AlgoDualContouring
@@ -19,7 +17,7 @@ class MeshGenerator : public QObject {
 public slots:
 	void generateMesh ();
 	// Function parameters
-	void setUsedFunction (UsedFunction fun);
+	void setUsedFunction (isomesh::SurfaceFunction function);
 	// Algorithm parameters
 	void setUsedAlgorithm (UsedAlgorithm algo);
 	// Common parameters
@@ -38,8 +36,7 @@ private slots:
 
 private:
 	bool m_doGenerateCalled = false;
-	// Function parameters
-	FunctionBuilder m_funBuilder;
+	isomesh::SurfaceFunction m_function;
 	// Algorithm parameters
 	UsedAlgorithm m_usedAlgorithm = AlgoMarchingCubes;
 	// Common parameters

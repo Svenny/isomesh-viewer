@@ -76,17 +76,17 @@ isomesh::SurfaceFunction FunctionBuilder::buildWavesFunction () {
 	isomesh::SurfaceFunction fun;
 	fun.f = [=](glm::dvec3 p) {
 		return p.y +
-			m_ampX1 * sin (m_freqX1 * p.x) + m_ampX2 * sin (m_freqX2 * p.x) +
-			m_ampZ1 * sin (m_freqZ1 * p.z) + m_ampZ2 * sin (m_freqZ2 * p.z);
+			m_amp1 * sin (m_freq1 * p.x) + m_amp2 * sin (m_freq2 * p.x) +
+			m_amp1 * sin (m_freq1 * p.z) + m_amp2 * sin (m_freq2 * p.z);
 	};
 	fun.grad = [=](glm::dvec3 p) {
 		double dx =
-			m_ampX1 * m_freqX1 * cos (m_freqX1 * p.x) +
-			m_ampX2 * m_freqX2 * cos (m_freqX2 * p.x);
+			m_amp1 * m_freq1 * cos (m_freq1 * p.x) +
+			m_amp2 * m_freq2 * cos (m_freq2 * p.x);
 		double dy = 1;
 		double dz =
-			m_ampZ1 * m_freqZ1 * cos (m_freqZ1 * p.z) +
-			m_ampZ2 * m_freqZ2 * cos (m_freqZ2 * p.z);
+			m_amp1 * m_freq1 * cos (m_freq1 * p.z) +
+			m_amp2 * m_freq2 * cos (m_freq2 * p.z);
 		return glm::dvec3 (dx, dy, dz);
 	};
 	return fun;
