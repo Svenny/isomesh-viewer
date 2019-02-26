@@ -35,9 +35,9 @@
         <translation>Общие параметры</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="160"/>
-        <source>&amp;Chunk size</source>
-        <translation>&amp;Размер чанка</translation>
+        <location filename="../src/mainwindow.ui" line="461"/>
+        <source>Grid size</source>
+        <translation>Размер сетки</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="222"/>
@@ -64,9 +64,9 @@
         <translation>вещественное число</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="280"/>
-        <source>C&amp;hunk scale</source>
-        <translation>&amp;Маштаб чанка</translation>
+        <location filename="../src/mainwindow.ui" line="511"/>
+        <source>Grid step</source>
+        <translation>Шаг сетки</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="290"/>

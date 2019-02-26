@@ -458,7 +458,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="chunkSizeLabel">
              <property name="text">
-              <string>&amp;Chunk size</string>
+              <string>Grid size</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -508,7 +508,7 @@
            <item row="1" column="0">
             <widget class="QLabel" name="chunkScaleLabel">
              <property name="text">
-              <string>C&amp;hunk scale</string>
+              <string>Grid step</string>
              </property>
              <property name="buddy">
               <cstring>chunkScaleEdit</cstring>
