@@ -4,12 +4,16 @@
 
 #include <QPalette>
 #include <QMessageBox>
+#include <QFileDialog>
 
 Q_DECLARE_METATYPE (UsedFunction)
 Q_DECLARE_METATYPE (UsedAlgorithm)
 
-MainWindow::MainWindow (QWidget *parent) :
-	QMainWindow (parent), ui (new Ui::MainWindow), m_locale (QLocale::system ()) {
+MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
+		, ui (new Ui::MainWindow)
+		, m_locale (QLocale::system ())
+		, m_heigthmap(new isomesh::HeightMapImporter({0, 3.4}, glm::dvec3(0,0,0), 0.1)) 
+{
 	ui->setupUi (this);
 	// Setup mesh generator running in a separate thread
 	m_meshGen = new MeshGenerator;
@@ -27,11 +31,11 @@ MainWindow::MainWindow (QWidget *parent) :
 	scaleValidator->setNotation (QDoubleValidator::StandardNotation);
 	ui->chunkScaleEdit->setValidator (scaleValidator);
 
-	auto offsetValidator = new QDoubleValidator (this);
-	offsetValidator->setNotation (QDoubleValidator::StandardNotation);
-	ui->xOffsetEdit->setValidator (offsetValidator);
-	ui->yOffsetEdit->setValidator (offsetValidator);
-	ui->zOffsetEdit->setValidator (offsetValidator);
+	auto doubleValidator = new QDoubleValidator (this);
+	doubleValidator->setNotation (QDoubleValidator::StandardNotation);
+	ui->xOffsetEdit->setValidator (doubleValidator);
+	ui->yOffsetEdit->setValidator (doubleValidator);
+	ui->zOffsetEdit->setValidator (doubleValidator);
 
 	auto positiveDoubleValidator = new QDoubleValidator(this);
 	positiveDoubleValidator->setBottom(0);
@@ -53,6 +57,12 @@ MainWindow::MainWindow (QWidget *parent) :
 	ui->wavesAmp2Edit->setValidator (positiveDoubleValidator);
 	ui->wavesAmp2Edit->setText(m_locale.toString(1.2));
 
+	ui->hmapPixelSizeEdit->setValidator(positiveDoubleValidator);
+	ui->hmapPixelSizeEdit->setText(m_locale.toString(0.1));
+	ui->hmapMaxHEdit->setValidator(doubleValidator);
+	ui->hmapMaxHEdit->setText(m_locale.toString(3.4));
+	ui->hmapMinHEdit->setValidator(doubleValidator);
+
 	initFunctionParams ();
 	initAlgorithmParams ();
 }
@@ -71,6 +81,7 @@ void MainWindow::initFunctionParams () {
 	ui->funSelectorBox->addItem (tr ("Perlin noise"), FunPerlin);
 	ui->funSelectorBox->addItem (tr ("Multifractal"), FunMultifractal);
 	ui->funSelectorBox->addItem (tr ("Two spheres"), FunTwoSpheres);
+	ui->funSelectorBox->addItem (tr ("Heightmap"), FunHeightmap);
 
 	ui->funSelectorBox->setCurrentIndex (3);
 }
@@ -108,7 +119,17 @@ void MainWindow::generateMesh() {
 	QMetaObject::invokeMethod (m_meshGen, "setZOffset", Q_ARG (double, parseDouble(ui->zOffsetEdit)));
 
 	if (updateFunctionParams()) {
-		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction, m_builder.buildFunction()));
+		auto fun = ui->funSelectorBox->currentData().value<UsedFunction>();
+		if (fun == UsedFunction::FunHeightmap) {
+			if (!m_heigthmap->isDataLoaded()) {
+				QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
+				return;
+			}
+			QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction, isomesh::HeightMapImporter::buildSurfaceFunction(m_heigthmap)));
+		} else {
+			QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction,
+ m_builder.buildFunction()));
+		}
 		QMetaObject::invokeMethod (m_meshGen, "generateMesh");
 		ui->viewer->setFocus();
 	}
@@ -151,7 +172,7 @@ bool MainWindow::updateFunctionParams()
 			return true;
 		}
 
-	case UsedFunction::FunPlane: {
+		case UsedFunction::FunPlane: {
 			if (hasInvalidInput({ui->planeXEdit, ui->planeYEdit, ui->planeZEdit}))
 				break;
 
@@ -161,7 +182,7 @@ bool MainWindow::updateFunctionParams()
 			return true;
 		}
 
-	case UsedFunction::FunWaves: {
+		case UsedFunction::FunWaves: {
 			if (hasInvalidInput({ui->wavesFreq1Edit, ui->wavesFreq2Edit, ui->wavesAmp1Edit, ui->wavesAmp2Edit}))
 				break;
 
@@ -171,7 +192,17 @@ bool MainWindow::updateFunctionParams()
 			m_builder.setWavesAmplitude2(parseDouble(ui->wavesAmp2Edit));
 			return true;
 		}
+
+		case UsedFunction::FunHeightmap: {
+			if (hasInvalidInput({ui->hmapMaxHEdit, ui->hmapPixelSizeEdit, ui->hmapMinHEdit}))
+				break;
+
+			m_heigthmap->setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
+			m_heigthmap->setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
+			return true;
+		}
 	}
+
 	return false;
 }
 
@@ -188,4 +219,16 @@ bool MainWindow::hasInvalidInput(std::initializer_list<QLineEdit*> widgets)
 		}
 	}
 	return false;
+}
+
+void MainWindow::setPathToHeightmap()
+{
+	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
+	try {
+		if (!filename.isEmpty()) {
+			m_heigthmap->loadGrayscale8bitMap(filename.toStdString());
+		}
+	} catch (std::runtime_error e) {
+		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
+	}
 }

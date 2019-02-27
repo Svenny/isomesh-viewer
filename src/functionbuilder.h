@@ -10,7 +10,8 @@ enum UsedFunction : int {
 	FunWaves,
 	FunPerlin,
 	FunMultifractal,
-	FunTwoSpheres
+	FunTwoSpheres,
+	FunHeightmap
 };
 
 class FunctionBuilder {

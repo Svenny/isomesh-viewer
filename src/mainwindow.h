@@ -5,8 +5,11 @@
 #include <QMainWindow>
 #include <QThread>
 
+#include <memory>
+
 #include "meshgenerator.h"
 #include "functionbuilder.h"
+#include <isomesh/fun/heightmap.hpp>
 
 class QLineEdit;
 namespace Ui {
@@ -27,11 +30,13 @@ private slots:
 	void checkQLineEditData();
 	void selectedFunctionChanged(int idx);
 	void generateMesh();
+	void setPathToHeightmap();
 
 private:
 	Ui::MainWindow *ui;
 	QThread m_workerThread;
 	MeshGenerator *m_meshGen;
+	std::shared_ptr<isomesh::HeightMapImporter> m_heigthmap;
 	FunctionBuilder m_builder;
 	QLocale m_locale;
 

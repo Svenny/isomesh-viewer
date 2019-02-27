@@ -108,7 +108,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>3</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="page_Plane">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -384,6 +384,112 @@
            <widget class="QWidget" name="page_Perlin_noise"/>
            <widget class="QWidget" name="page_Multifractal"/>
            <widget class="QWidget" name="page_Two_Spheres"/>
+           <widget class="QWidget" name="page_Heightmap">
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_6">
+               <item row="0" column="0">
+                <widget class="QLabel" name="hmapFileLable">
+                 <property name="text">
+                  <string>Hei&amp;ghtmap file</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="buddy">
+                  <cstring>chunkSizeBox</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="hmapPixelSizeLable">
+                 <property name="text">
+                  <string>&amp;Pixel size</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>xOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="hmapPixelSizeEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="hmapMaxHLable">
+                 <property name="text">
+                  <string>Maximum &amp;H</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>yOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="hmapMaxHEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="hmapMinHLable">
+                 <property name="text">
+                  <string>&amp;Minimum H</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>zOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="hmapMinHEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="hmapFileButton">
+                 <property name="text">
+                  <string>Choose file</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -458,7 +564,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="chunkSizeLabel">
              <property name="text">
-              <string>Grid size</string>
+              <string>Gr&amp;id size</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -508,7 +614,7 @@
            <item row="1" column="0">
             <widget class="QLabel" name="chunkScaleLabel">
              <property name="text">
-              <string>Grid step</string>
+              <string>G&amp;rid step</string>
              </property>
              <property name="buddy">
               <cstring>chunkScaleEdit</cstring>
@@ -540,7 +646,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="xOffsetLabel">
              <property name="text">
-              <string>&amp;X offset</string>
+              <string>X &amp;offset</string>
              </property>
              <property name="buddy">
               <cstring>xOffsetEdit</cstring>
@@ -566,7 +672,7 @@
            <item row="3" column="0">
             <widget class="QLabel" name="yOffsetLabel">
              <property name="text">
-              <string>&amp;Y offset</string>
+              <string>Y o&amp;ffset</string>
              </property>
              <property name="buddy">
               <cstring>yOffsetEdit</cstring>
@@ -592,7 +698,7 @@
            <item row="4" column="0">
             <widget class="QLabel" name="zOffsetLabel">
              <property name="text">
-              <string>&amp;Z offset</string>
+              <string>Z offs&amp;et</string>
              </property>
              <property name="buddy">
               <cstring>zOffsetEdit</cstring>
@@ -684,8 +790,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1366</x>
-     <y>540</y>
+     <x>1166</x>
+     <y>579</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -700,8 +806,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1366</x>
-     <y>573</y>
+     <x>1166</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -716,8 +822,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1366</x>
-     <y>606</y>
+     <x>1166</x>
+     <y>645</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -732,8 +838,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1366</x>
-     <y>639</y>
+     <x>1166</x>
+     <y>678</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -748,8 +854,8 @@
    <slot>generateMesh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1125</x>
-     <y>672</y>
+     <x>1179</x>
+     <y>724</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -764,8 +870,8 @@
    <slot>selectedFunctionChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1303</x>
-     <y>65</y>
+     <x>1178</x>
+     <y>78</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -780,8 +886,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1263</x>
-     <y>130</y>
+     <x>1148</x>
+     <y>147</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -796,8 +902,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1251</x>
-     <y>130</y>
+     <x>1148</x>
+     <y>147</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -812,8 +918,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1251</x>
-     <y>163</y>
+     <x>1148</x>
+     <y>180</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -828,8 +934,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1251</x>
-     <y>196</y>
+     <x>1148</x>
+     <y>213</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -844,8 +950,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1263</x>
-     <y>163</y>
+     <x>1148</x>
+     <y>180</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -860,8 +966,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1263</x>
-     <y>196</y>
+     <x>1148</x>
+     <y>213</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -876,8 +982,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1259</x>
-     <y>206</y>
+     <x>1148</x>
+     <y>213</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -892,8 +998,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1259</x>
-     <y>140</y>
+     <x>1148</x>
+     <y>147</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -908,8 +1014,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1259</x>
-     <y>173</y>
+     <x>1148</x>
+     <y>180</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -981,10 +1087,75 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>hmapMaxHEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hmapMinHEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>233</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hmapPixelSizeEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hmapFileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setPathToHeightmap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkQLineEditData()</slot>
   <slot>generateMesh()</slot>
   <slot>selectedFunctionChanged(int)</slot>
+  <slot>setPathToHeightmap()</slot>
  </slots>
 </ui>
