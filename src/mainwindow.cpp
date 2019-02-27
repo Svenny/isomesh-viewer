@@ -223,7 +223,7 @@ bool MainWindow::hasInvalidInput(std::initializer_list<QLineEdit*> widgets)
 
 void MainWindow::setPathToHeightmap()
 {
-	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
+	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.jpg *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
 	try {
 		if (!filename.isEmpty()) {
 			m_heigthmap->loadGrayscale8bitMap(filename.toStdString());
