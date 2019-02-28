@@ -226,7 +226,7 @@ void MainWindow::setPathToHeightmap()
 	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.jpg *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
 	try {
 		if (!filename.isEmpty()) {
-			m_heigthmap->loadGrayscale8bitMap(filename.toStdString());
+			m_heigthmap->loadGrayscaleMap(filename.toStdString());
 		}
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
