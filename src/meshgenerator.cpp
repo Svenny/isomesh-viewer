@@ -52,8 +52,6 @@ void MeshGenerator::setUsedAlgorithm (UsedAlgorithm algo) { m_usedAlgorithm = al
 // ------------------------------------------
 
 void MeshGenerator::setChunkSize (int size) {
-	if (size < 4 || size > 128)
-		return; // Out of grid's allowed range
 	if (size & (size - 1))
 		return; // Not a power of two
 	m_chunkSize = size;
