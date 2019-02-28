@@ -22,11 +22,9 @@ const float pi = acosf (-1.0f);
 Camera::Camera () :
 	m_proj (1.0f), m_view (1.0f), m_position (0.0f), m_orientation (1.0f, 0.0f, 0.0f, 0.0f),
 	m_fovDegrees (kDefaultFov), m_tanAX2 (tanf (kDefaultFov * 0.5f)), m_tanAY2 (m_tanAX2 / kDefaultAspectRatio),
-	m_width (kDefaultAspectRatio), m_height (1.0f) {
+	m_width (kDefaultAspectRatio), m_height (1.0f), m_avgFrameTime (0), m_framesRendered (0) {
 	for (int i = 0; i < 8; i++)
 		m_keyPressed[i] = false;
-	m_shara = 0;
-	m_sharaga = 0;
 }
 
 void Camera::setFovDegrees (float f) noexcept {
@@ -104,12 +102,10 @@ void Camera::update () noexcept {
 		(curTime - m_lastUpdateTime).count ();
 	m_lastUpdateTime = curTime;
 
-	m_shara = 0.5f * deltaTime + 0.5f * m_shara;
-	m_sharaga++;
-	if (m_sharaga < 0)
-		m_sharaga = 0;
-	if (m_sharaga % 100 == 0)
-		qDebug () << 1.0f / m_shara;
+	m_avgFrameTime = 0.25f * deltaTime + 0.75f * m_avgFrameTime;
+	m_framesRendered++;
+	if (m_framesRendered % 150 == 0)
+		qDebug ().noquote () << QString::number (1.0 / double (m_avgFrameTime), 'f', 1) << "FPS";
 
 	auto rotMat = glm::mat3_cast (m_orientation);
 	glm::vec3 dir (rotMat[0][2], rotMat[1][2], rotMat[2][2]);

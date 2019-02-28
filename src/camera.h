@@ -33,8 +33,8 @@ protected:
 
 	float m_width, m_height;
 
-	float m_shara;
-	int m_sharaga;
+	float m_avgFrameTime;
+	unsigned m_framesRendered;
 
 	std::chrono::high_resolution_clock::time_point m_lastUpdateTime;
 
