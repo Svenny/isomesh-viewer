@@ -8,22 +8,22 @@
 
 const static float kDefaultFov = 65.0f;
 const static float kDefaultAspectRatio = 16.0f / 9.0f;
-const static float kMouseSensitivity = 0.5f;
 
-const static float kForwardSpeed = 10.0f;
-const static float kStrafeSpeed = 5.0f;
+const static float kDefaultMouseSensitivity = 0.5f;
+const static float kDefaultForwardSpeed = 10.0f;
+const static float kDefaultStrafeSpeed = 5.0f;
+
 const static float kRollSpeed = 1.5f;
 
 const static float kNearPlane = 0.01f;
 const static float kFarPlane = 5000.0f;
 
-const float pi = acosf (-1.0f);
-
 Camera::Camera () :
 	m_proj (1.0f), m_view (1.0f), m_position (0.0f), m_orientation (1.0f, 0.0f, 0.0f, 0.0f),
 	m_fovDegrees (kDefaultFov), m_tanAX2 (tanf (kDefaultFov * 0.5f)), m_tanAY2 (m_tanAX2 / kDefaultAspectRatio),
-	m_width (kDefaultAspectRatio), m_height (1.0f), m_avgFrameTime (0), m_framesRendered (0) {
-	for (int i = 0; i < 8; i++)
+	m_width (kDefaultAspectRatio), m_height (1.0f), m_avgFrameTime (0), m_framesRendered (0),
+	m_mouseSensitivity (kDefaultMouseSensitivity), m_forwardSpeed (kDefaultForwardSpeed), m_strafeSpeed (kDefaultStrafeSpeed) {
+	for (int i = 0; i < Key::KeyCount; i++)
 		m_keyPressed[i] = false;
 }
 
@@ -41,28 +41,28 @@ void Camera::setScreenSize (int w, int h) noexcept {
 bool Camera::setKeyState (int key, bool pressed) noexcept {
 	switch (key) {
 	case Qt::Key_W:
-		m_keyPressed[0] = pressed;
+		m_keyPressed[Key::KeyForward] = pressed;
 		return true;
 	case Qt::Key_S:
-		m_keyPressed[1] = pressed;
+		m_keyPressed[Key::KeyBack] = pressed;
 		return true;
 	case Qt::Key_A:
-		m_keyPressed[2] = pressed;
+		m_keyPressed[Key::KeyLeft] = pressed;
 		return true;
 	case Qt::Key_D:
-		m_keyPressed[3] = pressed;
+		m_keyPressed[Key::KeyRight] = pressed;
 		return true;
 	case Qt::Key_C:
-		m_keyPressed[4] = pressed;
+		m_keyPressed[Key::KeyDown] = pressed;
 		return true;
 	case Qt::Key_Space:
-		m_keyPressed[5] = pressed;
+		m_keyPressed[Key::KeyUp] = pressed;
 		return true;
 	case Qt::Key_Q:
-		m_keyPressed[6] = pressed;
+		m_keyPressed[Key::KeyRollCCW] = pressed;
 		return true;
 	case Qt::Key_E:
-		m_keyPressed[7] = pressed;
+		m_keyPressed[Key::KeyRollCW] = pressed;
 		return true;
 	}
 	return false;
@@ -73,7 +73,7 @@ void Camera::resetKeyState() noexcept {
 		m_keyPressed[i] = false;
 }
 
-glm::quat quatFromEulerAngles (float pitch, float yaw, float roll) {
+static glm::quat quatFromEulerAngles (float pitch, float yaw, float roll) noexcept {
 	glm::vec3 eulerAngle (pitch * 0.5f, yaw * 0.5f, roll * 0.5f);
 	glm::vec3 c = glm::cos (eulerAngle * 0.5f);
 	glm::vec3 s = glm::sin (eulerAngle * 0.5f);
@@ -87,8 +87,8 @@ glm::quat quatFromEulerAngles (float pitch, float yaw, float roll) {
 }
 
 void Camera::processMouseMovement (float dx, float dy) noexcept {
-	float yawAngle = kMouseSensitivity * atanf (2 * dx * m_tanAX2 / m_width);
-	float pitchAngle = kMouseSensitivity * atanf (2 * dy * m_tanAY2 / m_height);
+	float yawAngle = m_mouseSensitivity * atanf (2 * dx * m_tanAX2 / m_width);
+	float pitchAngle = m_mouseSensitivity * atanf (2 * dy * m_tanAY2 / m_height);
 	auto rotQuat = quatFromEulerAngles (pitchAngle, yawAngle, 0.0f);
 	m_orientation = glm::normalize (rotQuat * m_orientation);
 
@@ -113,24 +113,23 @@ void Camera::update () noexcept {
 	glm::vec3 up (rotMat[0][1], rotMat[1][1], rotMat[2][1]);
 
 	float dx = 0;
-	if (m_keyPressed[2]) dx -= kStrafeSpeed;
-	if (m_keyPressed[3]) dx += kStrafeSpeed;
+	if (m_keyPressed[Key::KeyLeft]) dx -= m_strafeSpeed;
+	if (m_keyPressed[Key::KeyRight]) dx += m_strafeSpeed;
 	m_position += dx * deltaTime * right;
 
 	float dy = 0;
-	if (m_keyPressed[4]) dy -= kStrafeSpeed;
-	if (m_keyPressed[5]) dy += kStrafeSpeed;
+	if (m_keyPressed[Key::KeyDown]) dy -= m_strafeSpeed;
+	if (m_keyPressed[Key::KeyUp]) dy += m_strafeSpeed;
 	m_position += dy * deltaTime * up;
 
 	float dz = 0;
-	if (m_keyPressed[0]) dz -= kForwardSpeed;
-	if (m_keyPressed[1]) dz += kForwardSpeed;
+	if (m_keyPressed[Key::KeyForward]) dz -= m_forwardSpeed;
+	if (m_keyPressed[Key::KeyBack]) dz += m_forwardSpeed;
 	m_position += dz * deltaTime * dir;
 
-
 	float rollAngle = 0;
-	if (m_keyPressed[6]) rollAngle -= kRollSpeed * deltaTime;
-	if (m_keyPressed[7]) rollAngle += kRollSpeed * deltaTime;
+	if (m_keyPressed[Key::KeyRollCCW]) rollAngle -= kRollSpeed * deltaTime;
+	if (m_keyPressed[Key::KeyRollCW]) rollAngle += kRollSpeed * deltaTime;
 	auto rotQuat = quatFromEulerAngles (0, 0, rollAngle);
 	m_orientation = glm::normalize (rotQuat * m_orientation);
 
@@ -138,8 +137,9 @@ void Camera::update () noexcept {
 }
 
 void Camera::recalcProjection () {
-	m_tanAX2 = tanf (m_fovDegrees * pi / 360.0f);
+	float fov_radians = glm::radians (m_fovDegrees);
+	m_tanAX2 = tanf (fov_radians);
 	m_tanAY2 = m_tanAX2 * m_height / m_width;
 
-	m_proj = glm::perspectiveFov (glm::radians (m_fovDegrees), m_width, m_height, kNearPlane, kFarPlane);
+	m_proj = glm::perspectiveFov (fov_radians, m_width, m_height, kNearPlane, kFarPlane);
 }

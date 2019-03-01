@@ -21,6 +21,15 @@ public:
 	bool setKeyState (int key, bool pressed) noexcept;
 	void resetKeyState() noexcept;
 
+	float mouseSensitivity () const noexcept { return m_mouseSensitivity; }
+	void setMouseSensitivity (float value) noexcept { m_mouseSensitivity = value; }
+
+	float forwardSpeed () const noexcept { return m_forwardSpeed; }
+	void setForwardSpeed (float value) noexcept { m_forwardSpeed = value; }
+
+	float strafeSpeed () const noexcept { return m_strafeSpeed; }
+	void setStrafeSpeed (float value) noexcept { m_strafeSpeed = value; }
+
 	void processMouseMovement (float dx, float dy) noexcept;
 	void update () noexcept;
 protected:
@@ -32,6 +41,10 @@ protected:
 	float m_tanAX2, m_tanAY2;
 
 	float m_width, m_height;
+
+	float m_mouseSensitivity;
+	float m_forwardSpeed;
+	float m_strafeSpeed;
 
 	float m_avgFrameTime;
 	unsigned m_framesRendered;
@@ -45,7 +58,7 @@ protected:
 		KeyRight,
 		KeyUp,
 		KeyDown,
-		KeyRollC,
+		KeyRollCW,
 		KeyRollCCW,
 
 		KeyCount
