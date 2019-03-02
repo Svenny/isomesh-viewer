@@ -137,6 +137,17 @@ void ViewerWidget::mouseReleaseEvent (QMouseEvent *e) {
 	else e->ignore ();
 }
 
+void ViewerWidget::wheelEvent(QWheelEvent* event)
+{
+	if (event->delta() > 0) {
+		m_camera.setForwardSpeed(m_camera.forwardSpeed() * 1.1);
+		m_camera.setStrafeSpeed(m_camera.strafeSpeed() * 1.1);
+	} else {
+		m_camera.setForwardSpeed(m_camera.forwardSpeed() / 1.1);
+		m_camera.setStrafeSpeed(m_camera.strafeSpeed() / 1.1);
+	}
+}
+
 void ViewerWidget::focusOutEvent(QFocusEvent* event)
 {
 	m_camera.resetKeyState();
