@@ -36,7 +36,7 @@ private:
 	Ui::MainWindow *ui;
 	QThread m_workerThread;
 	MeshGenerator *m_meshGen;
-	std::shared_ptr<isomesh::HeightMapImporter> m_heigthmap;
+	isomesh::HeightMapImporter m_heigthmap;
 	FunctionBuilder m_builder;
 	QLocale m_locale;
 

@@ -12,7 +12,7 @@ Q_DECLARE_METATYPE (UsedAlgorithm)
 MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 		, ui (new Ui::MainWindow)
 		, m_locale (QLocale::system ())
-		, m_heigthmap(new isomesh::HeightMapImporter({0, 3.4}, glm::dvec3(0,0,0), 0.1)) 
+		, m_heigthmap({0, 3.4}, glm::dvec3(0,0,0), 0.1)
 {
 	ui->setupUi (this);
 	// Setup mesh generator running in a separate thread
@@ -121,11 +121,11 @@ void MainWindow::generateMesh() {
 	if (updateFunctionParams()) {
 		auto fun = ui->funSelectorBox->currentData().value<UsedFunction>();
 		if (fun == UsedFunction::FunHeightmap) {
-			if (!m_heigthmap->isDataLoaded()) {
+			if (!m_heigthmap.isDataLoaded()) {
 				QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
 				return;
 			}
-			QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction, isomesh::HeightMapImporter::buildSurfaceFunction(m_heigthmap)));
+			QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction, m_heigthmap.buildSurfaceFunction()));
 		} else {
 			QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction,
  m_builder.buildFunction()));
@@ -197,8 +197,8 @@ bool MainWindow::updateFunctionParams()
 			if (hasInvalidInput({ui->hmapMaxHEdit, ui->hmapPixelSizeEdit, ui->hmapMinHEdit}))
 				break;
 
-			m_heigthmap->setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
-			m_heigthmap->setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
+			m_heigthmap.setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
+			m_heigthmap.setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
 			return true;
 		}
 	}
@@ -226,7 +226,7 @@ void MainWindow::setPathToHeightmap()
 	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.jpg *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
 	try {
 		if (!filename.isEmpty()) {
-			m_heigthmap->loadGrayscaleMap(filename.toStdString());
+			m_heigthmap.loadGrayscaleMap(filename.toStdString());
 		}
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
