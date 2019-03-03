@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSharedPointer>
 
+#include <isomesh/field/scalar_field.hpp>
 #include <isomesh/data/mesh.hpp>
 
 enum UsedAlgorithm : int {
@@ -17,7 +18,7 @@ class MeshGenerator : public QObject {
 public slots:
 	void generateMesh ();
 	// Function parameters
-	void setUsedFunction (isomesh::SurfaceFunction function);
+	void setUsedFunction (isomesh::ScalarField* field);
 	// Algorithm parameters
 	void setUsedAlgorithm (UsedAlgorithm algo);
 	// Common parameters
@@ -36,7 +37,7 @@ private slots:
 
 private:
 	bool m_doGenerateCalled = false;
-	isomesh::SurfaceFunction m_function;
+	isomesh::ScalarField* m_function;
 	// Algorithm parameters
 	UsedAlgorithm m_usedAlgorithm = AlgoMarchingCubes;
 	// Common parameters

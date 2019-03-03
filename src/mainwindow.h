@@ -9,7 +9,6 @@
 
 #include "meshgenerator.h"
 #include "functionbuilder.h"
-#include <isomesh/fun/heightmap.hpp>
 
 class QLineEdit;
 namespace Ui {
@@ -36,7 +35,6 @@ private:
 	Ui::MainWindow *ui;
 	QThread m_workerThread;
 	MeshGenerator *m_meshGen;
-	isomesh::HeightMapImporter m_heigthmap;
 	FunctionBuilder m_builder;
 	QLocale m_locale;
 

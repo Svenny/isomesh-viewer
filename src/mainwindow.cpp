@@ -12,7 +12,6 @@ Q_DECLARE_METATYPE (UsedAlgorithm)
 MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 		, ui (new Ui::MainWindow)
 		, m_locale (QLocale::system ())
-		, m_heigthmap({0, 3.4}, glm::dvec3(0,0,0), 0.1)
 {
 	ui->setupUi (this);
 	// Setup mesh generator running in a separate thread
@@ -120,16 +119,11 @@ void MainWindow::generateMesh() {
 
 	if (updateFunctionParams()) {
 		auto fun = ui->funSelectorBox->currentData().value<UsedFunction>();
-		if (fun == UsedFunction::FunHeightmap) {
-			if (!m_heigthmap.isDataLoaded()) {
-				QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
-				return;
-			}
-			QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction, m_heigthmap.buildSurfaceFunction()));
-		} else {
-			QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::SurfaceFunction,
- m_builder.buildFunction()));
+		if (fun == UsedFunction::FunHeightmap && !m_builder.heightmap.isDataLoaded()) {
+			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
+			return;
 		}
+		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::ScalarField*, m_builder.buildFunction(fun)));
 		QMetaObject::invokeMethod (m_meshGen, "generateMesh");
 		ui->viewer->setFocus();
 	}
@@ -142,8 +136,6 @@ double MainWindow::parseDouble(QLineEdit* edit)
 
 void MainWindow::selectedFunctionChanged(int idx)
 {
-	auto fun = ui->funSelectorBox->itemData(idx).value<UsedFunction>();
-	m_builder.setUsedFunction(fun);
 	ui->stackedWidget->setCurrentIndex(ui->funSelectorBox->currentIndex());
 }
 
@@ -156,9 +148,9 @@ bool MainWindow::updateFunctionParams()
 			if (hasInvalidInput({ui->boxXEdit, ui->boxYEdit, ui->boxZEdit}))
 				break;
 
-			m_builder.setBoxSizeX(parseDouble(ui->boxXEdit));
-			m_builder.setBoxSizeY(parseDouble(ui->boxYEdit));
-			m_builder.setBoxSizeZ(parseDouble(ui->boxZEdit));
+			m_builder.box.boxSize.x = parseDouble(ui->boxXEdit);
+			m_builder.box.boxSize.y = parseDouble(ui->boxYEdit);
+			m_builder.box.boxSize.z = parseDouble(ui->boxZEdit);
 			return true;
 		}
 
@@ -166,9 +158,9 @@ bool MainWindow::updateFunctionParams()
 			if (hasInvalidInput({ui->ellipsoidXEdit, ui->ellipsoidYEdit, ui->ellipsoidZEdit}))
 				break;
 
-			m_builder.setEllipsoidRadiusX(parseDouble(ui->ellipsoidXEdit));
-			m_builder.setEllipsoidRadiusY(parseDouble(ui->ellipsoidYEdit));
-			m_builder.setEllipsoidRadiusZ(parseDouble(ui->ellipsoidZEdit));
+			m_builder.ellipsoid.radius.x = parseDouble(ui->ellipsoidXEdit);
+			m_builder.ellipsoid.radius.y = parseDouble(ui->ellipsoidYEdit);
+			m_builder.ellipsoid.radius.z = parseDouble(ui->ellipsoidZEdit);
 			return true;
 		}
 
@@ -176,9 +168,9 @@ bool MainWindow::updateFunctionParams()
 			if (hasInvalidInput({ui->planeXEdit, ui->planeYEdit, ui->planeZEdit}))
 				break;
 
-			m_builder.setPlaneDirX(parseDouble(ui->planeXEdit));
-			m_builder.setPlaneDirY(parseDouble(ui->planeYEdit));
-			m_builder.setPlaneDirZ(parseDouble(ui->planeZEdit));
+			m_builder.plane.plane.x = parseDouble(ui->planeXEdit);
+			m_builder.plane.plane.y = parseDouble(ui->planeYEdit);
+			m_builder.plane.plane.z = parseDouble(ui->planeZEdit);
 			return true;
 		}
 
@@ -186,10 +178,10 @@ bool MainWindow::updateFunctionParams()
 			if (hasInvalidInput({ui->wavesFreq1Edit, ui->wavesFreq2Edit, ui->wavesAmp1Edit, ui->wavesAmp2Edit}))
 				break;
 
-			m_builder.setWavesFrequency1(parseDouble(ui->wavesFreq1Edit));
-			m_builder.setWavesFrequency2(parseDouble(ui->wavesFreq2Edit));
-			m_builder.setWavesAmplitude1(parseDouble(ui->wavesAmp1Edit));
-			m_builder.setWavesAmplitude2(parseDouble(ui->wavesAmp2Edit));
+			m_builder.waves.freq1 = parseDouble(ui->wavesFreq1Edit);
+			m_builder.waves.freq2 = parseDouble(ui->wavesFreq2Edit);
+			m_builder.waves.amp1 = parseDouble(ui->wavesAmp1Edit);
+			m_builder.waves.amp2 = parseDouble(ui->wavesAmp2Edit);
 			return true;
 		}
 
@@ -197,8 +189,8 @@ bool MainWindow::updateFunctionParams()
 			if (hasInvalidInput({ui->hmapMaxHEdit, ui->hmapPixelSizeEdit, ui->hmapMinHEdit}))
 				break;
 
-			m_heigthmap.setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
-			m_heigthmap.setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
+			m_builder.heightmap.setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
+			m_builder.heightmap.setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
 			return true;
 		}
 	}
@@ -226,7 +218,7 @@ void MainWindow::setPathToHeightmap()
 	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.jpg *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
 	try {
 		if (!filename.isEmpty()) {
-			m_heigthmap.loadGrayscaleMap(filename.toStdString());
+			m_builder.heightmap.loadGrayscaleMap(filename.toStdString());
 		}
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));

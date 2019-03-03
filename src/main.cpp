@@ -4,6 +4,7 @@
 #include <QTranslator>
 
 #include <isomesh/common.hpp>
+#include <isomesh/field/scalar_field.hpp>
 #include <isomesh/data/mesh.hpp>
 
 #include "meshgenerator.h"
@@ -13,13 +14,13 @@
 Q_DECLARE_METATYPE (QSharedPointer<isomesh::Mesh>)
 Q_DECLARE_METATYPE (UsedFunction)
 Q_DECLARE_METATYPE (UsedAlgorithm)
-Q_DECLARE_METATYPE (isomesh::SurfaceFunction);
+Q_DECLARE_METATYPE (isomesh::ScalarField*);
 
 int main (int argc, char *argv[]) {
 	qRegisterMetaType<QSharedPointer<isomesh::Mesh> > ();
 	qRegisterMetaType<UsedFunction> ();
 	qRegisterMetaType<UsedAlgorithm> ();
-	qRegisterMetaType<isomesh::SurfaceFunction> ();
+	qRegisterMetaType<isomesh::ScalarField*> ();
 
 	QSurfaceFormat fmt;
 	fmt.setRenderableType (QSurfaceFormat::OpenGL);

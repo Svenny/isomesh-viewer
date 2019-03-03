@@ -20,6 +20,7 @@ set (ISOMESH_VIEWER_HEADERS
 	src/mainwindow.h
 	src/meshgenerator.h
 	src/viewerwidget.h
+	src/primitives.h
 )
 
 set (ISOMESH_VIEWER_SOURCES
@@ -29,6 +30,7 @@ set (ISOMESH_VIEWER_SOURCES
 	src/mainwindow.cpp
 	src/meshgenerator.cpp
 	src/viewerwidget.cpp
+	src/primitives.cpp
 )
 
 source_group (TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX Headers FILES ${ISOMESH_VIEWER_HEADERS})

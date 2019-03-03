@@ -25,7 +25,7 @@ void MeshGenerator::doGenerateMesh () {
 		// Generate a surface chunk from this function,
 		// then check it against a manually validated result
 		isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
-		G.fill (m_function, solver, isomesh::TrivialMaterialSelector ());
+		G.fill (*m_function, solver, isomesh::TrivialMaterialSelector ());
 		if (m_usedAlgorithm == AlgoMarchingCubes)
 			result = isomesh::marchingCubes (G);
 		else if (m_usedAlgorithm == AlgoDualContouring) {
@@ -41,7 +41,7 @@ void MeshGenerator::doGenerateMesh () {
 	emit meshGenerated (QSharedPointer<isomesh::Mesh>::create (std::move (result)));
 }
 
-void MeshGenerator::setUsedFunction (isomesh::SurfaceFunction fun) { m_function = fun; }
+void MeshGenerator::setUsedFunction (isomesh::ScalarField* fun) { m_function = fun; }
 
 
 
