@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 
+#include <exception>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 

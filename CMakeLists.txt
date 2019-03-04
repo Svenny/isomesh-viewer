@@ -50,4 +50,5 @@ add_executable (isomesh_viewer
 	${QM_FILES}
 )
 
-target_link_libraries (isomesh_viewer glm isomesh Qt5::Widgets)
+target_link_libraries (isomesh_viewer PUBLIC glm isomesh Qt5::Widgets)
+target_link_libraries (isomesh_viewer PRIVATE $<$<CXX_COMPILER_ID:Clang>:stdc++fs>)
