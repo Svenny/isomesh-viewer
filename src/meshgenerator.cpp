@@ -18,26 +18,35 @@ void MeshGenerator::doGenerateMesh () {
 	m_doGenerateCalled = false;
 	qDebug () << "regenerating mesh...";
 	isomesh::Mesh result;
-	// compute...
 	auto t1 = std::chrono::high_resolution_clock::now ();
 	{
-		isomesh::BisectionZeroFinder solver;
-		// Generate a surface chunk from this function,
-		// then check it against a manually validated result
-		isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
-		G.fill (*m_function, solver, isomesh::TrivialMaterialSelector ());
-		if (m_usedAlgorithm == AlgoMarchingCubes)
+		if (m_usedAlgorithm == AlgoDualMarchingCubes) {
+			isomesh::TrivialMaterialSelector selector;
+			isomesh::GradientDescentQefSolver4D solver;
+			isomesh::DMC_Octree octree (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
+			octree.build (*m_function, selector, solver, 0.025f);
+			result = octree.contour ();
+		}
+		else if (m_usedAlgorithm == AlgoMarchingCubes) {
+			isomesh::BisectionZeroFinder solver;
+			isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
+			G.fill (*m_function, solver, isomesh::TrivialMaterialSelector ());
 			result = isomesh::marchingCubes (G);
+		}
 		else if (m_usedAlgorithm == AlgoDualContouring) {
+			isomesh::BisectionZeroFinder solver;
+			isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
+			G.fill (*m_function, solver, isomesh::TrivialMaterialSelector ());
 			isomesh::AnyNonemptyMaterialFilter filter;
-			isomesh::GradientDescentQefSolver3D solver;
-			result = isomesh::dualContouring (G, filter, solver);
+			isomesh::GradientDescentQefSolver3D qef_solver;
+			result = isomesh::dualContouring (G, filter, qef_solver);
 		}
 		else qDebug () << "Invalid algorithm used";
 	}
 	auto t2 = std::chrono::high_resolution_clock::now ();
 	auto dur = std::chrono::duration_cast<std::chrono::duration<double> > (t2 - t1);
 	qDebug () << "... done in" << dur.count () * 1000.0 << " ms";
+	qDebug () << "mesh has" << result.vertexCount () << "vertices and" << result.indexCount () << "indices";
 	emit meshGenerated (QSharedPointer<isomesh::Mesh>::create (std::move (result)));
 }
 

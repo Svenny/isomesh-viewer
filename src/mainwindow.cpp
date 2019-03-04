@@ -88,6 +88,7 @@ void MainWindow::initFunctionParams () {
 void MainWindow::initAlgorithmParams () {
 	ui->algoSelectorBox->addItem (tr ("Marching Cubes"), AlgoMarchingCubes);
 	ui->algoSelectorBox->addItem (tr ("Dual Contouring"), AlgoDualContouring);
+	ui->algoSelectorBox->addItem (tr ("Dual Marching Cubes"), AlgoDualMarchingCubes);
 	connect (ui->algoSelectorBox, QOverload<int>::of (&QComboBox::currentIndexChanged), this, [this](int idx) {
 		auto algo = ui->algoSelectorBox->itemData(idx).value<UsedAlgorithm>();
 		QMetaObject::invokeMethod (m_meshGen, "setUsedAlgorithm", Q_ARG (UsedAlgorithm, algo));
