@@ -22,6 +22,7 @@ public slots:
 	void setUsedFunction (isomesh::ScalarField* field);
 	// Algorithm parameters
 	void setUsedAlgorithm (UsedAlgorithm algo);
+	void setEpsilon(float epsilon);
 	// Common parameters
 	void setChunkSize (int size);
 	void setXOffset (double value);
@@ -41,6 +42,7 @@ private:
 	isomesh::ScalarField* m_function;
 	// Algorithm parameters
 	UsedAlgorithm m_usedAlgorithm = AlgoMarchingCubes;
+	float m_epsilon;
 	// Common parameters
 	int m_chunkSize = 32;
 	double m_chunkScale = 1;

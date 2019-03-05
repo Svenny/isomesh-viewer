@@ -28,6 +28,7 @@ signals:
 private slots:
 	void checkQLineEditData();
 	void selectedFunctionChanged(int idx);
+	void selectedAlgoChanged(int idx);
 	void generateMesh();
 	void setPathToHeightmap();
 
@@ -41,6 +42,7 @@ private:
 	void initFunctionParams ();
 	void initAlgorithmParams ();
 	bool updateFunctionParams();
+	bool updateAlgoParams();
 	bool hasInvalidInput(std::initializer_list<QLineEdit*> widgets);
 	double parseDouble(QLineEdit* edit);
 };

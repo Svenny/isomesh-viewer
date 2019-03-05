@@ -2,6 +2,8 @@
 
 #include "ui_mainwindow.h"
 
+#include <limits>
+
 #include <QPalette>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -39,13 +41,6 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	auto positiveDoubleValidator = new QDoubleValidator(this);
 	positiveDoubleValidator->setBottom(0);
 	positiveDoubleValidator->setNotation(QDoubleValidator::StandardNotation);
-	ui->boxXEdit->setValidator (positiveDoubleValidator);
-	ui->boxYEdit->setValidator (positiveDoubleValidator);
-	ui->boxZEdit->setValidator (positiveDoubleValidator);
-
-	ui->ellipsoidXEdit->setValidator (positiveDoubleValidator);
-	ui->ellipsoidYEdit->setValidator (positiveDoubleValidator);
-	ui->ellipsoidZEdit->setValidator (positiveDoubleValidator);
 
 	ui->wavesFreq1Edit->setValidator (positiveDoubleValidator);
 	ui->wavesFreq1Edit->setText(m_locale.toString(0.1));
@@ -61,6 +56,21 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->hmapMaxHEdit->setValidator(doubleValidator);
 	ui->hmapMaxHEdit->setText(m_locale.toString(3.4));
 	ui->hmapMinHEdit->setValidator(doubleValidator);
+
+	auto zeroGreaterValidator = new QDoubleValidator(this);
+	zeroGreaterValidator->setBottom(std::numeric_limits<double>::epsilon());
+	zeroGreaterValidator->setNotation(QDoubleValidator::StandardNotation);
+
+	ui->boxXEdit->setValidator(zeroGreaterValidator);
+	ui->boxYEdit->setValidator(zeroGreaterValidator);
+	ui->boxZEdit->setValidator(zeroGreaterValidator);
+
+	ui->ellipsoidXEdit->setValidator(zeroGreaterValidator);
+	ui->ellipsoidYEdit->setValidator(zeroGreaterValidator);
+	ui->ellipsoidZEdit->setValidator(zeroGreaterValidator);
+
+	ui->dmcEpsilonEdit->setValidator(zeroGreaterValidator);
+	ui->dmcEpsilonEdit->setText(m_locale.toString(0.025));
 
 	initFunctionParams ();
 	initAlgorithmParams ();
@@ -118,7 +128,7 @@ void MainWindow::generateMesh() {
 	QMetaObject::invokeMethod (m_meshGen, "setYOffset", Q_ARG (double, parseDouble(ui->yOffsetEdit)));
 	QMetaObject::invokeMethod (m_meshGen, "setZOffset", Q_ARG (double, parseDouble(ui->zOffsetEdit)));
 
-	if (updateFunctionParams()) {
+	if (updateAlgoParams() && updateFunctionParams()) {
 		auto fun = ui->funSelectorBox->currentData().value<UsedFunction>();
 		if (fun == UsedFunction::FunHeightmap && !m_builder.heightmap.isDataLoaded()) {
 			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
@@ -137,7 +147,12 @@ double MainWindow::parseDouble(QLineEdit* edit)
 
 void MainWindow::selectedFunctionChanged(int idx)
 {
-	ui->stackedWidget->setCurrentIndex(ui->funSelectorBox->currentIndex());
+	ui->stackedWidget->setCurrentIndex(idx);
+}
+
+void MainWindow::selectedAlgoChanged(int idx)
+{
+	ui->stackedWidgetAlgo->setCurrentIndex(idx);
 }
 
 bool MainWindow::updateFunctionParams()
@@ -192,6 +207,27 @@ bool MainWindow::updateFunctionParams()
 
 			m_builder.heightmap.setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
 			m_builder.heightmap.setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool MainWindow::updateAlgoParams()
+{
+	auto algo = ui->algoSelectorBox->currentData().value<UsedAlgorithm>();
+	switch(algo) {
+		case UsedAlgorithm::AlgoMarchingCubes:
+			[[fallthrough]];
+		case UsedAlgorithm::AlgoDualContouring:
+			return true;
+
+		case UsedAlgorithm::AlgoDualMarchingCubes: {
+			if (hasInvalidInput({ui->dmcEpsilonEdit}))
+				break;
+
+			m_meshGen->setEpsilon(static_cast<float>(parseDouble(ui->dmcEpsilonEdit)));
 			return true;
 		}
 	}
