@@ -1,6 +1,8 @@
 #ifndef FUNCTIONSELECTOR_H
 #define FUNCTIONSELECTOR_H
 
+#include <QSharedPointer>
+
 #include <isomesh/common.hpp>
 #include <isomesh/field/heightmap.hpp>
 #include "primitives.h"
@@ -19,7 +21,7 @@ enum UsedFunction : int {
 class FunctionBuilder {
 public:
 	FunctionBuilder();
-	isomesh::ScalarField* buildFunction(UsedFunction fun);
+	QSharedPointer<isomesh::ScalarField> buildFunction(UsedFunction fun);
 
 public:
 	Plane plane;

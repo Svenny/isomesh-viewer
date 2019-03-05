@@ -50,7 +50,7 @@ void MeshGenerator::doGenerateMesh () {
 	emit meshGenerated (QSharedPointer<isomesh::Mesh>::create (std::move (result)));
 }
 
-void MeshGenerator::setUsedFunction (isomesh::ScalarField* fun) { m_function = fun; }
+void MeshGenerator::setUsedFunction (QSharedPointer<isomesh::ScalarField> fun) { m_function = fun; }
 
 void MeshGenerator::setEpsilon(float epsilon) { m_epsilon = epsilon; }
 

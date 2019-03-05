@@ -14,13 +14,13 @@
 Q_DECLARE_METATYPE (QSharedPointer<isomesh::Mesh>)
 Q_DECLARE_METATYPE (UsedFunction)
 Q_DECLARE_METATYPE (UsedAlgorithm)
-Q_DECLARE_METATYPE (isomesh::ScalarField*);
+Q_DECLARE_METATYPE (QSharedPointer<isomesh::ScalarField>);
 
 int main (int argc, char *argv[]) {
 	qRegisterMetaType<QSharedPointer<isomesh::Mesh> > ();
 	qRegisterMetaType<UsedFunction> ();
 	qRegisterMetaType<UsedAlgorithm> ();
-	qRegisterMetaType<isomesh::ScalarField*> ();
+	qRegisterMetaType<QSharedPointer<isomesh::ScalarField> > ();
 
 	QSurfaceFormat fmt;
 	fmt.setRenderableType (QSurfaceFormat::OpenGL);

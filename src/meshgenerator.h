@@ -19,7 +19,7 @@ class MeshGenerator : public QObject {
 public slots:
 	void generateMesh ();
 	// Function parameters
-	void setUsedFunction (isomesh::ScalarField* field);
+	void setUsedFunction (QSharedPointer<isomesh::ScalarField> field);
 	// Algorithm parameters
 	void setUsedAlgorithm (UsedAlgorithm algo);
 	void setEpsilon(float epsilon);
@@ -39,7 +39,7 @@ private slots:
 
 private:
 	bool m_doGenerateCalled = false;
-	isomesh::ScalarField* m_function;
+	QSharedPointer<isomesh::ScalarField> m_function;
 	// Algorithm parameters
 	UsedAlgorithm m_usedAlgorithm = AlgoMarchingCubes;
 	float m_epsilon;

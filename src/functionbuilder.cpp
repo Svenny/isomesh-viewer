@@ -2,16 +2,16 @@
 
 #include <QDebug>
 
-isomesh::ScalarField* FunctionBuilder::buildFunction(UsedFunction fun) {
+QSharedPointer<isomesh::ScalarField> FunctionBuilder::buildFunction(UsedFunction fun) {
 	switch (fun) {
 	case FunPlane:
-		return &plane;
+		return QSharedPointer<Plane>::create(plane);
 	case FunEllipsoid:
-		return &ellipsoid;
+		return QSharedPointer<Ellipsoid>::create(ellipsoid);
 	case FunBox:
-		return &box;
+		return QSharedPointer<Box>::create(box);
 	case FunWaves:
-		return &waves;
+		return QSharedPointer<Waves>::create(waves);
 	case FunPerlin:
 		//TODO
 		break;
@@ -19,9 +19,9 @@ isomesh::ScalarField* FunctionBuilder::buildFunction(UsedFunction fun) {
 		//TODO
 		break;
 	case FunTwoSpheres:
-		return &twoSpheres;
+		return QSharedPointer<TwoSpheres>::create(twoSpheres);
 	case FunHeightmap:
-		return &heightmap;
+		return QSharedPointer<isomesh::Heightmap>::create(heightmap);
 	}
 	qDebug () << "Selected invalid function";
 	return nullptr;

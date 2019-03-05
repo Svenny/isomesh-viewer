@@ -134,7 +134,7 @@ void MainWindow::generateMesh() {
 			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
 			return;
 		}
-		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (isomesh::ScalarField*, m_builder.buildFunction(fun)));
+		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (QSharedPointer<isomesh::ScalarField>, m_builder.buildFunction(fun)));
 		QMetaObject::invokeMethod (m_meshGen, "generateMesh");
 		ui->viewer->setFocus();
 	}
