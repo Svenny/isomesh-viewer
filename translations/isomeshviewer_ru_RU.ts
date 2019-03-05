@@ -5,9 +5,9 @@
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="17"/>
-        <location filename="../src/mainwindow.cpp" line="125"/>
-        <location filename="../src/mainwindow.cpp" line="215"/>
-        <location filename="../src/mainwindow.cpp" line="232"/>
+        <location filename="../src/mainwindow.cpp" line="134"/>
+        <location filename="../src/mainwindow.cpp" line="244"/>
+        <location filename="../src/mainwindow.cpp" line="261"/>
         <source>Isomesh Viewer</source>
         <translation></translation>
     </message>
@@ -132,37 +132,52 @@
         <translation>Параметры алгоритма</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="556"/>
+        <location filename="../src/mainwindow.ui" line="563"/>
+        <source>A&amp;ccuracy</source>
+        <translation>&amp;Точность</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="607"/>
         <source>Common parameters</source>
         <translation>Общие параметры</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="567"/>
+        <location filename="../src/mainwindow.ui" line="618"/>
         <source>Gr&amp;id size</source>
         <translation>Размер се&amp;тки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="617"/>
+        <location filename="../src/mainwindow.ui" line="665"/>
+        <source>256</source>
+        <translation>256</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="670"/>
+        <source>512</source>
+        <translation>512</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="678"/>
         <source>G&amp;rid step</source>
         <translation>&amp;Шаг сетки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="649"/>
+        <location filename="../src/mainwindow.ui" line="710"/>
         <source>X &amp;offset</source>
         <translation>Смещение по &amp;X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="675"/>
+        <location filename="../src/mainwindow.ui" line="736"/>
         <source>Y o&amp;ffset</source>
         <translation>Смещение по &amp;Y</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="701"/>
+        <location filename="../src/mainwindow.ui" line="762"/>
         <source>Z offs&amp;et</source>
         <translation>Смещение по &amp;Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="761"/>
+        <location filename="../src/mainwindow.ui" line="822"/>
         <source>toolBar_2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -170,7 +185,7 @@
         <location filename="../src/mainwindow.ui" line="133"/>
         <location filename="../src/mainwindow.ui" line="156"/>
         <location filename="../src/mainwindow.ui" line="179"/>
-        <location filename="../src/mainwindow.ui" line="639"/>
+        <location filename="../src/mainwindow.ui" line="700"/>
         <source>1</source>
         <translation></translation>
     </message>
@@ -189,104 +204,110 @@
         <location filename="../src/mainwindow.ui" line="359"/>
         <location filename="../src/mainwindow.ui" line="376"/>
         <location filename="../src/mainwindow.ui" line="426"/>
-        <location filename="../src/mainwindow.ui" line="642"/>
+        <location filename="../src/mainwindow.ui" line="582"/>
+        <location filename="../src/mainwindow.ui" line="703"/>
         <source>positive real number</source>
         <translation>положительное вещественное число</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="475"/>
-        <location filename="../src/mainwindow.ui" line="665"/>
-        <location filename="../src/mainwindow.ui" line="691"/>
-        <location filename="../src/mainwindow.ui" line="717"/>
+        <location filename="../src/mainwindow.ui" line="726"/>
+        <location filename="../src/mainwindow.ui" line="752"/>
+        <location filename="../src/mainwindow.ui" line="778"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="452"/>
         <location filename="../src/mainwindow.ui" line="478"/>
-        <location filename="../src/mainwindow.ui" line="668"/>
-        <location filename="../src/mainwindow.ui" line="694"/>
-        <location filename="../src/mainwindow.ui" line="720"/>
+        <location filename="../src/mainwindow.ui" line="729"/>
+        <location filename="../src/mainwindow.ui" line="755"/>
+        <location filename="../src/mainwindow.ui" line="781"/>
         <source>real number</source>
         <translation>вещественное число</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="732"/>
+        <location filename="../src/mainwindow.ui" line="793"/>
         <source>Generate mesh</source>
         <translation>Сгенерировать меш</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="77"/>
+        <location filename="../src/mainwindow.cpp" line="86"/>
         <source>Plane</source>
         <translation>Плоскость</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="78"/>
+        <location filename="../src/mainwindow.cpp" line="87"/>
         <source>Ellipsoid</source>
         <translation>Эллипсоид</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="79"/>
+        <location filename="../src/mainwindow.cpp" line="88"/>
         <source>Box</source>
         <translation>Параллелепипед</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="80"/>
+        <location filename="../src/mainwindow.cpp" line="89"/>
         <source>Waves</source>
         <translation>Волны</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="81"/>
+        <location filename="../src/mainwindow.cpp" line="90"/>
         <source>Perlin noise</source>
         <translation>Шум Перлина</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="82"/>
+        <location filename="../src/mainwindow.cpp" line="91"/>
         <source>Multifractal</source>
         <translation>Мультифрактал</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="83"/>
+        <location filename="../src/mainwindow.cpp" line="92"/>
         <source>Two spheres</source>
         <translation>Две сферы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="84"/>
+        <location filename="../src/mainwindow.cpp" line="93"/>
         <source>Heightmap</source>
         <translation>Карта высот</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="90"/>
+        <location filename="../src/mainwindow.cpp" line="99"/>
         <source>Marching Cubes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="91"/>
+        <location filename="../src/mainwindow.cpp" line="100"/>
         <source>Dual Contouring</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="125"/>
+        <location filename="../src/mainwindow.cpp" line="101"/>
+        <source>Dual Marching Cubes</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="134"/>
         <source>Heigthmap file not loaded</source>
         <translation>Файл карты высот не загружен</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="216"/>
+        <location filename="../src/mainwindow.cpp" line="245"/>
         <source>Some inputs fields contains invalid information or empty (the fields with invalid input marks by red color)</source>
         <translation>Некоторые поля ввода содержат неправильную информацию или пусты (поля с неправильньным вводом отмечены красным цветом)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="226"/>
+        <location filename="../src/mainwindow.cpp" line="255"/>
         <source>Load heightmap</source>
         <translation>Загрузка карты высот</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="226"/>
+        <location filename="../src/mainwindow.cpp" line="255"/>
         <source>Heightmap Files (*.png *.jpg *.bmp)</source>
         <translation>Карты высот (*.png *.jpg *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="232"/>
+        <location filename="../src/mainwindow.cpp" line="261"/>
         <source>Loading file ends with error: %1</source>
         <translation>Загрузка файла завершилось ошибкой: %1</translation>
     </message>
