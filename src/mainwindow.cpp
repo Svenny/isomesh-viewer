@@ -72,6 +72,10 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->dmcEpsilonEdit->setValidator(zeroGreaterValidator);
 	ui->dmcEpsilonEdit->setText(m_locale.toString(0.025));
 
+	ui->twoSpheresRadiusEdit->setValidator(zeroGreaterValidator);
+	ui->twoSpheresGapEdit->setValidator(zeroGreaterValidator);
+	ui->twoSpheresGapEdit->setText(m_locale.toString(0.5));
+
 	initFunctionParams ();
 	initAlgorithmParams ();
 }
@@ -207,6 +211,15 @@ bool MainWindow::updateFunctionParams()
 
 			m_builder.heightmap.setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
 			m_builder.heightmap.setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
+			return true;
+		}
+
+		case UsedFunction::FunTwoSpheres: {
+			if (hasInvalidInput({ui->twoSpheresGapEdit, ui->twoSpheresRadiusEdit}))
+				break;
+
+			m_builder.twoSpheres.radius = parseDouble(ui->twoSpheresRadiusEdit);
+			m_builder.twoSpheres.gap = parseDouble(ui->twoSpheresGapEdit);
 			return true;
 		}
 	}
