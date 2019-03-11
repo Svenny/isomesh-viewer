@@ -5,9 +5,9 @@
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="17"/>
-        <location filename="../src/mainwindow.cpp" line="134"/>
-        <location filename="../src/mainwindow.cpp" line="244"/>
-        <location filename="../src/mainwindow.cpp" line="261"/>
+        <location filename="../src/mainwindow.cpp" line="148"/>
+        <location filename="../src/mainwindow.cpp" line="279"/>
+        <location filename="../src/mainwindow.cpp" line="296"/>
         <source>Isomesh Viewer</source>
         <translation></translation>
     </message>
@@ -48,6 +48,7 @@
         <location filename="../src/mainwindow.ui" line="263"/>
         <location filename="../src/mainwindow.ui" line="280"/>
         <location filename="../src/mainwindow.ui" line="297"/>
+        <location filename="../src/mainwindow.ui" line="400"/>
         <source>8</source>
         <translation>8</translation>
     </message>
@@ -97,95 +98,155 @@
         <translation>Амплитуда 2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="394"/>
+        <location filename="../src/mainwindow.ui" line="393"/>
+        <source>Radius</source>
+        <translation>Радиус</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="410"/>
+        <source>Gap</source>
+        <translation>Разрыв</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="435"/>
         <source>Hei&amp;ghtmap file</source>
         <translation>&amp;Файл карты высот</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="407"/>
+        <location filename="../src/mainwindow.ui" line="448"/>
         <source>&amp;Pixel size</source>
         <translation>Размер в &amp;пикселях</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="433"/>
+        <location filename="../src/mainwindow.ui" line="474"/>
         <source>Maximum &amp;H</source>
         <translation>Максимум &amp;высоты</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="459"/>
+        <location filename="../src/mainwindow.ui" line="500"/>
         <source>&amp;Minimum H</source>
         <translation>&amp;Минимум высоты</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="485"/>
+        <location filename="../src/mainwindow.ui" line="526"/>
         <source>Choose file</source>
         <translation>Выбор файла</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="509"/>
+        <location filename="../src/mainwindow.ui" line="550"/>
         <source>&amp;Algorithm</source>
         <translation>&amp;Алгоритм</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="540"/>
+        <location filename="../src/mainwindow.ui" line="581"/>
         <source>Algorithm parameters</source>
         <translation>Параметры алгоритма</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="563"/>
+        <location filename="../src/mainwindow.ui" line="604"/>
         <source>A&amp;ccuracy</source>
         <translation>&amp;Точность</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="607"/>
+        <location filename="../src/mainwindow.ui" line="648"/>
         <source>Common parameters</source>
         <translation>Общие параметры</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="618"/>
+        <location filename="../src/mainwindow.ui" line="661"/>
+        <source>Grid</source>
+        <translation>Сетка</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="669"/>
         <source>Gr&amp;id size</source>
         <translation>Размер се&amp;тки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="665"/>
+        <location filename="../src/mainwindow.ui" line="716"/>
         <source>256</source>
         <translation>256</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="670"/>
+        <location filename="../src/mainwindow.ui" line="721"/>
         <source>512</source>
         <translation>512</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="678"/>
+        <location filename="../src/mainwindow.ui" line="729"/>
         <source>G&amp;rid step</source>
         <translation>&amp;Шаг сетки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="710"/>
+        <location filename="../src/mainwindow.ui" line="761"/>
         <source>X &amp;offset</source>
         <translation>Смещение по &amp;X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="736"/>
+        <location filename="../src/mainwindow.ui" line="787"/>
         <source>Y o&amp;ffset</source>
         <translation>Смещение по &amp;Y</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="762"/>
+        <location filename="../src/mainwindow.ui" line="813"/>
         <source>Z offs&amp;et</source>
         <translation>Смещение по &amp;Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="822"/>
+        <location filename="../src/mainwindow.ui" line="842"/>
+        <source>Lighting</source>
+        <translation>Освещение</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="850"/>
+        <source>Lighting &amp;direction X</source>
+        <translation>Направление освещения &amp;X</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="876"/>
+        <source>Lighting direction &amp;Y</source>
+        <translation>Направление освещения &amp;Y</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="902"/>
+        <source>Lighting direction &amp;Z</source>
+        <translation>Направление освещения &amp;Z</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="928"/>
+        <source>Use Lighting</source>
+        <translation>Использовать освещение</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="938"/>
+        <source>Use color from normal</source>
+        <translation>Использовать цвета по нормалям</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="983"/>
         <source>toolBar_2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="994"/>
+        <source>toolBar_3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1005"/>
+        <source>toolBar_4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1016"/>
+        <source>toolBar_5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="133"/>
         <location filename="../src/mainwindow.ui" line="156"/>
         <location filename="../src/mainwindow.ui" line="179"/>
-        <location filename="../src/mainwindow.ui" line="700"/>
+        <location filename="../src/mainwindow.ui" line="751"/>
         <source>1</source>
         <translation></translation>
     </message>
@@ -203,111 +264,116 @@
         <location filename="../src/mainwindow.ui" line="342"/>
         <location filename="../src/mainwindow.ui" line="359"/>
         <location filename="../src/mainwindow.ui" line="376"/>
-        <location filename="../src/mainwindow.ui" line="426"/>
-        <location filename="../src/mainwindow.ui" line="582"/>
-        <location filename="../src/mainwindow.ui" line="703"/>
+        <location filename="../src/mainwindow.ui" line="403"/>
+        <location filename="../src/mainwindow.ui" line="420"/>
+        <location filename="../src/mainwindow.ui" line="467"/>
+        <location filename="../src/mainwindow.ui" line="623"/>
+        <location filename="../src/mainwindow.ui" line="754"/>
         <source>positive real number</source>
         <translation>положительное вещественное число</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="475"/>
-        <location filename="../src/mainwindow.ui" line="726"/>
-        <location filename="../src/mainwindow.ui" line="752"/>
-        <location filename="../src/mainwindow.ui" line="778"/>
+        <location filename="../src/mainwindow.ui" line="516"/>
+        <location filename="../src/mainwindow.ui" line="777"/>
+        <location filename="../src/mainwindow.ui" line="803"/>
+        <location filename="../src/mainwindow.ui" line="829"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="452"/>
-        <location filename="../src/mainwindow.ui" line="478"/>
-        <location filename="../src/mainwindow.ui" line="729"/>
-        <location filename="../src/mainwindow.ui" line="755"/>
-        <location filename="../src/mainwindow.ui" line="781"/>
+        <location filename="../src/mainwindow.ui" line="493"/>
+        <location filename="../src/mainwindow.ui" line="519"/>
+        <location filename="../src/mainwindow.ui" line="780"/>
+        <location filename="../src/mainwindow.ui" line="806"/>
+        <location filename="../src/mainwindow.ui" line="832"/>
+        <location filename="../src/mainwindow.ui" line="869"/>
+        <location filename="../src/mainwindow.ui" line="895"/>
+        <location filename="../src/mainwindow.ui" line="921"/>
         <source>real number</source>
         <translation>вещественное число</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="793"/>
+        <location filename="../src/mainwindow.ui" line="954"/>
         <source>Generate mesh</source>
         <translation>Сгенерировать меш</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="86"/>
+        <location filename="../src/mainwindow.cpp" line="100"/>
         <source>Plane</source>
         <translation>Плоскость</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="87"/>
+        <location filename="../src/mainwindow.cpp" line="101"/>
         <source>Ellipsoid</source>
         <translation>Эллипсоид</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="88"/>
+        <location filename="../src/mainwindow.cpp" line="102"/>
         <source>Box</source>
         <translation>Параллелепипед</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="89"/>
+        <location filename="../src/mainwindow.cpp" line="103"/>
         <source>Waves</source>
         <translation>Волны</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="90"/>
+        <location filename="../src/mainwindow.cpp" line="104"/>
         <source>Perlin noise</source>
         <translation>Шум Перлина</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="91"/>
+        <location filename="../src/mainwindow.cpp" line="105"/>
         <source>Multifractal</source>
         <translation>Мультифрактал</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="92"/>
+        <location filename="../src/mainwindow.cpp" line="106"/>
         <source>Two spheres</source>
         <translation>Две сферы</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="93"/>
+        <location filename="../src/mainwindow.cpp" line="107"/>
         <source>Heightmap</source>
         <translation>Карта высот</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="99"/>
+        <location filename="../src/mainwindow.cpp" line="113"/>
         <source>Marching Cubes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="100"/>
+        <location filename="../src/mainwindow.cpp" line="114"/>
         <source>Dual Contouring</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="101"/>
+        <location filename="../src/mainwindow.cpp" line="115"/>
         <source>Dual Marching Cubes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="134"/>
+        <location filename="../src/mainwindow.cpp" line="148"/>
         <source>Heigthmap file not loaded</source>
         <translation>Файл карты высот не загружен</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="245"/>
+        <location filename="../src/mainwindow.cpp" line="280"/>
         <source>Some inputs fields contains invalid information or empty (the fields with invalid input marks by red color)</source>
         <translation>Некоторые поля ввода содержат неправильную информацию или пусты (поля с неправильньным вводом отмечены красным цветом)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="255"/>
+        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>Load heightmap</source>
         <translation>Загрузка карты высот</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="255"/>
+        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>Heightmap Files (*.png *.jpg *.bmp)</source>
         <translation>Карты высот (*.png *.jpg *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="261"/>
+        <location filename="../src/mainwindow.cpp" line="296"/>
         <source>Loading file ends with error: %1</source>
         <translation>Загрузка файла завершилось ошибкой: %1</translation>
     </message>
