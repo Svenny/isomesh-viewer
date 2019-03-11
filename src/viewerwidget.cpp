@@ -22,6 +22,9 @@ void ViewerWidget::initializeGL () {
 	if (!m_program.link ())
 		throw std::runtime_error ("Couldn't compile shaders");
 	m_mvpLocation = m_program.uniformLocation ("MVP");
+	m_useLightingLocation = m_program.uniformLocation("useLighting");
+	m_lightDirLocation = m_program.uniformLocation("lightDir");
+	m_useNormalColorLocation = m_program.uniformLocation("useNormalColor");
 
 	m_VAO.create ();
 	m_VAO.bind ();
@@ -40,6 +43,13 @@ void ViewerWidget::initializeGL () {
 		m_EBO.bind ();
 	}
 	m_VAO.release ();
+
+	m_program.bind();
+	glm::vec3 dir = glm::normalize(glm::vec3(0.3f, 0.9f, 0.3f));
+	glUniform3f(m_lightDirLocation, dir.x, dir.y, dir.z);
+	glUniform1i(m_useLightingLocation, true);
+	glUniform1i(m_useNormalColorLocation, false);
+	m_program.release();
 
 	glClearColor (0.5f, 0.5f, 0.5f, 1.0f);
 	glEnable (GL_DEPTH_TEST);
@@ -85,6 +95,28 @@ void ViewerWidget::setMesh (QSharedPointer<isomesh::Mesh> mesh) {
 	m_EBO.allocate (mesh->indexData (), int (mesh->indexBytes ()));
 	m_VAO.release ();
 	m_meshIndicesCount = int (mesh->indexCount ());
+}
+
+void ViewerWidget::enableLighting(bool enabled)
+{
+	m_program.bind();
+	glUniform1i(m_useLightingLocation, enabled);
+	m_program.release();
+}
+
+void ViewerWidget::enableNormalColors(bool enabled)
+{
+	m_program.bind();
+	glUniform1i(m_useNormalColorLocation, enabled);
+	m_program.release();
+}
+
+void ViewerWidget::setLightDirection(glm::vec3 dir)
+{
+	m_program.bind();
+	dir = glm::normalize(dir);
+	glUniform3f(m_lightDirLocation, dir.x, dir.y, dir.z);
+	m_program.release();
 }
 
 void ViewerWidget::keyPressEvent (QKeyEvent *e) {

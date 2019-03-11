@@ -38,6 +38,16 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->yOffsetEdit->setValidator (doubleValidator);
 	ui->zOffsetEdit->setValidator (doubleValidator);
 
+	ui->xLightDirEdit->setValidator (doubleValidator);
+	ui->xLightDirEdit->setText(m_locale.toString(0.3));
+	ui->yLightDirEdit->setValidator (doubleValidator);
+	ui->yLightDirEdit->setText(m_locale.toString(0.7));
+	ui->zLightDirEdit->setValidator (doubleValidator);
+	ui->zLightDirEdit->setText(m_locale.toString(0.3));
+	connect(ui->xLightDirEdit, &QLineEdit::textChanged, this, &MainWindow::lightDirChanged);
+	connect(ui->yLightDirEdit, &QLineEdit::textChanged, this, &MainWindow::lightDirChanged);
+	connect(ui->zLightDirEdit, &QLineEdit::textChanged, this, &MainWindow::lightDirChanged);
+
 	auto positiveDoubleValidator = new QDoubleValidator(this);
 	positiveDoubleValidator->setBottom(0);
 	positiveDoubleValidator->setNotation(QDoubleValidator::StandardNotation);
@@ -248,6 +258,18 @@ bool MainWindow::updateAlgoParams()
 	return false;
 }
 
+void MainWindow::lightDirChanged()
+{
+	if (!ui->xLightDirEdit->hasAcceptableInput()
+		|| !ui->yLightDirEdit->hasAcceptableInput()
+		|| !ui->zLightDirEdit->hasAcceptableInput()
+	)
+		return;
+
+	glm::vec3 dir(parseDouble(ui->xLightDirEdit), parseDouble(ui->yLightDirEdit), parseDouble(ui->zLightDirEdit));
+	ui->viewer->setLightDirection(dir);
+}
+
 bool MainWindow::hasInvalidInput(std::initializer_list<QLineEdit*> widgets)
 {
 	for (const QLineEdit* edit : widgets) {
@@ -272,5 +294,23 @@ void MainWindow::setPathToHeightmap()
 		}
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
+	}
+}
+
+void MainWindow::lightingStatusChanged(int status)
+{
+	if (status == Qt::Checked) {
+		ui->viewer->enableLighting(true);
+	} else if (status == Qt::Unchecked) {
+		ui->viewer->enableLighting(false);
+	}
+}
+
+void MainWindow::normalColorStatusChanged(int status)
+{
+	if (status == Qt::Checked) {
+		ui->viewer->enableNormalColors(true);
+	} else if (status == Qt::Unchecked) {
+		ui->viewer->enableNormalColors(false);
 	}
 }

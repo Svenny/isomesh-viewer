@@ -108,7 +108,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>6</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="page_Plane">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -652,178 +652,298 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <layout class="QFormLayout" name="formLayout">
-           <item row="0" column="0">
-            <widget class="QLabel" name="chunkSizeLabel">
-             <property name="text">
-              <string>Gr&amp;id size</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="buddy">
-              <cstring>chunkSizeBox</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QComboBox" name="chunkSizeBox">
-             <property name="currentIndex">
-              <number>3</number>
-             </property>
-             <item>
-              <property name="text">
-               <string notr="true">4</string>
-              </property>
+          <widget class="QTabWidget" name="settingsTabWidget">
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <widget class="QWidget" name="gridTab">
+            <attribute name="title">
+             <string>Grid</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_10">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout">
+               <item row="0" column="0">
+                <widget class="QLabel" name="chunkSizeLabel">
+                 <property name="text">
+                  <string>Gr&amp;id size</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="buddy">
+                  <cstring>chunkSizeBox</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="chunkSizeBox">
+                 <property name="currentIndex">
+                  <number>3</number>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string notr="true">4</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">8</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">16</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">32</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">64</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">128</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>256</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>512</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="chunkScaleLabel">
+                 <property name="text">
+                  <string>G&amp;rid step</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>chunkScaleEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="chunkScaleEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="xOffsetLabel">
+                 <property name="text">
+                  <string>X &amp;offset</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>xOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="xOffsetEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="yOffsetLabel">
+                 <property name="text">
+                  <string>Y o&amp;ffset</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>yOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="yOffsetEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="zOffsetLabel">
+                 <property name="text">
+                  <string>Z offs&amp;et</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>zOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="zOffsetEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-             <item>
-              <property name="text">
-               <string notr="true">8</string>
-              </property>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="lightTab">
+            <attribute name="title">
+             <string>Lighting</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_11">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_8">
+               <item row="2" column="0">
+                <widget class="QLabel" name="xLightDirLabel">
+                 <property name="text">
+                  <string>Lighting &amp;direction X</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>xOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="xLightDirEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="yLightDirLabel">
+                 <property name="text">
+                  <string>Lighting direction &amp;Y</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>yOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="yLightDirEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="zLightDirLabel">
+                 <property name="text">
+                  <string>Lighting direction &amp;Z</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>zOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="zLightDirEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="useLightingCheckbox">
+                 <property name="text">
+                  <string>Use Lighting</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="useNormalColorsCheckbox">
+                 <property name="text">
+                  <string>Use color from normal</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-             <item>
-              <property name="text">
-               <string notr="true">16</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">32</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">64</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">128</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>256</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>512</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="chunkScaleLabel">
-             <property name="text">
-              <string>G&amp;rid step</string>
-             </property>
-             <property name="buddy">
-              <cstring>chunkScaleEdit</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="chunkScaleEdit">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>1</string>
-             </property>
-             <property name="placeholderText">
-              <string>positive real number</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="xOffsetLabel">
-             <property name="text">
-              <string>X &amp;offset</string>
-             </property>
-             <property name="buddy">
-              <cstring>xOffsetEdit</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="xOffsetEdit">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="placeholderText">
-              <string>real number</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="yOffsetLabel">
-             <property name="text">
-              <string>Y o&amp;ffset</string>
-             </property>
-             <property name="buddy">
-              <cstring>yOffsetEdit</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="yOffsetEdit">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="placeholderText">
-              <string>real number</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="zOffsetLabel">
-             <property name="text">
-              <string>Z offs&amp;et</string>
-             </property>
-             <property name="buddy">
-              <cstring>zOffsetEdit</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QLineEdit" name="zOffsetEdit">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="placeholderText">
-              <string>real number</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+            </layout>
+           </widget>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -869,6 +989,39 @@
     <bool>false</bool>
    </attribute>
   </widget>
+  <widget class="QToolBar" name="toolBar_3">
+   <property name="windowTitle">
+    <string>toolBar_3</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="toolBar_4">
+   <property name="windowTitle">
+    <string>toolBar_4</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="toolBar_5">
+   <property name="windowTitle">
+    <string>toolBar_5</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -892,8 +1045,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1166</x>
-     <y>579</y>
+     <x>1155</x>
+     <y>514</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -908,8 +1061,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1166</x>
-     <y>612</y>
+     <x>1155</x>
+     <y>537</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -924,8 +1077,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1166</x>
-     <y>645</y>
+     <x>1155</x>
+     <y>559</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -940,8 +1093,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1166</x>
-     <y>678</y>
+     <x>1155</x>
+     <y>582</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -957,7 +1110,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1179</x>
-     <y>724</y>
+     <y>639</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -988,7 +1141,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>120</y>
     </hint>
     <hint type="destinationlabel">
@@ -1004,7 +1157,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>120</y>
     </hint>
     <hint type="destinationlabel">
@@ -1020,7 +1173,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>126</y>
     </hint>
     <hint type="destinationlabel">
@@ -1036,7 +1189,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>131</y>
     </hint>
     <hint type="destinationlabel">
@@ -1052,7 +1205,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>126</y>
     </hint>
     <hint type="destinationlabel">
@@ -1068,7 +1221,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>131</y>
     </hint>
     <hint type="destinationlabel">
@@ -1084,7 +1237,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>131</y>
     </hint>
     <hint type="destinationlabel">
@@ -1100,7 +1253,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>120</y>
     </hint>
     <hint type="destinationlabel">
@@ -1116,7 +1269,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>126</y>
     </hint>
     <hint type="destinationlabel">
@@ -1132,7 +1285,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>119</y>
     </hint>
     <hint type="destinationlabel">
@@ -1148,7 +1301,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>124</y>
     </hint>
     <hint type="destinationlabel">
@@ -1164,7 +1317,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>129</y>
     </hint>
     <hint type="destinationlabel">
@@ -1180,7 +1333,7 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
+     <x>857</x>
      <y>134</y>
     </hint>
     <hint type="destinationlabel">
@@ -1196,8 +1349,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1087</x>
-     <y>200</y>
+     <x>857</x>
+     <y>129</y>
     </hint>
     <hint type="destinationlabel">
      <x>594</x>
@@ -1212,8 +1365,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1087</x>
-     <y>233</y>
+     <x>857</x>
+     <y>134</y>
     </hint>
     <hint type="destinationlabel">
      <x>594</x>
@@ -1228,8 +1381,8 @@
    <slot>checkQLineEditData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1087</x>
-     <y>167</y>
+     <x>857</x>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
      <x>594</x>
@@ -1244,8 +1397,8 @@
    <slot>setPathToHeightmap()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1087</x>
-     <y>134</y>
+     <x>857</x>
+     <y>119</y>
     </hint>
     <hint type="destinationlabel">
      <x>594</x>
@@ -1285,6 +1438,86 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>useLightingCheckbox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>lightingStatusChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>851</x>
+     <y>491</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>xLightDirEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1053</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>useNormalColorsCheckbox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>normalColorStatusChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1053</x>
+     <y>491</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zLightDirEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1053</x>
+     <y>572</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>yLightDirEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1053</x>
+     <y>545</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkQLineEditData()</slot>
@@ -1292,5 +1525,8 @@
   <slot>selectedFunctionChanged(int)</slot>
   <slot>setPathToHeightmap()</slot>
   <slot>selectedAlgoChanged(int)</slot>
+  <slot>lightingStatusChanged(int)</slot>
+  <slot>normalColorStatusChanged(int)</slot>
+  <slot>lightDirChanged()</slot>
  </slots>
 </ui>

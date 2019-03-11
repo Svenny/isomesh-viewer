@@ -31,6 +31,9 @@ private slots:
 	void selectedAlgoChanged(int idx);
 	void generateMesh();
 	void setPathToHeightmap();
+	void lightingStatusChanged(int status);
+	void normalColorStatusChanged(int status);
+	void lightDirChanged();
 
 private:
 	Ui::MainWindow *ui;

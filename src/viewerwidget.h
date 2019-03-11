@@ -30,6 +30,10 @@ public:
 	virtual void focusOutEvent(QFocusEvent* event) override;
 	virtual void wheelEvent(QWheelEvent *event) override;
 
+	void setLightDirection(glm::vec3 dir);
+	void enableLighting(bool enabled);
+	void enableNormalColors(bool enabled);
+
 public slots:
 	void setMesh (QSharedPointer<isomesh::Mesh> mesh);
 
@@ -43,6 +47,7 @@ private:
 	QOpenGLVertexArrayObject m_VAO;
 	QOpenGLBuffer m_VBO, m_EBO;
 	int m_mvpLocation, m_meshIndicesCount;
+	int m_lightDirLocation, m_useLightingLocation, m_useNormalColorLocation;
 	bool m_wireframeEnabled = false;
 
 	Camera m_camera;
