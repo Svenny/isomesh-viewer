@@ -61,6 +61,10 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->wavesAmp2Edit->setValidator (positiveDoubleValidator);
 	ui->wavesAmp2Edit->setText(m_locale.toString(1.2));
 
+	ui->textureScaleEdit->setValidator(positiveDoubleValidator);
+	ui->textureScaleEdit->setText(m_locale.toString(0.03125));
+	connect(ui->textureScaleEdit, &QLineEdit::textChanged, this, &MainWindow::textureScaleChanged);
+
 	ui->hmapPixelSizeEdit->setValidator(positiveDoubleValidator);
 	ui->hmapPixelSizeEdit->setText(m_locale.toString(0.1));
 	ui->hmapMaxHEdit->setValidator(doubleValidator);
@@ -297,6 +301,19 @@ void MainWindow::setPathToHeightmap()
 	}
 }
 
+void MainWindow::setPathToTexture()
+{
+	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.jpg *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
+	try {
+		if (!filename.isEmpty()) {
+			QImage image(filename);
+			ui->viewer->setTexture(image.mirrored());
+		}
+	} catch (std::runtime_error e) {
+		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
+	}
+}
+
 void MainWindow::lightingStatusChanged(int status)
 {
 	if (status == Qt::Checked) {
@@ -314,3 +331,23 @@ void MainWindow::normalColorStatusChanged(int status)
 		ui->viewer->enableNormalColors(false);
 	}
 }
+
+void MainWindow::textureStatusChanged(int status)
+{
+	if (status == Qt::Checked) {
+		ui->useNormalColorsCheckbox->setEnabled(false);
+		ui->viewer->enableTexture(true);
+	} else if (status == Qt::Unchecked) {
+		ui->useNormalColorsCheckbox->setEnabled(true);
+		ui->viewer->enableTexture(false);
+	}
+}
+
+void MainWindow::textureScaleChanged()
+{
+	if (!ui->textureScaleEdit->hasAcceptableInput())
+		return;
+
+	ui->viewer->setTextureScale(parseDouble(ui->textureScaleEdit));
+}
+

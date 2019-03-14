@@ -2,6 +2,7 @@
 
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QImage>
 
 #include <exception>
 #include <glm/glm.hpp>
@@ -10,7 +11,8 @@
 ViewerWidget::ViewerWidget (QWidget *parent) :
 	QOpenGLWidget (parent),
 	m_VBO (QOpenGLBuffer::VertexBuffer),
-	m_EBO (QOpenGLBuffer::IndexBuffer)
+	m_EBO (QOpenGLBuffer::IndexBuffer),
+	m_texture (nullptr)
 {}
 
 void ViewerWidget::initializeGL () {
@@ -25,6 +27,8 @@ void ViewerWidget::initializeGL () {
 	m_useLightingLocation = m_program.uniformLocation("useLighting");
 	m_lightDirLocation = m_program.uniformLocation("lightDir");
 	m_useNormalColorLocation = m_program.uniformLocation("useNormalColor");
+	m_useTextureLocation = m_program.uniformLocation("useTexture");
+	m_textureScaleLocation = m_program.uniformLocation("textureScale");
 
 	m_VAO.create ();
 	m_VAO.bind ();
@@ -49,6 +53,8 @@ void ViewerWidget::initializeGL () {
 	glUniform3f(m_lightDirLocation, dir.x, dir.y, dir.z);
 	glUniform1i(m_useLightingLocation, true);
 	glUniform1i(m_useNormalColorLocation, false);
+	glUniform1i(m_useTextureLocation, false);
+	glUniform1f(m_textureScaleLocation, 0.03125f);
 	m_program.release();
 
 	glClearColor (0.5f, 0.5f, 0.5f, 1.0f);
@@ -77,7 +83,11 @@ void ViewerWidget::paintGL () {
 	m_program.bind ();
 	glUniformMatrix4fv (m_mvpLocation, 1, GL_FALSE, glm::value_ptr (MVP));
 	m_VAO.bind ();
+	if (m_texture)
+		m_texture->bind();
 	glDrawElements (GL_TRIANGLES, m_meshIndicesCount, GL_UNSIGNED_INT, nullptr);
+	if (m_texture)
+		m_texture->release();
 	m_VAO.release ();
 	m_program.release ();
 
@@ -111,6 +121,13 @@ void ViewerWidget::enableNormalColors(bool enabled)
 	m_program.release();
 }
 
+void ViewerWidget::enableTexture(bool enabled)
+{
+	m_program.bind();
+	glUniform1i(m_useTextureLocation, enabled);
+	m_program.release();
+}
+
 void ViewerWidget::setLightDirection(glm::vec3 dir)
 {
 	m_program.bind();
@@ -118,6 +135,29 @@ void ViewerWidget::setLightDirection(glm::vec3 dir)
 	glUniform3f(m_lightDirLocation, dir.x, dir.y, dir.z);
 	m_program.release();
 }
+
+void ViewerWidget::setTextureScale(float scale)
+{
+	m_program.bind();
+	glUniform1f(m_textureScaleLocation, scale);
+	m_program.release();
+}
+
+void ViewerWidget::setTexture(const QImage& image)
+{
+	if (m_texture)
+		delete m_texture;
+
+	m_program.bind();
+	m_VAO.bind();
+	m_texture = new QOpenGLTexture(image);
+	m_texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+	m_texture->setMagnificationFilter(QOpenGLTexture::Linear);
+	m_texture->setWrapMode(QOpenGLTexture::Repeat);
+	m_VAO.release();
+	m_program.release();
+}
+
 
 void ViewerWidget::keyPressEvent (QKeyEvent *e) {
 	if (m_camera.setKeyState (e->key (), true))

@@ -9,7 +9,9 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLWidget>
+#include <QOpenGLTexture>
 #include <QSharedPointer>
+#include <QImage>
 
 #include <isomesh/data/mesh.hpp>
 
@@ -33,6 +35,9 @@ public:
 	void setLightDirection(glm::vec3 dir);
 	void enableLighting(bool enabled);
 	void enableNormalColors(bool enabled);
+	void enableTexture(bool enabled);
+	void setTexture(const QImage& image);
+	void setTextureScale(float scale);
 
 public slots:
 	void setMesh (QSharedPointer<isomesh::Mesh> mesh);
@@ -46,8 +51,10 @@ private:
 	QOpenGLShaderProgram m_program;
 	QOpenGLVertexArrayObject m_VAO;
 	QOpenGLBuffer m_VBO, m_EBO;
+	QOpenGLTexture* m_texture;
 	int m_mvpLocation, m_meshIndicesCount;
 	int m_lightDirLocation, m_useLightingLocation, m_useNormalColorLocation;
+	int m_useTextureLocation, m_textureScaleLocation;
 	bool m_wireframeEnabled = false;
 
 	Camera m_camera;

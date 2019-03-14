@@ -108,7 +108,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>5</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="page_Plane">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -432,13 +432,20 @@
                <item row="0" column="0">
                 <widget class="QLabel" name="hmapFileLable">
                  <property name="text">
-                  <string>Hei&amp;ghtmap file</string>
+                  <string>Heightmap &amp;file</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                  <property name="buddy">
                   <cstring>chunkSizeBox</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="hmapFileButton">
+                 <property name="text">
+                  <string>Choose file</string>
                  </property>
                 </widget>
                </item>
@@ -517,13 +524,6 @@
                  </property>
                  <property name="placeholderText">
                   <string>real number</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QPushButton" name="hmapFileButton">
-                 <property name="text">
-                  <string>Choose file</string>
                  </property>
                 </widget>
                </item>
@@ -784,7 +784,7 @@
                <item row="3" column="0">
                 <widget class="QLabel" name="yOffsetLabel">
                  <property name="text">
-                  <string>Y o&amp;ffset</string>
+                  <string>&amp;Y offset</string>
                  </property>
                  <property name="buddy">
                   <cstring>yOffsetEdit</cstring>
@@ -936,6 +936,73 @@
                 <widget class="QCheckBox" name="useNormalColorsCheckbox">
                  <property name="text">
                   <string>Use color from normal</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="textureTab">
+            <attribute name="title">
+             <string>Texture</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_12">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_9">
+               <item row="3" column="0">
+                <widget class="QCheckBox" name="useTextureCheckbox">
+                 <property name="text">
+                  <string>Use texture</string>
+                 </property>
+                 <property name="checked">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="textureScaleLable">
+                 <property name="text">
+                  <string>T&amp;exture scale</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>zOffsetEdit</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLineEdit" name="textureScaleEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="textureFileLabel">
+                 <property name="text">
+                  <string>Te&amp;xture file</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="buddy">
+                  <cstring>chunkSizeBox</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QPushButton" name="textureFileButton">
+                 <property name="text">
+                  <string>Choose file</string>
                  </property>
                 </widget>
                </item>
@@ -1280,70 +1347,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>hmapMaxHEdit</sender>
-   <signal>textEdited(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkQLineEditData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>857</x>
-     <y>129</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>594</x>
-     <y>379</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>hmapMinHEdit</sender>
-   <signal>textEdited(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkQLineEditData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>857</x>
-     <y>134</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>594</x>
-     <y>379</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>hmapPixelSizeEdit</sender>
-   <signal>textEdited(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkQLineEditData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>857</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>594</x>
-     <y>379</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>hmapFileButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setPathToHeightmap()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>857</x>
-     <y>119</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>594</x>
-     <y>379</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>dmcEpsilonEdit</sender>
    <signal>textEdited(QString)</signal>
    <receiver>MainWindow</receiver>
@@ -1455,6 +1458,118 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>hmapMaxHEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hmapMinHEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hmapPixelSizeEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hmapFileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setPathToHeightmap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>119</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>useTextureCheckbox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>textureStatusChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>891</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>331</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textureFileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setPathToTexture()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1078</x>
+     <y>496</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>331</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textureScaleEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1078</x>
+     <y>529</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>331</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkQLineEditData()</slot>
@@ -1465,5 +1580,8 @@
   <slot>lightingStatusChanged(int)</slot>
   <slot>normalColorStatusChanged(int)</slot>
   <slot>lightDirChanged()</slot>
+  <slot>textureStatusChanged(int)</slot>
+  <slot>textureScaleChanged()</slot>
+  <slot>setPathToTexture()</slot>
  </slots>
 </ui>

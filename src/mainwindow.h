@@ -32,6 +32,9 @@ private slots:
 	void generateMesh();
 	void setPathToHeightmap();
 	void lightingStatusChanged(int status);
+	void textureStatusChanged(int status);
+	void textureScaleChanged();
+	void setPathToTexture();
 	void normalColorStatusChanged(int status);
 	void lightDirChanged();
 
