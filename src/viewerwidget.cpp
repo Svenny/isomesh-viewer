@@ -5,6 +5,7 @@
 #include <QImage>
 
 #include <exception>
+#include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -12,7 +13,8 @@ ViewerWidget::ViewerWidget (QWidget *parent) :
 	QOpenGLWidget (parent),
 	m_VBO (QOpenGLBuffer::VertexBuffer),
 	m_EBO (QOpenGLBuffer::IndexBuffer),
-	m_texture (nullptr)
+	m_texture (nullptr),
+	m_mesh (nullptr)
 {}
 
 void ViewerWidget::initializeGL () {
@@ -85,7 +87,8 @@ void ViewerWidget::paintGL () {
 	m_VAO.bind ();
 	if (m_texture)
 		m_texture->bind();
-	glDrawElements (GL_TRIANGLES, m_meshIndicesCount, GL_UNSIGNED_INT, nullptr);
+	if (m_mesh)
+		glDrawElements (GL_TRIANGLES, m_meshIndicesCount, GL_UNSIGNED_INT, nullptr);
 	if (m_texture)
 		m_texture->release();
 	m_VAO.release ();
@@ -95,6 +98,7 @@ void ViewerWidget::paintGL () {
 }
 
 void ViewerWidget::setMesh (QSharedPointer<isomesh::Mesh> mesh) {
+	m_mesh = mesh;
 	// Fill vertex buffer
 	m_VBO.bind ();
 	m_VBO.allocate (mesh->vertexData (), int (mesh->vertexBytes ()));
@@ -126,6 +130,16 @@ void ViewerWidget::enableTexture(bool enabled)
 	m_program.bind();
 	glUniform1i(m_useTextureLocation, enabled);
 	m_program.release();
+}
+
+QSharedPointer<isomesh::Mesh> ViewerWidget::mesh()
+{
+	return m_mesh;
+}
+
+void ViewerWidget::clearMesh()
+{
+	m_mesh = nullptr;
 }
 
 void ViewerWidget::setLightDirection(glm::vec3 dir)

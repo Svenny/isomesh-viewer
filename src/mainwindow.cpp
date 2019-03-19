@@ -13,6 +13,8 @@ Q_DECLARE_METATYPE (UsedAlgorithm)
 
 MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 		, ui (new Ui::MainWindow)
+		, m_originalModel(nullptr)
+		, m_storedModel(nullptr)
 		, m_locale (QLocale::system ())
 {
 	ui->setupUi (this);
@@ -90,6 +92,9 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->twoSpheresGapEdit->setValidator(zeroGreaterValidator);
 	ui->twoSpheresGapEdit->setText(m_locale.toString(0.5));
 
+	ui->modelScaleEdit->setValidator(zeroGreaterValidator);
+	connect(ui->modelScaleEdit, &QLineEdit::textChanged, this, &MainWindow::modelScaleChanged);
+
 	initFunctionParams ();
 	initAlgorithmParams ();
 }
@@ -109,6 +114,7 @@ void MainWindow::initFunctionParams () {
 	ui->funSelectorBox->addItem (tr ("Multifractal"), FunMultifractal);
 	ui->funSelectorBox->addItem (tr ("Two spheres"), FunTwoSpheres);
 	ui->funSelectorBox->addItem (tr ("Heightmap"), FunHeightmap);
+	ui->funSelectorBox->addItem (tr ("Model"), FunModel);
 
 	ui->funSelectorBox->setCurrentIndex (3);
 }
@@ -151,7 +157,11 @@ void MainWindow::generateMesh() {
 		if (fun == UsedFunction::FunHeightmap && !m_builder.heightmap.isDataLoaded()) {
 			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
 			return;
+		} else if (fun == UsedFunction::FunModel && !m_builder.plyMesh.loaded()) {
+			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Model file not loaded"));
+			return;
 		}
+
 		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (QSharedPointer<isomesh::ScalarField>, m_builder.buildFunction(fun)));
 		QMetaObject::invokeMethod (m_meshGen, "generateMesh");
 		ui->viewer->setFocus();
@@ -166,6 +176,13 @@ double MainWindow::parseDouble(QLineEdit* edit)
 void MainWindow::selectedFunctionChanged(int idx)
 {
 	ui->stackedWidget->setCurrentIndex(idx);
+
+	auto fun = ui->funSelectorBox->currentData().value<UsedFunction>();
+	if (fun == UsedFunction::FunModel && ui->modelOriginalCheckbox->checkState() == Qt::Checked) {
+		ui->viewer->clearMesh();
+		if (m_originalModel)
+			ui->viewer->setMesh(m_originalModel);
+	}
 }
 
 void MainWindow::selectedAlgoChanged(int idx)
@@ -225,6 +242,14 @@ bool MainWindow::updateFunctionParams()
 
 			m_builder.heightmap.setPixelSize(parseDouble(ui->hmapPixelSizeEdit));
 			m_builder.heightmap.setHeightRange({parseDouble(ui->hmapMinHEdit), parseDouble(ui->hmapMaxHEdit)});
+			return true;
+		}
+
+		case UsedFunction::FunModel: {
+			if (hasInvalidInput({ui->modelScaleEdit}))
+				break;
+
+			m_builder.plyMesh.setScale(parseDouble(ui->modelScaleEdit));
 			return true;
 		}
 
@@ -303,11 +328,28 @@ void MainWindow::setPathToHeightmap()
 
 void MainWindow::setPathToTexture()
 {
-	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load heightmap"), QString(), tr("Heightmap Files (*.png *.jpg *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
+	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load Texture"), QString(), tr("Texture Files (*.png *.jpg *.bmp)"), nullptr, QFileDialog::DontUseNativeDialog);
 	try {
 		if (!filename.isEmpty()) {
 			QImage image(filename);
 			ui->viewer->setTexture(image.mirrored());
+		}
+	} catch (std::runtime_error e) {
+		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
+	}
+}
+
+void MainWindow::setPathToModel()
+{
+	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load Model"), QString(), tr("Models Files (*.ply)"), nullptr, QFileDialog::DontUseNativeDialog);
+	try {
+		if (!filename.isEmpty()) {
+			m_builder.plyMesh.load(filename.toStdString());
+			if (ui->modelOriginalCheckbox->checkState() == Qt::Checked) {
+				m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
+				ui->viewer->setMesh(m_originalModel);
+			} else
+				m_originalModel = nullptr;
 		}
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
@@ -343,6 +385,23 @@ void MainWindow::textureStatusChanged(int status)
 	}
 }
 
+void MainWindow::showOriginalModelStatusChanged(int status)
+{
+	if (status == Qt::Checked) {
+		if (!m_originalModel)
+			m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
+
+		m_storedModel = ui->viewer->mesh();
+		ui->viewer->setMesh(m_originalModel);
+	} else if (status == Qt::Unchecked) {
+		if (m_storedModel)
+			ui->viewer->setMesh(m_storedModel);
+		else
+			ui->viewer->clearMesh();
+		m_storedModel = nullptr;
+	}
+}
+
 void MainWindow::textureScaleChanged()
 {
 	if (!ui->textureScaleEdit->hasAcceptableInput())
@@ -351,3 +410,16 @@ void MainWindow::textureScaleChanged()
 	ui->viewer->setTextureScale(parseDouble(ui->textureScaleEdit));
 }
 
+void MainWindow::modelScaleChanged()
+{
+	if (!ui->modelScaleEdit->hasAcceptableInput())
+		return;
+
+	m_builder.plyMesh.setScale((float)parseDouble(ui->modelScaleEdit));
+
+	if (m_originalModel) {
+		m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
+		if (ui->modelOriginalCheckbox->checkState() == Qt::Checked)
+			ui->viewer->setMesh(m_originalModel);
+	}
+}

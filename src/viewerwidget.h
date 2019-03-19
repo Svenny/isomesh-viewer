@@ -14,6 +14,7 @@
 #include <QImage>
 
 #include <isomesh/data/mesh.hpp>
+#include <isomesh/util/ply_mesh.hpp>
 
 #include "camera.h"
 
@@ -39,6 +40,9 @@ public:
 	void setTexture(const QImage& image);
 	void setTextureScale(float scale);
 
+	QSharedPointer<isomesh::Mesh> mesh();
+	void clearMesh();
+
 public slots:
 	void setMesh (QSharedPointer<isomesh::Mesh> mesh);
 
@@ -59,6 +63,7 @@ private:
 
 	Camera m_camera;
 	QPoint m_lastMousePos;
+	QSharedPointer<isomesh::Mesh> m_mesh;
 };
 
 #endif // VIEWERWIDGET_H

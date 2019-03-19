@@ -5,6 +5,7 @@
 
 #include <isomesh/common.hpp>
 #include <isomesh/field/heightmap.hpp>
+#include <isomesh/util/ply_mesh.hpp>
 #include "primitives.h"
 
 enum UsedFunction : int {
@@ -15,7 +16,8 @@ enum UsedFunction : int {
 	FunPerlin,
 	FunMultifractal,
 	FunTwoSpheres,
-	FunHeightmap
+	FunHeightmap,
+	FunModel
 };
 
 class FunctionBuilder {
@@ -30,6 +32,7 @@ public:
 	Waves waves;
 	TwoSpheres twoSpheres;
 	isomesh::Heightmap heightmap;
+	isomesh::PlyMesh plyMesh;
 };
 
 #endif // FUNCTIONSELECTOR_H

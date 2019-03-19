@@ -37,12 +37,17 @@ private slots:
 	void setPathToTexture();
 	void normalColorStatusChanged(int status);
 	void lightDirChanged();
+	void setPathToModel();
+	void showOriginalModelStatusChanged(int status);
+	void modelScaleChanged();
 
 private:
 	Ui::MainWindow *ui;
 	QThread m_workerThread;
 	MeshGenerator *m_meshGen;
 	FunctionBuilder m_builder;
+	QSharedPointer<isomesh::Mesh> m_originalModel;
+	QSharedPointer<isomesh::Mesh> m_storedModel;
 	QLocale m_locale;
 
 	void initFunctionParams ();
