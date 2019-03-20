@@ -420,7 +420,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Texture Files (*.png *.jpg *.bmp)</source>
-        <translation>Файлы текстуры</translation>
+        <translation>Файл текстуры (*png *.jpg *.bmp)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="344"/>
@@ -430,7 +430,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="344"/>
         <source>Models Files (*.ply)</source>
-        <translation>Файлы модели</translation>
+        <translation>Файл модели (*.ply)</translation>
     </message>
 </context>
 </TS>
