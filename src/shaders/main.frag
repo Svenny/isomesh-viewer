@@ -19,13 +19,13 @@ void main () {
 	vec3 objectColor;
 	if (useTexture) {
 		vec3 blending = abs( normal );
-		blending = normalize(max(blending, 0.00001)); // Force weights to sum to 1.0
+		blending = max(blending, 0.00001); // Force weights to sum to 1.0
 		float b = (blending.x + blending.y + blending.z);
 		blending /= vec3(b, b, b);
 
-		vec4 xaxis = texture2D( ourTexture, pos.yz * textureScale);
-		vec4 yaxis = texture2D( ourTexture, pos.xz * textureScale);
-		vec4 zaxis = texture2D( ourTexture, pos.xy * textureScale);
+		vec4 xaxis = texture( ourTexture, pos.yz * textureScale);
+		vec4 yaxis = texture( ourTexture, pos.xz * textureScale);
+		vec4 zaxis = texture( ourTexture, pos.xy * textureScale);
 		vec4 tex = xaxis * blending.x + yaxis * blending.y + zaxis * blending.z;
 		objectColor = tex.xyz;
 	} else if (useNormalColor) {
