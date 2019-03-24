@@ -283,6 +283,9 @@ bool MainWindow::updateAlgoParams()
 				break;
 
 			m_meshGen->setEpsilon(static_cast<float>(parseDouble(ui->dmcEpsilonEdit)));
+			m_meshGen->setDmcUseSimpleSplitPolicy (ui->dmcSimpleSplitPolicyFlag->isChecked ());
+			m_meshGen->setDmcUseEarlyStop (ui->dmcEarlySplitStopFlag->isChecked ());
+			m_meshGen->setDmcUseRandomSampling (ui->dmcRandomSamplingFlag->isChecked ());
 			return true;
 		}
 	}

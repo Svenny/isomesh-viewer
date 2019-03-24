@@ -688,6 +688,27 @@
                  </property>
                 </widget>
                </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="dmcSimpleSplitPolicyFlag">
+                 <property name="text">
+                  <string>Use simple split heuristic</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="dmcEarlySplitStopFlag">
+                 <property name="text">
+                  <string>Use early split stop heuristic</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QCheckBox" name="dmcRandomSamplingFlag">
+                 <property name="text">
+                  <string>Use random sampling</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>

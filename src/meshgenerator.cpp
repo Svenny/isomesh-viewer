@@ -24,7 +24,8 @@ void MeshGenerator::doGenerateMesh () {
 			isomesh::TrivialMaterialSelector selector;
 			isomesh::GradientDescentQefSolver4D solver;
 			isomesh::DMC_Octree octree (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
-			octree.build (*m_function, selector, solver, m_epsilon);
+			octree.build (*m_function, selector, solver, m_epsilon,
+			              m_dmcUseSimpleSplitPolicy, m_dmcUseRandomSampling, m_dmcUseEarlyStop);
 			result = octree.contour ();
 		}
 		else if (m_usedAlgorithm == AlgoMarchingCubes) {
