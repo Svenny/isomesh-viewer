@@ -157,9 +157,12 @@ void MainWindow::generateMesh() {
 		if (fun == UsedFunction::FunHeightmap && !m_builder.heightmap.isDataLoaded()) {
 			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
 			return;
-		} else if (fun == UsedFunction::FunModel && !m_builder.plyMesh.loaded()) {
-			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Model file not loaded"));
-			return;
+		} else if (fun == UsedFunction::FunModel) {
+			if (!m_builder.plyMesh.loaded()) {
+				QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Model file not loaded"));
+				return;
+			}
+			ui->modelOriginalCheckbox->setCheckState(Qt::Unchecked);
 		}
 
 		QMetaObject::invokeMethod (m_meshGen, "setUsedFunction", Q_ARG (QSharedPointer<isomesh::ScalarField>, m_builder.buildFunction(fun)));
@@ -345,11 +348,14 @@ void MainWindow::setPathToModel()
 	try {
 		if (!filename.isEmpty()) {
 			m_builder.plyMesh.load(filename.toStdString());
+			m_builder.meshField.load(filename.toStdString());
 			if (ui->modelOriginalCheckbox->checkState() == Qt::Checked) {
 				m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
 				ui->viewer->setMesh(m_originalModel);
-			} else
+			} else {
 				m_originalModel = nullptr;
+				ui->viewer->clearMesh();
+			}
 		}
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));

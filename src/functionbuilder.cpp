@@ -22,6 +22,8 @@ QSharedPointer<isomesh::ScalarField> FunctionBuilder::buildFunction(UsedFunction
 		return QSharedPointer<TwoSpheres>::create(twoSpheres);
 	case FunHeightmap:
 		return QSharedPointer<isomesh::Heightmap>::create(heightmap);
+	case FunModel:
+		return QSharedPointer<isomesh::MeshField>::create(meshField);
 	}
 	qDebug () << "Selected invalid function";
 	return nullptr;

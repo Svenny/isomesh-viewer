@@ -6,6 +6,7 @@
 #include <isomesh/common.hpp>
 #include <isomesh/field/heightmap.hpp>
 #include <isomesh/util/ply_mesh.hpp>
+#include <isomesh/field/mesh_field.hpp>
 #include "primitives.h"
 
 enum UsedFunction : int {
@@ -33,6 +34,7 @@ public:
 	TwoSpheres twoSpheres;
 	isomesh::Heightmap heightmap;
 	isomesh::PlyMesh plyMesh;
+	isomesh::MeshField meshField;
 };
 
 #endif // FUNCTIONSELECTOR_H
