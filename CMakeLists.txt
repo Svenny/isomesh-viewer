@@ -12,7 +12,6 @@ set (CMAKE_AUTOUIC ON)
 
 find_package (Qt5 CONFIG REQUIRED Widgets LinguistTools)
 find_package (glm CONFIG REQUIRED)
-find_package (tinyply CONFIG REQUIRED)
 find_package (isomesh CONFIG REQUIRED)
 
 set (ISOMESH_VIEWER_HEADERS
