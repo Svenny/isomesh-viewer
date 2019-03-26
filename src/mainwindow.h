@@ -30,6 +30,7 @@ private slots:
 	void selectedFunctionChanged(int idx);
 	void selectedAlgoChanged(int idx);
 	void generateMesh();
+	void exportMeshToPly();
 	void setPathToHeightmap();
 	void lightingStatusChanged(int status);
 	void textureStatusChanged(int status);

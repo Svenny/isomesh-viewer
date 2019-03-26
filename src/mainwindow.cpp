@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 
+#include <isomesh/export/mesh2ply.hpp>
+
 Q_DECLARE_METATYPE (UsedFunction)
 Q_DECLARE_METATYPE (UsedAlgorithm)
 
@@ -363,6 +365,14 @@ void MainWindow::setPathToModel()
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
 	}
+}
+
+void MainWindow::exportMeshToPly()
+{
+	QString filename = QFileDialog::getSaveFileName(this, tr("Save Mesh"), QString(), tr("Models Files (*.ply)"), nullptr, QFileDialog::DontUseNativeDialog);
+	if (!filename.isEmpty() && ui->viewer->mesh())
+		isomesh::mesh2ply(ui->viewer->mesh().data(), filename.toStdString());
+
 }
 
 void MainWindow::lightingStatusChanged(int status)

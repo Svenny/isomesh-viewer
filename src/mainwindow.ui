@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1235</width>
-    <height>664</height>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1101,11 +1101,22 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="generateButton">
-        <property name="text">
-         <string>Generate mesh</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="meshButtonsLayout">
+       <item>
+         <widget class="QPushButton" name="generateButton">
+          <property name="text">
+           <string>Generate mesh</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exportToPlyButton">
+          <property name="text">
+           <string>Export mesh to .ply</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -1703,6 +1714,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>exportToPlyButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportMeshToPly()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1016</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkQLineEditData()</slot>
@@ -1718,5 +1745,6 @@
   <slot>setPathToTexture()</slot>
   <slot>setPathToModel()</slot>
   <slot>showOriginalModelStatusChanged(int)</slot>
+  <slot>exportMeshToPly()</slot>
  </slots>
 </ui>
