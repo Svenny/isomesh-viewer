@@ -104,8 +104,6 @@ void Camera::update () noexcept {
 
 	m_avgFrameTime = 0.25f * deltaTime + 0.75f * m_avgFrameTime;
 	m_framesRendered++;
-	if (m_framesRendered % 150 == 0)
-		qDebug ().noquote () << QString::number (1.0 / double (m_avgFrameTime), 'f', 1) << "FPS";
 
 	auto rotMat = glm::mat3_cast (m_orientation);
 	glm::vec3 dir (rotMat[0][2], rotMat[1][2], rotMat[2][2]);

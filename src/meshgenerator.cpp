@@ -3,11 +3,12 @@
 #include <chrono>
 
 #include <QDebug>
+#include <QTime>
 
 #include <isomesh/isomesh.hpp>
 
 void MeshGenerator::generateMesh () {
-	qDebug () << "generate mesh requested";
+	qDebug () << "generate mesh requested in" << QTime::currentTime().toString(Qt::SystemLocaleShortDate).toStdString().data();
 	if (!m_doGenerateCalled) {
 		m_doGenerateCalled = true;
 		QMetaObject::invokeMethod (this, "doGenerateMesh", Qt::QueuedConnection);
