@@ -40,8 +40,16 @@ void MeshGenerator::doGenerateMesh () {
 			isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
 			G.fill (*m_function, solver, isomesh::TrivialMaterialSelector ());
 			isomesh::AnyNonemptyMaterialFilter filter;
-			isomesh::GradientDescentQefSolver3D qef_solver;
-			result = isomesh::dualContouring (G, filter, qef_solver);
+			if (m_dcUseSimplification) {
+				isomesh::QrQefSolver3D qef_solver;
+				isomesh::DC_Octree octree (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
+				octree.build (G, qef_solver, m_epsilon, true);
+				result = octree.contour (filter);
+			}
+			else {
+				isomesh::GradientDescentQefSolver3D qef_solver;
+				result = isomesh::dualContouring (G, filter, qef_solver);
+			}
 		}
 		else qDebug () << "Invalid algorithm used";
 	}

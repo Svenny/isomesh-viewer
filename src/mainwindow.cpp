@@ -87,6 +87,9 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->ellipsoidYEdit->setValidator(zeroGreaterValidator);
 	ui->ellipsoidZEdit->setValidator(zeroGreaterValidator);
 
+	ui->dcEpsilonEdit->setValidator (zeroGreaterValidator);
+	ui->dcEpsilonEdit->setText (m_locale.toString (0.025));
+
 	ui->dmcEpsilonEdit->setValidator(zeroGreaterValidator);
 	ui->dmcEpsilonEdit->setText(m_locale.toString(0.025));
 
@@ -276,10 +279,14 @@ bool MainWindow::updateAlgoParams()
 	auto algo = ui->algoSelectorBox->currentData().value<UsedAlgorithm>();
 	switch(algo) {
 		case UsedAlgorithm::AlgoMarchingCubes:
-			[[fallthrough]];
-		case UsedAlgorithm::AlgoDualContouring:
 			return true;
+		case UsedAlgorithm::AlgoDualContouring:
+			if (hasInvalidInput ({ ui->dcEpsilonEdit }))
+				break;
 
+			m_meshGen->setEpsilon (static_cast<float>(parseDouble (ui->dcEpsilonEdit)));
+			m_meshGen->setDcUseSimplification (ui->dcAdaptiveFlag->isChecked ());
+			return true;
 		case UsedAlgorithm::AlgoDualMarchingCubes: {
 			if (hasInvalidInput({ui->dmcEpsilonEdit}))
 				break;

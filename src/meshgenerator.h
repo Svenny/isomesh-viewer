@@ -23,6 +23,7 @@ public slots:
 	// Algorithm parameters
 	void setUsedAlgorithm (UsedAlgorithm algo);
 	void setEpsilon(float epsilon);
+	void setDcUseSimplification (bool value) { m_dcUseSimplification = value; }
 	void setDmcUseSimpleSplitPolicy (bool value) { m_dmcUseSimpleSplitPolicy = value; }
 	void setDmcUseEarlyStop (bool value) { m_dmcUseEarlyStop = value; }
 	void setDmcUseRandomSampling (bool value) { m_dmcUseRandomSampling = value; }
@@ -46,6 +47,7 @@ private:
 	// Algorithm parameters
 	UsedAlgorithm m_usedAlgorithm = AlgoMarchingCubes;
 	float m_epsilon;
+	bool m_dcUseSimplification = false;
 	bool m_dmcUseSimpleSplitPolicy = false;
 	bool m_dmcUseEarlyStop = false;
 	bool m_dmcUseRandomSampling = false;

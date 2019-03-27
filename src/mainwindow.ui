@@ -654,10 +654,38 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="page_MC"/>
-           <widget class="QWidget" name="page_DC"/>
+           <widget class="QWidget" name="page_DC">
+            <layout class="QGridLayout" name="gridLayout_14">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_13">
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="dcEpsilonEdit">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="dcEpsilonLabel">
+                 <property name="text">
+                  <string>Simplification tolerance</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="dcAdaptiveFlag">
+                 <property name="text">
+                  <string>Use adaptive simplification</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
            <widget class="QWidget" name="page_MDC">
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0">
@@ -1102,7 +1130,7 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="meshButtonsLayout">
-       <item>
+        <item>
          <widget class="QPushButton" name="generateButton">
           <property name="text">
            <string>Generate mesh</string>
@@ -1727,6 +1755,38 @@
     <hint type="destinationlabel">
      <x>617</x>
      <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dcEpsilonEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1126</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dcAdaptiveFlag</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dcEpsilonEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1126</x>
+     <y>358</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1126</x>
+     <y>333</y>
     </hint>
    </hints>
   </connection>
