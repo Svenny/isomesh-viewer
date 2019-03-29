@@ -35,6 +35,7 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	auto scaleValidator = new QDoubleValidator (1e-5, 1e5, 100, ui->chunkScaleEdit);
 	scaleValidator->setNotation (QDoubleValidator::StandardNotation);
 	ui->chunkScaleEdit->setValidator (scaleValidator);
+	connect(ui->chunkScaleEdit, &QLineEdit::textChanged, this, &MainWindow::modelScaleChanged);
 
 	auto doubleValidator = new QDoubleValidator (this);
 	doubleValidator->setNotation (QDoubleValidator::StandardNotation);
@@ -97,8 +98,6 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->twoSpheresGapEdit->setValidator(zeroGreaterValidator);
 	ui->twoSpheresGapEdit->setText(m_locale.toString(0.5));
 
-	ui->modelScaleEdit->setValidator(zeroGreaterValidator);
-	connect(ui->modelScaleEdit, &QLineEdit::textChanged, this, &MainWindow::modelScaleChanged);
 
 	initFunctionParams ();
 	initAlgorithmParams ();
@@ -254,10 +253,10 @@ bool MainWindow::updateFunctionParams()
 		}
 
 		case UsedFunction::FunModel: {
-			if (hasInvalidInput({ui->modelScaleEdit}))
+			if (hasInvalidInput({ui->chunkScaleEdit}))
 				break;
 
-			m_builder.plyMesh.setScale(parseDouble(ui->modelScaleEdit));
+			m_builder.plyMesh.setScale(1.0f/(float)parseDouble(ui->chunkScaleEdit));
 			return true;
 		}
 
@@ -438,10 +437,11 @@ void MainWindow::textureScaleChanged()
 
 void MainWindow::modelScaleChanged()
 {
-	if (!ui->modelScaleEdit->hasAcceptableInput())
+	if (!ui->chunkScaleEdit->hasAcceptableInput())
 		return;
+	qDebug() << "chunkScaleEdit";
 
-	m_builder.plyMesh.setScale((float)parseDouble(ui->modelScaleEdit));
+	m_builder.plyMesh.setScale(1.0f/(float)parseDouble(ui->chunkScaleEdit));
 
 	if (m_originalModel) {
 		m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
