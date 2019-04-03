@@ -45,6 +45,7 @@ public:
 
 public slots:
 	void setMesh (QSharedPointer<isomesh::Mesh> mesh);
+	void setBoundSize(int size);
 
 protected:
 	virtual void initializeGL () override;
@@ -52,9 +53,10 @@ protected:
 	virtual void resizeGL (int w, int h) override;
 
 private:
-	QOpenGLShaderProgram m_program;
-	QOpenGLVertexArrayObject m_VAO;
+	QOpenGLShaderProgram m_program, m_grid_program;
+	QOpenGLVertexArrayObject m_VAO, m_gridBounds_VAO;
 	QOpenGLBuffer m_VBO, m_EBO;
+	QOpenGLBuffer m_grid_VBO, m_grid_EBO;
 	QOpenGLTexture* m_texture;
 	int m_mvpLocation, m_meshIndicesCount;
 	int m_lightDirLocation, m_useLightingLocation, m_useNormalColorLocation;

@@ -41,6 +41,7 @@ private slots:
 	void setPathToModel();
 	void showOriginalModelStatusChanged(int status);
 	void modelScaleChanged();
+	void chunkSizeChanged(QString value);
 
 private:
 	Ui::MainWindow *ui;

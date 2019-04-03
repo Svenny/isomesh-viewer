@@ -439,7 +439,6 @@ void MainWindow::modelScaleChanged()
 {
 	if (!ui->chunkScaleEdit->hasAcceptableInput())
 		return;
-	qDebug() << "chunkScaleEdit";
 
 	m_builder.plyMesh.setScale(1.0f/(float)parseDouble(ui->chunkScaleEdit));
 
@@ -448,4 +447,10 @@ void MainWindow::modelScaleChanged()
 		if (ui->modelOriginalCheckbox->checkState() == Qt::Checked)
 			ui->viewer->setMesh(m_originalModel);
 	}
+}
+
+void MainWindow::chunkSizeChanged(QString value)
+{
+	int size = value.toInt();
+	ui->viewer->setBoundSize(size);
 }

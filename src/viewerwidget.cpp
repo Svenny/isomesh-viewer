@@ -6,6 +6,7 @@
 
 #include <exception>
 #include <string>
+#include <array>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -13,6 +14,8 @@ ViewerWidget::ViewerWidget (QWidget *parent) :
 	QOpenGLWidget (parent),
 	m_VBO (QOpenGLBuffer::VertexBuffer),
 	m_EBO (QOpenGLBuffer::IndexBuffer),
+	m_grid_VBO(QOpenGLBuffer::VertexBuffer),
+	m_grid_EBO(QOpenGLBuffer::IndexBuffer),
 	m_texture (nullptr),
 	m_mesh (nullptr)
 {}
@@ -50,6 +53,25 @@ void ViewerWidget::initializeGL () {
 	}
 	m_VAO.release ();
 
+	m_grid_program.addCacheableShaderFromSourceFile (QOpenGLShader::Vertex, ":/shaders/grid.vert");
+	m_grid_program.addCacheableShaderFromSourceFile (QOpenGLShader::Fragment, ":/shaders/grid.frag");
+	if (!m_grid_program.link ())
+		throw std::runtime_error ("Couldn't compile shaders");
+
+	m_gridBounds_VAO.create();
+	m_gridBounds_VAO.bind();
+	{
+		m_grid_VBO.create ();
+		m_grid_VBO.bind ();
+		glEnableVertexAttribArray (0);
+		glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof (GLfloat), nullptr);
+		m_grid_VBO.release ();
+
+		m_grid_EBO.create ();
+		m_grid_EBO.bind ();
+	}
+	m_gridBounds_VAO.release();
+
 	m_program.bind();
 	glm::vec3 dir = glm::normalize(glm::vec3(0.3f, 0.9f, 0.3f));
 	glUniform3f(m_lightDirLocation, dir.x, dir.y, dir.z);
@@ -62,6 +84,8 @@ void ViewerWidget::initializeGL () {
 	glClearColor (0.5f, 0.5f, 0.5f, 1.0f);
 	glEnable (GL_DEPTH_TEST);
 	//glEnable(GL_CULL_FACE);
+
+	setBoundSize(32);
 }
 
 void ViewerWidget::resizeGL (int w, int h) {
@@ -92,6 +116,15 @@ void ViewerWidget::paintGL () {
 	if (m_texture)
 		m_texture->release();
 	m_VAO.release ();
+	m_program.release();
+
+	m_grid_program.bind();
+	glUniformMatrix4fv (m_mvpLocation, 1, GL_FALSE, glm::value_ptr (MVP));
+	m_gridBounds_VAO.bind();
+	glDrawElements(GL_LINES, 24, GL_UNSIGNED_INT, nullptr);
+	m_gridBounds_VAO.release();
+	m_grid_program.release();
+
 	m_program.release ();
 
 	update ();
@@ -239,4 +272,42 @@ void ViewerWidget::focusOutEvent(QFocusEvent* event)
 {
 	m_camera.resetKeyState();
 	update();
+}
+
+void ViewerWidget::setBoundSize(int size)
+{
+	const float a = size/2;
+	std::array<glm::vec3, 8> gridBounds;
+	gridBounds[0] = glm::vec3(a, a, a);
+	gridBounds[1] = glm::vec3(a, a, -a);
+	gridBounds[2] = glm::vec3(a, -a, a);
+	gridBounds[3] = glm::vec3(a, -a, -a);
+	gridBounds[4] = glm::vec3(-a, a, a);
+	gridBounds[5] = glm::vec3(-a, a, -a);
+	gridBounds[6] = glm::vec3(-a, -a, a);
+	gridBounds[7] = glm::vec3(-a, -a, -a);
+
+	m_grid_VBO.bind();
+	m_grid_VBO.allocate(gridBounds.data(), int (gridBounds.size() * sizeof (glm::vec3)));
+	m_grid_VBO.release ();
+
+	std::array<uint32_t, 24> indexs({
+		0, 1,
+		0, 2,
+		0, 4,
+		1, 3,
+		1, 5,
+		2, 3,
+		2, 6,
+		3, 7,
+		4, 5,
+		4, 6,
+		5, 7,
+		6, 7
+	});
+
+	m_gridBounds_VAO.bind();
+	m_grid_EBO.bind();
+	m_grid_EBO.allocate(indexs.data(), int(indexs.size() * sizeof(uint32_t)));
+	m_gridBounds_VAO.release();
 }
