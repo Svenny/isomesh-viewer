@@ -1,6 +1,8 @@
 #ifndef PRIMITIVES_H
 #define PRIMITIVES_H
 
+#include <random>
+
 #include <isomesh/field/scalar_field.hpp>
 
 struct Plane: public isomesh::ScalarField {
@@ -40,6 +42,18 @@ struct TwoSpheres: public isomesh::ScalarField {
 
 	double value(double x, double y, double z) const noexcept override;
 	glm::dvec3 grad(double x, double y, double z) const noexcept override;
+};
+
+struct PerlinNoise: public isomesh::ScalarField {
+	PerlinNoise(uint32_t seed = std::default_random_engine::default_seed){reseed(seed);}
+	double value(double x, double y, double z) const noexcept override;
+	glm::dvec3 grad(double x, double y, double z) const noexcept override;
+private:
+	inline double fade(double t) const noexcept;
+	inline double lerp(double t, double a, double b) const noexcept;
+	inline double grad(int hash, double x, double y, double z) const noexcept;
+	void reseed(uint32_t seed = std::default_random_engine::default_seed) noexcept;
+	std::array<int32_t, 512> p;
 };
 
 #endif // PRIMITIVES_H

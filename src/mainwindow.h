@@ -42,6 +42,7 @@ private slots:
 	void showOriginalModelStatusChanged(int status);
 	void modelScaleChanged();
 	void chunkSizeChanged(QString value);
+	void regeneratePerlinNoise();
 
 private:
 	Ui::MainWindow *ui;

@@ -98,6 +98,9 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->twoSpheresGapEdit->setValidator(zeroGreaterValidator);
 	ui->twoSpheresGapEdit->setText(m_locale.toString(0.5));
 
+	auto intZeroGreater = new QIntValidator(0, std::numeric_limits<int>::max(), this);
+	ui->perlinSeedEdit->setValidator(intZeroGreater);
+
 
 	initFunctionParams ();
 	initAlgorithmParams ();
@@ -266,6 +269,10 @@ bool MainWindow::updateFunctionParams()
 
 			m_builder.twoSpheres.radius = parseDouble(ui->twoSpheresRadiusEdit);
 			m_builder.twoSpheres.gap = parseDouble(ui->twoSpheresGapEdit);
+			return true;
+		}
+
+		case UsedFunction::FunPerlin: {
 			return true;
 		}
 	}
@@ -453,4 +460,15 @@ void MainWindow::chunkSizeChanged(QString value)
 {
 	int size = value.toInt();
 	ui->viewer->setBoundSize(size);
+}
+
+void MainWindow::regeneratePerlinNoise()
+{
+	if (!ui->perlinSeedEdit->hasAcceptableInput() && !ui->perlinSeedEdit->text().isEmpty())
+		return;
+
+	if (ui->perlinSeedEdit->text().isEmpty())
+		m_builder.noise = PerlinNoise();
+	else
+		m_builder.noise = PerlinNoise(ui->perlinSeedEdit->text().toInt());
 }

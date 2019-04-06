@@ -13,7 +13,7 @@ QSharedPointer<isomesh::ScalarField> FunctionBuilder::buildFunction(UsedFunction
 	case FunWaves:
 		return QSharedPointer<Waves>::create(waves);
 	case FunPerlin:
-		//TODO
+		return QSharedPointer<PerlinNoise>::create(noise);
 		break;
 	case FunMultifractal:
 		//TODO

@@ -32,6 +32,7 @@ public:
 	Box box;
 	Waves waves;
 	TwoSpheres twoSpheres;
+	PerlinNoise noise;
 	isomesh::Heightmap heightmap;
 	isomesh::PlyMesh plyMesh;
 	isomesh::MeshField meshField;

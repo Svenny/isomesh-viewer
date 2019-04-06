@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1235</width>
+    <width>1289</width>
     <height>759</height>
    </rect>
   </property>
@@ -108,7 +108,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>8</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="page_Plane">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -381,7 +381,31 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="page_Perlin_noise"/>
+           <widget class="QWidget" name="page_Perlin_noise">
+            <layout class="QGridLayout" name="gridLayout_15">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_12">
+               <item row="0" column="0">
+                <widget class="QLabel" name="perlinSeedLable">
+                 <property name="text">
+                  <string>Seed</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="perlinSeedEdit"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QPushButton" name="perlinGenerateButton">
+                 <property name="text">
+                  <string>Regenerate noise</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
            <widget class="QWidget" name="page_Multifractal"/>
            <widget class="QWidget" name="page_Two_Spheres">
             <layout class="QGridLayout" name="gridLayout_6">
@@ -1764,6 +1788,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>perlinSeedEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>799</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>513</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>perlinGenerateButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>regeneratePerlinNoise()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>799</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>513</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkQLineEditData()</slot>
@@ -1781,5 +1837,6 @@
   <slot>showOriginalModelStatusChanged(int)</slot>
   <slot>exportMeshToPly()</slot>
   <slot>chunkSizeChanged(QString)</slot>
+  <slot>regeneratePerlinNoise()</slot>
  </slots>
 </ui>
