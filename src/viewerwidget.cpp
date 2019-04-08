@@ -298,7 +298,7 @@ void ViewerWidget::setBoundSize(int size)
 	m_grid_VBO.allocate(gridBounds.data(), int (gridBounds.size() * sizeof (glm::vec3)));
 	m_grid_VBO.release ();
 
-	std::array<uint32_t, 24> indexs({
+	const std::array<uint32_t, 24> indexs = {
 		0, 1,
 		0, 2,
 		0, 4,
@@ -311,7 +311,7 @@ void ViewerWidget::setBoundSize(int size)
 		4, 6,
 		5, 7,
 		6, 7
-	});
+	};
 
 	m_gridBounds_VAO.bind();
 	m_grid_EBO.bind();

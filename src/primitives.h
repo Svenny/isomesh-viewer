@@ -2,6 +2,7 @@
 #define PRIMITIVES_H
 
 #include <random>
+#include <array>
 
 #include <isomesh/field/scalar_field.hpp>
 
