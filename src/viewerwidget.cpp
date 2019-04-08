@@ -103,7 +103,14 @@ void ViewerWidget::paintGL () {
 
 	m_camera.update ();
 	auto PV = m_camera.getPVMatrix ();
-	auto M = glm::translate (glm::mat4 (1.0f), glm::vec3 (0, -1.0f, -1.0f));
+	glm::mat4 M { 1.0f };
+	if (m_mesh) {
+		// We are not using large coordinates, so precision-losing conversion does not cause issues
+		float scale = float (m_mesh->globalScale ());
+		glm::vec3 translate = glm::vec3 (m_mesh->globalPos ());
+		M = glm::scale (M, glm::vec3 (scale));
+		M = glm::translate (M, translate);
+	}
 	auto MVP = PV * M;
 
 	m_program.bind ();
