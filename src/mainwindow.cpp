@@ -289,6 +289,20 @@ bool MainWindow::updateFunctionParams()
 		}
 
 		case UsedFunction::FunPerlin: {
+			if (!ui->perlinSeedEdit->hasAcceptableInput() && !ui->perlinSeedEdit->text().isEmpty()) {
+				QMessageBox::warning(
+					this,
+					tr("Isomesh Viewer"),
+					tr("Some inputs fields contains invalid information or empty (the fields with invalid input marks by red color)")
+				);
+				break;
+			}
+
+			if (ui->perlinSeedEdit->text().isEmpty())
+				m_builder.noise = PerlinNoise();
+			else
+				m_builder.noise = PerlinNoise(ui->perlinSeedEdit->text().toInt());
+
 			return true;
 		}
 
@@ -470,17 +484,6 @@ void MainWindow::textureScaleChanged()
 		return;
 
 	ui->viewer->setTextureScale(parseDouble(ui->textureScaleEdit));
-}
-
-void MainWindow::regeneratePerlinNoise()
-{
-	if (!ui->perlinSeedEdit->hasAcceptableInput() && !ui->perlinSeedEdit->text().isEmpty())
-		return;
-
-	if (ui->perlinSeedEdit->text().isEmpty())
-		m_builder.noise = PerlinNoise();
-	else
-		m_builder.noise = PerlinNoise(ui->perlinSeedEdit->text().toInt());
 }
 
 void MainWindow::updateBoundCube()

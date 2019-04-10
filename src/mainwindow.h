@@ -41,7 +41,6 @@ private slots:
 	void setPathToModel();
 	void showOriginalModelStatusChanged(int status);
 	void updateBoundCube();
-	void regeneratePerlinNoise();
 
 private:
 	Ui::MainWindow *ui;

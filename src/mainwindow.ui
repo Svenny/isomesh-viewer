@@ -108,7 +108,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>5</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="page_Plane">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -396,13 +396,6 @@
                 <widget class="QLineEdit" name="perlinSeedEdit">
                  <property name="placeholderText">
                   <string>integer or empty</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QPushButton" name="perlinGenerateButton">
-                 <property name="text">
-                  <string>Regenerate noise</string>
                  </property>
                 </widget>
                </item>
@@ -1902,22 +1895,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>perlinGenerateButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>regeneratePerlinNoise()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>799</x>
-     <y>126</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>513</x>
-     <y>379</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>fractalAmpEdit</sender>
    <signal>textEdited(QString)</signal>
    <receiver>MainWindow</receiver>
@@ -2030,6 +2007,5 @@
   <slot>showOriginalModelStatusChanged(int)</slot>
   <slot>exportMeshToPly()</slot>
   <slot>updateBoundCube()</slot>
-  <slot>regeneratePerlinNoise()</slot>
  </slots>
 </ui>
