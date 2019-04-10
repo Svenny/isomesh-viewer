@@ -16,7 +16,7 @@ QSharedPointer<isomesh::ScalarField> FunctionBuilder::buildFunction(UsedFunction
 		return QSharedPointer<PerlinNoise>::create(noise);
 		break;
 	case FunMultifractal:
-		//TODO
+		return QSharedPointer<Multifractal>::create(fractal);
 		break;
 	case FunTwoSpheres:
 		return QSharedPointer<TwoSpheres>::create(twoSpheres);

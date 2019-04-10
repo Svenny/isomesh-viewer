@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1289</width>
-    <height>759</height>
+    <width>1340</width>
+    <height>825</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -108,7 +108,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="page_Plane">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -393,7 +393,11 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="perlinSeedEdit"/>
+                <widget class="QLineEdit" name="perlinSeedEdit">
+                 <property name="placeholderText">
+                  <string>integer or empty</string>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="1">
                 <widget class="QPushButton" name="perlinGenerateButton">
@@ -406,7 +410,116 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="page_Multifractal"/>
+           <widget class="QWidget" name="page_Multifractal">
+            <layout class="QGridLayout" name="gridLayout_16">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_14">
+               <item row="0" column="0">
+                <widget class="QLabel" name="fractalFreqLabel">
+                 <property name="text">
+                  <string>Frequency</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="fractalFreqEdit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="fractalAmpLabel">
+                 <property name="text">
+                  <string>Amplitude</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="fractalAmpEdit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="fractalGainLabel">
+                 <property name="text">
+                  <string>Gain</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="fractalGainEdit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="fractalLacunarityLabel">
+                 <property name="text">
+                  <string>Lacunarity</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="fractalLacunarityEdit">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="fractalOctavesLabel">
+                 <property name="text">
+                  <string>Octaves</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="fractalOctavesEdit">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>positive integer</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="fractalNoiseShiftLabel">
+                 <property name="text">
+                  <string>Noise shift</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLineEdit" name="fractalNoiseShiftEdit">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>real number</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
            <widget class="QWidget" name="page_Two_Spheres">
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
@@ -652,7 +765,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page_MC"/>
            <widget class="QWidget" name="page_DC">
@@ -1801,6 +1914,102 @@
     <hint type="destinationlabel">
      <x>513</x>
      <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fractalAmpEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>996</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fractalFreqEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>996</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fractalLacunarityEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>996</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fractalGainEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>996</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fractalNoiseShiftEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>996</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fractalOctavesEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>996</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>412</y>
     </hint>
    </hints>
   </connection>

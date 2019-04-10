@@ -57,4 +57,19 @@ private:
 	std::array<int32_t, 512> p;
 };
 
+struct Multifractal : public isomesh::ScalarField {
+	Multifractal (uint32_t seed = std::default_random_engine::default_seed);
+	virtual double value (double x, double y, double z) const noexcept override;
+	virtual glm::dvec3 grad (double x, double y, double z) const noexcept override;
+
+	double gain = 0.5;
+	double lacunarity = 2.0;
+	double amp = 5.0;
+	double freq = 1.0;
+	double noiseShift = 0;
+	int octaves = 8;
+private:
+	PerlinNoise m_noise;
+};
+
 #endif // PRIMITIVES_H

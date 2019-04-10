@@ -3,6 +3,8 @@
 #include <iostream>
 #include <algorithm>
 
+#define UNUSED(x) (void)x;
+
 double Plane::value(double x, double y, double z) const noexcept
 {
 	return plane.x*x + plane.y*y + plane.z*z;
@@ -160,4 +162,34 @@ glm::dvec3 PerlinNoise::grad(double x, double y, double z) const noexcept
 	const double z2 = value(x, y, z + h);
 
 	return {(x2 - x1)/2/h, (y2 - y1)/2/h, (z2 - z1)/2/h};
+}
+
+Multifractal::Multifractal (uint32_t seed) :
+	m_noise (seed)
+{}
+
+double Multifractal::value (double x, double y, double z) const noexcept {
+	double val = y;
+	double amp = this->amp;
+	double freq = this->freq;
+	for (int i = 0; i < octaves; i++) {
+		val -= amp * m_noise (freq * x, noiseShift, freq * z);
+		amp *= gain;
+		freq *= lacunarity;
+	}
+	return val;
+}
+
+glm::dvec3 Multifractal::grad (double x, double y, double z) const noexcept {
+	UNUSED(y);
+	glm::dvec3 g { 0.0 };
+	double amp = this->amp;
+	double freq = this->freq;
+	for (int i = 0; i < octaves; i++) {
+		g -= amp * freq * m_noise.grad (freq * x, noiseShift, freq * z);
+		amp *= gain;
+		freq *= lacunarity;
+	}
+	g.y = 1.0;
+	return g;
 }

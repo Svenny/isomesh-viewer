@@ -33,6 +33,7 @@ public:
 	Waves waves;
 	TwoSpheres twoSpheres;
 	PerlinNoise noise;
+	Multifractal fractal;
 	isomesh::Heightmap heightmap;
 	isomesh::PlyMesh plyMesh;
 	isomesh::MeshField meshField;

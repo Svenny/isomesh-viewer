@@ -56,6 +56,18 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	connect(ui->yLightDirEdit, &QLineEdit::textChanged, this, &MainWindow::lightDirChanged);
 	connect(ui->zLightDirEdit, &QLineEdit::textChanged, this, &MainWindow::lightDirChanged);
 
+	ui->fractalFreqEdit->setValidator(doubleValidator);
+	ui->fractalFreqEdit->setText(m_locale.toString(1.0));
+	ui->fractalGainEdit->setValidator(doubleValidator);
+	ui->fractalGainEdit->setText(m_locale.toString(0.5));
+	ui->fractalLacunarityEdit->setValidator(doubleValidator);
+	ui->fractalLacunarityEdit->setText(m_locale.toString(2.0));
+	ui->fractalNoiseShiftEdit->setValidator(doubleValidator);
+
+	ui->hmapMaxHEdit->setValidator(doubleValidator);
+	ui->hmapMaxHEdit->setText(m_locale.toString(3.4));
+	ui->hmapMinHEdit->setValidator(doubleValidator);
+
 	auto positiveDoubleValidator = new QDoubleValidator(this);
 	positiveDoubleValidator->setBottom(0);
 	positiveDoubleValidator->setNotation(QDoubleValidator::StandardNotation);
@@ -75,9 +87,9 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 
 	ui->hmapPixelSizeEdit->setValidator(positiveDoubleValidator);
 	ui->hmapPixelSizeEdit->setText(m_locale.toString(0.1));
-	ui->hmapMaxHEdit->setValidator(doubleValidator);
-	ui->hmapMaxHEdit->setText(m_locale.toString(3.4));
-	ui->hmapMinHEdit->setValidator(doubleValidator);
+
+	ui->fractalAmpEdit->setValidator(positiveDoubleValidator);
+	ui->fractalAmpEdit->setText(m_locale.toString(5.0));
 
 	auto zeroGreaterValidator = new QDoubleValidator(this);
 	zeroGreaterValidator->setBottom(std::numeric_limits<double>::epsilon());
@@ -103,6 +115,7 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 
 	auto intZeroGreater = new QIntValidator(0, std::numeric_limits<int>::max(), this);
 	ui->perlinSeedEdit->setValidator(intZeroGreater);
+	ui->fractalOctavesEdit->setValidator(intZeroGreater);
 
 	connect(ui->chunkSizeBox, &QComboBox::currentTextChanged, this, &MainWindow::updateBoundCube);
 
@@ -276,6 +289,20 @@ bool MainWindow::updateFunctionParams()
 		}
 
 		case UsedFunction::FunPerlin: {
+			return true;
+		}
+
+		case UsedFunction::FunMultifractal: {
+			if (hasInvalidInput({ui->fractalAmpEdit, ui->fractalFreqEdit, ui->fractalGainEdit, ui->fractalLacunarityEdit, ui->fractalNoiseShiftEdit, ui->fractalOctavesEdit}))
+				break;
+
+			m_builder.fractal.freq = parseDouble(ui->fractalFreqEdit);
+			m_builder.fractal.amp = parseDouble(ui->fractalAmpEdit);
+			m_builder.fractal.gain = parseDouble(ui->fractalGainEdit);
+			m_builder.fractal.lacunarity = parseDouble(ui->fractalLacunarityEdit);
+			m_builder.fractal.noiseShift = parseDouble(ui->fractalNoiseShiftEdit);
+			m_builder.fractal.octaves = ui->fractalOctavesEdit->text().toInt();
+
 			return true;
 		}
 	}
