@@ -1773,22 +1773,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>chunkSizeBox</sender>
-   <signal>currentTextChanged(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>chunkSizeChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1023</x>
-     <y>540</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>617</x>
-     <y>379</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>perlinSeedEdit</sender>
    <signal>textEdited(QString)</signal>
    <receiver>MainWindow</receiver>
@@ -1836,7 +1820,7 @@
   <slot>setPathToModel()</slot>
   <slot>showOriginalModelStatusChanged(int)</slot>
   <slot>exportMeshToPly()</slot>
-  <slot>chunkSizeChanged(QString)</slot>
+  <slot>updateBoundCube()</slot>
   <slot>regeneratePerlinNoise()</slot>
  </slots>
 </ui>

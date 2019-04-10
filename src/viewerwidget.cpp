@@ -85,7 +85,7 @@ void ViewerWidget::initializeGL () {
 	glEnable (GL_DEPTH_TEST);
 	//glEnable(GL_CULL_FACE);
 
-	setBoundSize(32);
+	setBoundCube(32, glm::dvec3(0,0,0), 1.0f);
 }
 
 void ViewerWidget::resizeGL (int w, int h) {
@@ -108,8 +108,8 @@ void ViewerWidget::paintGL () {
 		// We are not using large coordinates, so precision-losing conversion does not cause issues
 		float scale = float (m_mesh->globalScale ());
 		glm::vec3 translate = glm::vec3 (m_mesh->globalPos ());
-		M = glm::scale (M, glm::vec3 (scale));
 		M = glm::translate (M, translate);
+		M = glm::scale (M, glm::vec3 (scale));
 	}
 	auto MVP = PV * M;
 
@@ -126,6 +126,7 @@ void ViewerWidget::paintGL () {
 	m_program.release();
 
 	m_grid_program.bind();
+	MVP = PV * glm::mat4{ 1.0f };
 	glUniformMatrix4fv (m_mvpLocation, 1, GL_FALSE, glm::value_ptr (MVP));
 	m_gridBounds_VAO.bind();
 	glDrawElements(GL_LINES, 24, GL_UNSIGNED_INT, nullptr);
@@ -277,22 +278,24 @@ void ViewerWidget::wheelEvent(QWheelEvent* event)
 
 void ViewerWidget::focusOutEvent(QFocusEvent* event)
 {
+	Q_UNUSED(event);
 	m_camera.resetKeyState();
 	update();
 }
 
-void ViewerWidget::setBoundSize(int size)
+void ViewerWidget::setBoundCube(int size, glm::dvec3 pos, float scale)
 {
-	const float a = size/2;
+	glm::vec3 shift((float)pos.x, (float)pos.y, (float)pos.z);
+	const float a = (size/2)*scale;
 	std::array<glm::vec3, 8> gridBounds;
-	gridBounds[0] = glm::vec3(a, a, a);
-	gridBounds[1] = glm::vec3(a, a, -a);
-	gridBounds[2] = glm::vec3(a, -a, a);
-	gridBounds[3] = glm::vec3(a, -a, -a);
-	gridBounds[4] = glm::vec3(-a, a, a);
-	gridBounds[5] = glm::vec3(-a, a, -a);
-	gridBounds[6] = glm::vec3(-a, -a, a);
-	gridBounds[7] = glm::vec3(-a, -a, -a);
+	gridBounds[0] = glm::vec3(a, a, a) + shift;
+	gridBounds[1] = glm::vec3(a, a, -a) + shift;
+	gridBounds[2] = glm::vec3(a, -a, a) + shift;
+	gridBounds[3] = glm::vec3(a, -a, -a) + shift;
+	gridBounds[4] = glm::vec3(-a, a, a) + shift;
+	gridBounds[5] = glm::vec3(-a, a, -a) + shift;
+	gridBounds[6] = glm::vec3(-a, -a, a) + shift;
+	gridBounds[7] = glm::vec3(-a, -a, -a) + shift;
 
 	m_grid_VBO.bind();
 	m_grid_VBO.allocate(gridBounds.data(), int (gridBounds.size() * sizeof (glm::vec3)));

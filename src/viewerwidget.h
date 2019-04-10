@@ -43,9 +43,10 @@ public:
 	QSharedPointer<isomesh::Mesh> mesh();
 	void clearMesh();
 
+	void setBoundCube(int size, glm::dvec3 pos, float scale);
+
 public slots:
 	void setMesh (QSharedPointer<isomesh::Mesh> mesh);
-	void setBoundSize(int size);
 
 protected:
 	virtual void initializeGL () override;

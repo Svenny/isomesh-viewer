@@ -40,8 +40,7 @@ private slots:
 	void lightDirChanged();
 	void setPathToModel();
 	void showOriginalModelStatusChanged(int status);
-	void modelScaleChanged();
-	void chunkSizeChanged(QString value);
+	void updateBoundCube();
 	void regeneratePerlinNoise();
 
 private:

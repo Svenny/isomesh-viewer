@@ -35,13 +35,16 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	auto scaleValidator = new QDoubleValidator (1e-5, 1e5, 100, ui->chunkScaleEdit);
 	scaleValidator->setNotation (QDoubleValidator::StandardNotation);
 	ui->chunkScaleEdit->setValidator (scaleValidator);
-	connect(ui->chunkScaleEdit, &QLineEdit::textChanged, this, &MainWindow::modelScaleChanged);
+	connect(ui->chunkScaleEdit, &QLineEdit::textChanged, this, &MainWindow::updateBoundCube);
 
 	auto doubleValidator = new QDoubleValidator (this);
 	doubleValidator->setNotation (QDoubleValidator::StandardNotation);
 	ui->xOffsetEdit->setValidator (doubleValidator);
+	connect(ui->xOffsetEdit, &QLineEdit::textChanged, this, &MainWindow::updateBoundCube);
 	ui->yOffsetEdit->setValidator (doubleValidator);
+	connect(ui->yOffsetEdit, &QLineEdit::textChanged, this, &MainWindow::updateBoundCube);
 	ui->zOffsetEdit->setValidator (doubleValidator);
+	connect(ui->zOffsetEdit, &QLineEdit::textChanged, this, &MainWindow::updateBoundCube);
 
 	ui->xLightDirEdit->setValidator (doubleValidator);
 	ui->xLightDirEdit->setText(m_locale.toString(0.3));
@@ -101,6 +104,7 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	auto intZeroGreater = new QIntValidator(0, std::numeric_limits<int>::max(), this);
 	ui->perlinSeedEdit->setValidator(intZeroGreater);
 
+	connect(ui->chunkSizeBox, &QComboBox::currentTextChanged, this, &MainWindow::updateBoundCube);
 
 	initFunctionParams ();
 	initAlgorithmParams ();
@@ -259,7 +263,6 @@ bool MainWindow::updateFunctionParams()
 			if (hasInvalidInput({ui->chunkScaleEdit}))
 				break;
 
-			m_builder.plyMesh.setScale(1.0f/(float)parseDouble(ui->chunkScaleEdit));
 			return true;
 		}
 
@@ -442,26 +445,6 @@ void MainWindow::textureScaleChanged()
 	ui->viewer->setTextureScale(parseDouble(ui->textureScaleEdit));
 }
 
-void MainWindow::modelScaleChanged()
-{
-	if (!ui->chunkScaleEdit->hasAcceptableInput())
-		return;
-
-	m_builder.plyMesh.setScale(1.0f/(float)parseDouble(ui->chunkScaleEdit));
-
-	if (m_originalModel) {
-		m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
-		if (ui->modelOriginalCheckbox->checkState() == Qt::Checked)
-			ui->viewer->setMesh(m_originalModel);
-	}
-}
-
-void MainWindow::chunkSizeChanged(QString value)
-{
-	int size = value.toInt();
-	ui->viewer->setBoundSize(size);
-}
-
 void MainWindow::regeneratePerlinNoise()
 {
 	if (!ui->perlinSeedEdit->hasAcceptableInput() && !ui->perlinSeedEdit->text().isEmpty())
@@ -471,4 +454,19 @@ void MainWindow::regeneratePerlinNoise()
 		m_builder.noise = PerlinNoise();
 	else
 		m_builder.noise = PerlinNoise(ui->perlinSeedEdit->text().toInt());
+}
+
+void MainWindow::updateBoundCube()
+{
+	if (!ui->xOffsetEdit->hasAcceptableInput()
+		|| !ui->yOffsetEdit->hasAcceptableInput()
+		|| !ui->zOffsetEdit->hasAcceptableInput()
+		|| !ui->chunkScaleEdit->hasAcceptableInput()
+	)
+		return;
+
+	glm::dvec3 pos(parseDouble(ui->xOffsetEdit), parseDouble(ui->yOffsetEdit), parseDouble(ui->zOffsetEdit));
+	float scale = (float)parseDouble(ui->chunkScaleEdit);
+	int size = ui->chunkSizeBox->currentText().toInt();
+	ui->viewer->setBoundCube(size, pos, scale);
 }
