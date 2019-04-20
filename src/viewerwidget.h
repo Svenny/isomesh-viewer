@@ -52,17 +52,20 @@ protected:
 	virtual void initializeGL () override;
 	virtual void paintGL () override;
 	virtual void resizeGL (int w, int h) override;
+	void calcNormalsData(QSharedPointer<isomesh::Mesh> mesh);
 
 private:
 	QOpenGLShaderProgram m_program, m_grid_program;
-	QOpenGLVertexArrayObject m_VAO, m_gridBounds_VAO;
+	QOpenGLVertexArrayObject m_VAO, m_gridBounds_VAO, m_normals_VAO;
 	QOpenGLBuffer m_VBO, m_EBO;
 	QOpenGLBuffer m_grid_VBO, m_grid_EBO;
+	QOpenGLBuffer m_normals_VBO, m_normals_EBO;
 	QOpenGLTexture* m_texture;
 	int m_mvpLocation, m_meshIndicesCount;
 	int m_lightDirLocation, m_useLightingLocation, m_useNormalColorLocation;
 	int m_useTextureLocation, m_textureScaleLocation;
 	bool m_wireframeEnabled = false;
+	bool m_showNormals = false;
 
 	Camera m_camera;
 	QPoint m_lastMousePos;

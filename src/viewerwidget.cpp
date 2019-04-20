@@ -16,6 +16,8 @@ ViewerWidget::ViewerWidget (QWidget *parent) :
 	m_EBO (QOpenGLBuffer::IndexBuffer),
 	m_grid_VBO(QOpenGLBuffer::VertexBuffer),
 	m_grid_EBO(QOpenGLBuffer::IndexBuffer),
+	m_normals_VBO(QOpenGLBuffer::VertexBuffer),
+	m_normals_EBO(QOpenGLBuffer::IndexBuffer),
 	m_texture (nullptr),
 	m_mesh (nullptr)
 {}
@@ -72,6 +74,20 @@ void ViewerWidget::initializeGL () {
 	}
 	m_gridBounds_VAO.release();
 
+	m_normals_VAO.create();
+	m_normals_VAO.bind();
+	{
+		m_normals_VBO.create ();
+		m_normals_VBO.bind ();
+		glEnableVertexAttribArray (0);
+		glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof (GLfloat), nullptr);
+		m_normals_VBO.release ();
+
+		m_normals_EBO.create ();
+		m_normals_EBO.bind ();
+	}
+	m_normals_VAO.release();
+
 	m_program.bind();
 	glm::vec3 dir = glm::normalize(glm::vec3(0.3f, 0.9f, 0.3f));
 	glUniform3f(m_lightDirLocation, dir.x, dir.y, dir.z);
@@ -126,8 +142,17 @@ void ViewerWidget::paintGL () {
 	m_program.release();
 
 	m_grid_program.bind();
+	glUniformMatrix4fv (m_mvpLocation, 1, GL_FALSE, glm::value_ptr (MVP));
+
+	if (m_mesh && m_showNormals) {
+		m_normals_VAO.bind();
+		glDrawElements(GL_LINES, 2*m_meshIndicesCount/3, GL_UNSIGNED_INT, nullptr);
+		m_normals_VAO.release();
+	}
+
 	MVP = PV * glm::mat4{ 1.0f };
 	glUniformMatrix4fv (m_mvpLocation, 1, GL_FALSE, glm::value_ptr (MVP));
+
 	m_gridBounds_VAO.bind();
 	glDrawElements(GL_LINES, 24, GL_UNSIGNED_INT, nullptr);
 	m_gridBounds_VAO.release();
@@ -150,6 +175,8 @@ void ViewerWidget::setMesh (QSharedPointer<isomesh::Mesh> mesh) {
 	m_EBO.allocate (mesh->indexData (), int (mesh->indexBytes ()));
 	m_VAO.release ();
 	m_meshIndicesCount = int (mesh->indexCount ());
+
+	calcNormalsData(mesh);
 }
 
 void ViewerWidget::enableLighting(bool enabled)
@@ -219,6 +246,8 @@ void ViewerWidget::keyPressEvent (QKeyEvent *e) {
 		update ();
 	else if (e->key () == Qt::Key_F)
 		m_wireframeEnabled = !m_wireframeEnabled;
+	else if (e->key () == Qt::Key_N)
+		m_showNormals = !m_showNormals;
 	else e->ignore ();
 }
 
@@ -320,4 +349,33 @@ void ViewerWidget::setBoundCube(int size, glm::dvec3 pos, float scale)
 	m_grid_EBO.bind();
 	m_grid_EBO.allocate(indexs.data(), int(indexs.size() * sizeof(uint32_t)));
 	m_gridBounds_VAO.release();
+}
+
+void ViewerWidget::calcNormalsData(QSharedPointer<isomesh::Mesh> mesh)
+{
+	const size_t indexCount = mesh->indexCount();
+
+	std::vector<glm::vec3> normalPoints(2*indexCount/3);
+	const uint32_t* data = static_cast<const uint32_t*>(mesh->indexData());
+	for (size_t i = 0; i < indexCount; i+=3) {
+		glm::vec3 a = (*mesh)[data[i]].position;
+		glm::vec3 b = (*mesh)[data[i+1]].position;
+		glm::vec3 c = (*mesh)[data[i+2]].position;
+		float scale = 0.3f * (glm::length(a - b) + glm::length(b - c) + glm::length(c - a))/3;
+		normalPoints[2*i/3] = (a+b+c)/3.0f;
+		normalPoints[2*i/3+1] = scale*glm::normalize(glm::cross(a - b, a - c)) + normalPoints[2*i/3];
+	}
+
+	m_normals_VBO.bind();
+	m_normals_VBO.allocate(normalPoints.data(), int (normalPoints.size() * sizeof (glm::vec3)));
+	m_normals_VBO.release ();
+
+	std::vector<uint32_t> indexs(2*indexCount/3);
+	for (size_t i = 0; i < indexs.size(); i++)
+		indexs[i] = i;
+
+	m_normals_VAO.bind();
+	m_normals_EBO.bind();
+	m_normals_EBO.allocate(indexs.data(), int(indexs.size() * sizeof(uint32_t)));
+	m_normals_VAO.release();
 }
