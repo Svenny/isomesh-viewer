@@ -9,6 +9,7 @@
 #include <QFileDialog>
 
 #include <isomesh/export/mesh2ply.hpp>
+#include <isomesh/util/ply_mesh.hpp>
 
 Q_DECLARE_METATYPE (UsedFunction)
 Q_DECLARE_METATYPE (UsedAlgorithm)
@@ -182,7 +183,7 @@ void MainWindow::generateMesh() {
 			QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Heigthmap file not loaded"));
 			return;
 		} else if (fun == UsedFunction::FunModel) {
-			if (!m_builder.plyMesh.loaded()) {
+			if (m_modelFilepath.isEmpty()) {
 				QMessageBox::warning(this, tr("Isomesh Viewer"), tr("Model file not loaded"));
 				return;
 			}
@@ -409,10 +410,10 @@ void MainWindow::setPathToModel()
 	const QString& filename = QFileDialog::getOpenFileName(this, tr("Load Model"), QString(), tr("Models Files (*.ply)"), nullptr, QFileDialog::DontUseNativeDialog);
 	try {
 		if (!filename.isEmpty()) {
-			m_builder.plyMesh.load(filename.toStdString());
+			m_modelFilepath = filename;
 			m_builder.meshField.load(filename.toStdString());
 			if (ui->modelOriginalCheckbox->checkState() == Qt::Checked) {
-				m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
+				m_originalModel = QSharedPointer<isomesh::Mesh>(isomesh::ply2mesh(filename.toStdString()));
 				ui->viewer->setMesh(m_originalModel);
 			} else {
 				m_originalModel = nullptr;
@@ -465,7 +466,10 @@ void MainWindow::showOriginalModelStatusChanged(int status)
 {
 	if (status == Qt::Checked) {
 		if (!m_originalModel)
-			m_originalModel = QSharedPointer<isomesh::Mesh>(m_builder.plyMesh.mesh());
+			if (m_modelFilepath.isEmpty())
+				m_originalModel = QSharedPointer<isomesh::Mesh>(new isomesh::Mesh());
+			else
+				m_originalModel = QSharedPointer<isomesh::Mesh>(isomesh::ply2mesh(m_modelFilepath.toStdString()));
 
 		m_storedModel = ui->viewer->mesh();
 		ui->viewer->setMesh(m_originalModel);

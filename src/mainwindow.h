@@ -48,6 +48,7 @@ private:
 	MeshGenerator *m_meshGen;
 	FunctionBuilder m_builder;
 	QSharedPointer<isomesh::Mesh> m_originalModel;
+	QString m_modelFilepath;
 	QSharedPointer<isomesh::Mesh> m_storedModel;
 	QLocale m_locale;
 
