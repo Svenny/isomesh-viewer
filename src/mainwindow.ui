@@ -695,6 +695,13 @@
                  </property>
                 </widget>
                </item>
+               <item row="1" column="1">
+                <widget class="QPushButton" name="modelRevertWindingOrderButton">
+                 <property name="text">
+                  <string>Revert winding order</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>
@@ -1990,6 +1997,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>modelRevertWindingOrderButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>revertWindingOrder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1185</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>669</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkQLineEditData()</slot>
@@ -2007,5 +2030,6 @@
   <slot>showOriginalModelStatusChanged(int)</slot>
   <slot>exportMeshToPly()</slot>
   <slot>updateBoundCube()</slot>
+  <slot>revertWindingOrder()</slot>
  </slots>
 </ui>

@@ -42,15 +42,19 @@ private slots:
 	void showOriginalModelStatusChanged(int status);
 	void updateBoundCube();
 	void meshGenerationDone(QSharedPointer<isomesh::Mesh> mesh);
+	void revertWindingOrder();
 
 private:
 	Ui::MainWindow *ui;
 	QThread m_workerThread;
 	MeshGenerator *m_meshGen;
 	FunctionBuilder m_builder;
+
+	bool m_windingOrder;
 	QSharedPointer<isomesh::Mesh> m_originalModel;
 	QString m_modelFilepath;
 	QSharedPointer<isomesh::Mesh> m_storedModel;
+
 	QLocale m_locale;
 
 	void initFunctionParams ();

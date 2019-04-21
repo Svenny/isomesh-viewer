@@ -16,6 +16,7 @@ Q_DECLARE_METATYPE (UsedAlgorithm)
 
 MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 		, ui (new Ui::MainWindow)
+		, m_windingOrder(false)
 		, m_originalModel(nullptr)
 		, m_storedModel(nullptr)
 		, m_locale (QLocale::system ())
@@ -412,6 +413,7 @@ void MainWindow::setPathToModel()
 	try {
 		if (!filename.isEmpty()) {
 			m_modelFilepath = filename;
+			m_windingOrder = false;
 			m_builder.meshField.load(filename.toStdString());
 			if (ui->modelOriginalCheckbox->checkState() == Qt::Checked) {
 				m_originalModel = QSharedPointer<isomesh::Mesh>(isomesh::ply2mesh(filename.toStdString()));
@@ -423,6 +425,18 @@ void MainWindow::setPathToModel()
 		}
 	} catch (std::runtime_error e) {
 		QMessageBox::critical(this, tr("Isomesh Viewer"), tr("Loading file ends with error: %1").arg(tr(e.what())));
+	}
+}
+
+void MainWindow::revertWindingOrder()
+{
+	if (!m_modelFilepath.isEmpty()) {
+		m_windingOrder = !m_windingOrder;
+		m_builder.meshField.load(m_modelFilepath.toStdString(), m_windingOrder);
+		if (ui->modelOriginalCheckbox->isChecked())
+			ui->modelOriginalCheckbox->setCheckState(Qt::Checked);
+		m_originalModel = QSharedPointer<isomesh::Mesh>(isomesh::ply2mesh(m_modelFilepath.toStdString(), m_windingOrder));
+		ui->viewer->setMesh(m_originalModel);
 	}
 }
 
