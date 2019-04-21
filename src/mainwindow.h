@@ -41,6 +41,7 @@ private slots:
 	void setPathToModel();
 	void showOriginalModelStatusChanged(int status);
 	void updateBoundCube();
+	void meshGenerationDone(QSharedPointer<isomesh::Mesh> mesh);
 
 private:
 	Ui::MainWindow *ui;

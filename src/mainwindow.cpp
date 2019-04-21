@@ -30,8 +30,9 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	//	double num = m_locale.toDouble (ui->chunkScaleEdit->text ());
 	//	qDebug () << num;
 	//});
-	connect (m_meshGen, &MeshGenerator::meshGenerated, ui->viewer, &ViewerWidget::setMesh);
 	m_workerThread.start ();
+
+	connect (m_meshGen, &MeshGenerator::meshGenerated, this, &MainWindow::meshGenerationDone);
 
 	auto scaleValidator = new QDoubleValidator (1e-5, 1e5, 100, ui->chunkScaleEdit);
 	scaleValidator->setNotation (QDoubleValidator::StandardNotation);
@@ -503,4 +504,15 @@ void MainWindow::updateBoundCube()
 	float scale = (float)parseDouble(ui->chunkScaleEdit);
 	int size = ui->chunkSizeBox->currentText().toInt();
 	ui->viewer->setBoundCube(size, pos, scale);
+}
+
+void MainWindow::meshGenerationDone(QSharedPointer<isomesh::Mesh> mesh)
+{
+	auto fun = ui->funSelectorBox->currentData().value<UsedFunction>();
+	if (fun == UsedFunction::FunModel) {
+		if (ui->modelOriginalCheckbox->isChecked())
+			ui->modelOriginalCheckbox->setCheckState(Qt::Unchecked);
+	}
+
+	ui->viewer->setMesh(mesh);
 }
