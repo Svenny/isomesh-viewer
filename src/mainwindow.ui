@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1340</width>
-    <height>825</height>
+    <width>1024</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -765,7 +765,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="page_MC"/>
            <widget class="QWidget" name="page_DC">
@@ -797,7 +797,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="page_MDC">
+           <widget class="QWidget" name="page_DMC">
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0">
               <layout class="QFormLayout" name="formLayout_11">
@@ -849,6 +849,30 @@
                 </widget>
                </item>
               </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_MDC">
+            <layout class="QFormLayout" name="formLayout_15">
+             <item row="0" column="0">
+              <widget class="QLabel" name="mdcEpsilonLabel">
+               <property name="text">
+                <string>Simplification tolerance</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="mdcEpsilonEdit">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="frame">
+                <bool>true</bool>
+               </property>
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -2010,6 +2034,22 @@
     <hint type="destinationlabel">
      <x>669</x>
      <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mdcEpsilonEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkQLineEditData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>915</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>511</x>
+     <y>324</y>
     </hint>
    </hints>
   </connection>

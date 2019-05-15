@@ -23,7 +23,7 @@
     <message>
         <location filename="../src/mainwindow.ui" line="84"/>
         <source>Function parameters</source>
-        <translation>Параметры функции</translation>
+        <translation>Параметры поверхности</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="120"/>
@@ -175,7 +175,7 @@
     <message>
         <location filename="../src/mainwindow.ui" line="1254"/>
         <source>Export mesh to .ply</source>
-        <translation>Экспортировать мэш в .ply</translation>
+        <translation>Экспортировать в .ply</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="578"/>
@@ -399,7 +399,7 @@
     <message>
         <location filename="../src/mainwindow.ui" line="1247"/>
         <source>Generate mesh</source>
-        <translation>Сгенерировать меш</translation>
+        <translation>Построить поверхность</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="136"/>

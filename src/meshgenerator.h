@@ -10,7 +10,8 @@
 enum UsedAlgorithm : int {
 	AlgoMarchingCubes,
 	AlgoDualContouring,
-	AlgoDualMarchingCubes
+	AlgoDualMarchingCubes,
+	AlgoManifoldDualContouring
 };
 
 class MeshGenerator : public QObject {

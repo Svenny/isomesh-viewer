@@ -26,13 +26,7 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	m_meshGen = new MeshGenerator;
 	m_meshGen->moveToThread (&m_workerThread);
 	connect (&m_workerThread, SIGNAL (finished ()), m_meshGen, SLOT (deleteLater ()));
-	//connect (ui->generateButton, SIGNAL (clicked ()), m_meshGen, SLOT (generateMesh ()));
-	//connect (ui->generateButton, &QPushButton::clicked, this, [this]() {
-	//	double num = m_locale.toDouble (ui->chunkScaleEdit->text ());
-	//	qDebug () << num;
-	//});
 	m_workerThread.start ();
-
 	connect (m_meshGen, &MeshGenerator::meshGenerated, this, &MainWindow::meshGenerationDone);
 
 	auto scaleValidator = new QDoubleValidator (1e-5, 1e5, 100, ui->chunkScaleEdit);
@@ -112,6 +106,9 @@ MainWindow::MainWindow (QWidget *parent) : QMainWindow (parent)
 	ui->dmcEpsilonEdit->setValidator(zeroGreaterValidator);
 	ui->dmcEpsilonEdit->setText(m_locale.toString(0.025));
 
+	ui->mdcEpsilonEdit->setValidator (zeroGreaterValidator);
+	ui->mdcEpsilonEdit->setText (m_locale.toString (0.025));
+
 	ui->twoSpheresRadiusEdit->setValidator(zeroGreaterValidator);
 	ui->twoSpheresGapEdit->setValidator(zeroGreaterValidator);
 	ui->twoSpheresGapEdit->setText(m_locale.toString(0.5));
@@ -150,6 +147,7 @@ void MainWindow::initAlgorithmParams () {
 	ui->algoSelectorBox->addItem (tr ("Marching Cubes"), AlgoMarchingCubes);
 	ui->algoSelectorBox->addItem (tr ("Dual Contouring"), AlgoDualContouring);
 	ui->algoSelectorBox->addItem (tr ("Dual Marching Cubes"), AlgoDualMarchingCubes);
+	ui->algoSelectorBox->addItem (tr ("Manifold Dual Contouring"), AlgoManifoldDualContouring);
 	connect (ui->algoSelectorBox, QOverload<int>::of (&QComboBox::currentIndexChanged), this, [this](int idx) {
 		auto algo = ui->algoSelectorBox->itemData(idx).value<UsedAlgorithm>();
 		QMetaObject::invokeMethod (m_meshGen, "setUsedAlgorithm", Q_ARG (UsedAlgorithm, algo));
@@ -348,6 +346,13 @@ bool MainWindow::updateAlgoParams()
 			m_meshGen->setDmcUseSimpleSplitPolicy (ui->dmcSimpleSplitPolicyFlag->isChecked ());
 			m_meshGen->setDmcUseEarlyStop (ui->dmcEarlySplitStopFlag->isChecked ());
 			m_meshGen->setDmcUseRandomSampling (ui->dmcRandomSamplingFlag->isChecked ());
+			return true;
+		}
+		case UsedAlgorithm::AlgoManifoldDualContouring: {
+			if (hasInvalidInput ({ ui->mdcEpsilonEdit }))
+				break;
+
+			m_meshGen->setEpsilon (static_cast<float> (parseDouble (ui->mdcEpsilonEdit)));
 			return true;
 		}
 	}

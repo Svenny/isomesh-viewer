@@ -22,34 +22,38 @@ void MeshGenerator::doGenerateMesh () {
 	auto t1 = std::chrono::high_resolution_clock::now ();
 	{
 		if (m_usedAlgorithm == AlgoDualMarchingCubes) {
-			isomesh::TrivialMaterialSelector selector;
-			isomesh::GradientDescentQefSolver4D solver;
+			isomesh::QefSolver4D solver;
 			isomesh::DMC_Octree octree (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
-			octree.build (*m_function, selector, solver, m_epsilon,
+			octree.build (*m_function, solver, m_epsilon,
 			              m_dmcUseSimpleSplitPolicy, m_dmcUseRandomSampling, m_dmcUseEarlyStop);
 			result = octree.contour ();
 		}
 		else if (m_usedAlgorithm == AlgoMarchingCubes) {
 			isomesh::BisectionZeroFinder solver;
 			isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
-			G.fill (*m_function, solver, isomesh::TrivialMaterialSelector ());
+			G.fill (*m_function, solver);
 			result = isomesh::marchingCubes (G);
 		}
 		else if (m_usedAlgorithm == AlgoDualContouring) {
 			isomesh::BisectionZeroFinder solver;
 			isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
-			G.fill (*m_function, solver, isomesh::TrivialMaterialSelector ());
-			isomesh::AnyNonemptyMaterialFilter filter;
+			G.fill (*m_function, solver);
+			isomesh::QefSolver3D qef_solver;
 			if (m_dcUseSimplification) {
-				isomesh::QrQefSolver3D qef_solver;
 				isomesh::DC_Octree octree (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
 				octree.build (G, qef_solver, m_epsilon, true);
-				result = octree.contour (filter);
+				result = octree.contour ();
 			}
-			else {
-				isomesh::GradientDescentQefSolver3D qef_solver;
-				result = isomesh::dualContouring (G, filter, qef_solver);
-			}
+			else result = isomesh::dualContouring (G, qef_solver);
+		}
+		else if (m_usedAlgorithm == AlgoManifoldDualContouring) {
+			isomesh::BisectionZeroFinder solver;
+			isomesh::UniformGrid G (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
+			G.fill (*m_function, solver);
+			isomesh::QefSolver3D qef_solver;
+			isomesh::MDC_Octree octree (m_chunkSize, glm::dvec3 (m_xOffset, m_yOffset, m_zOffset), m_chunkScale);
+			octree.build (G, qef_solver);
+			result = octree.contour (m_epsilon);
 		}
 		else qDebug () << "Invalid algorithm used";
 	}

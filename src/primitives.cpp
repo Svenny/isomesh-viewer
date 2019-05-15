@@ -71,33 +71,33 @@ glm::dvec3 Waves::grad(double x, double y, double z) const noexcept
 
 double TwoSpheres::value(double x, double y, double z) const noexcept
 {
-	const glm::dvec3 center_right (radius + gap * 0.5, 0, 0);
-	const glm::dvec3 center_left (-radius - gap * 0.5, 0, 0);
+	const double offset = glm::sqrt (0.5 * (0.5 * gap + radius) * (0.5 * gap + radius));
+	const glm::dvec3 center_right (offset, 0, offset);
+	const glm::dvec3 center_left (-offset, 0, -offset);
 	const double radius2 = radius * radius;
 
-	glm::dvec3 p(x,y,z);
+	glm::dvec3 p (x, y, z);
 
-	if (p.x < 0)
-		p -= center_left;
-	else
-		p -= center_right;
-	return glm::dot (p, p) - radius2;
+	double val1 = glm::dot (p - center_left, p - center_left) - radius2;
+	double val2 = glm::dot (p - center_right, p - center_right) - radius2;
+	return glm::min (val1, val2);
 }
 
 glm::dvec3 TwoSpheres::grad(double x, double y, double z) const noexcept
 {
-	const glm::dvec3 center_right (radius + gap * 0.5, 0, 0);
-	const glm::dvec3 center_left (-radius - gap * 0.5, 0, 0);
+	const double offset = glm::sqrt (0.5 * (0.5 * gap + radius) * (0.5 * gap + radius));
+	const glm::dvec3 center_right (offset, 0, offset);
+	const glm::dvec3 center_left (-offset, 0, -offset);
+	const double radius2 = radius * radius;
 
-	glm::dvec3 p(x,y,z);
+	glm::dvec3 p (x, y, z);
 
-	if (p.x < 0)
-		p -= center_left;
-	else
-		p -= center_right;
-	return 2.0 * p;
+	double val1 = glm::dot (p - center_left, p - center_left) - radius2;
+	double val2 = glm::dot (p - center_right, p - center_right) - radius2;
+	if (val1 < val2)
+		return 2.0 * (p - center_left);
+	else return 2.0 * (p - center_right);
 }
-
 
 double PerlinNoise::fade(double t) const noexcept {
 	return t * t * t * (t * (t * 6 - 15) + 10);
@@ -152,7 +152,7 @@ double PerlinNoise::value(double x, double y, double z) const noexcept
 
 glm::dvec3 PerlinNoise::grad(double x, double y, double z) const noexcept
 {
-	const double h = 0.1;
+	const double h = 1e-6;
 
 	const double x1 = value(x - h, y, z);
 	const double x2 = value(x + h, y, z);
