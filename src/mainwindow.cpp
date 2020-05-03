@@ -485,12 +485,12 @@ void MainWindow::textureStatusChanged(int status)
 void MainWindow::showOriginalModelStatusChanged(int status)
 {
 	if (status == Qt::Checked) {
-		if (!m_originalModel)
+		if (!m_originalModel) {
 			if (m_modelFilepath.isEmpty())
 				m_originalModel = QSharedPointer<isomesh::Mesh>(new isomesh::Mesh());
 			else
 				m_originalModel = QSharedPointer<isomesh::Mesh>(isomesh::ply2mesh(m_modelFilepath.toStdString()));
-
+		}
 		m_storedModel = ui->viewer->mesh();
 		ui->viewer->setMesh(m_originalModel);
 	} else if (status == Qt::Unchecked) {
